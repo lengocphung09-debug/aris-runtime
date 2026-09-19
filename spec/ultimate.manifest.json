@@ -1,0 +1,14 @@
+{
+  "name": "ARIS-9.6 ULTIMATE",
+  "parent": "ARIS-9.6 FINAL",
+  "spec_sha256": "16c2b69402b2ec05ffbc0092669908235aeaa6e39fcf50937f4be7c55aa0fd19",
+  "design_status": "ULTIMATE DESIGN SPECIFICATION",
+  "self_authorizing": false,
+  "runtime_activation_implied": false,
+  "universal_correctness_claimed": false,
+  "conformance_suite": {"first": 1, "last": 112},
+  "topology": ["KERNEL","CORE","MASTER"],
+  "sibling_authorities": ["VLF","TEXT_METRICS"],
+  "ultimate_layers": ["A1_POLICY_COMPILER","A2_CONSTRAINT_PLANNER","A3_TEMPORAL_MONITOR","A4_METAMORPHIC_VERIFY","C1_MERKLE_PROVENANCE","C2_SIGNED_ATTESTATION","C3_TRANSPARENCY_LOG","C4_EXECUTION_ATTESTATION"],
+  "identity_invariant": "SPECIFIED != COMPILED != IMPLEMENTED != DEPLOYED != EXECUTED != OBSERVED != VERIFIED != VALIDATED != AUDITED != RELEASED != TRUE"
+}

@@ -1,0 +1,11 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {handoff,releaseGate,temporal,merkle,signManifest,executionAttestation,policyCompile,plan,compatible} from '../src/runtime.js';import {runConformance} from '../src/conformance.js';
+test('C01-C112 conformance harness passes',()=>{const r=runConformance();assert.equal(r.total,112);assert.equal(r.fail,0);assert.equal(r.pass,112);});
+test('handoff fails closed on stale revision',()=>{assert.equal(handoff({revision_status:'STALE'}).commit,false);});
+test('release gate fails closed when gates absent',()=>{assert.equal(releaseGate({}).eligible,false);});
+test('temporal monitor blocks release-before-eligible',()=>{assert.equal(temporal([{event:'RELEASED'}]).pass,false);});
+test('Merkle root changes with leaf',()=>{assert.notEqual(merkle(['a']),merkle(['b']));});
+test('signature validates but does not claim truth',()=>{const r=signManifest({x:1});assert.equal(r.valid,true);assert.match(r.note,/!=/);});
+test('attestation chain rejects gaps',()=>{assert.equal(executionAttestation(['SOURCE_VERIFIED','RUNTIME_OBSERVED']).valid,false);});
+test('policy compiler blocks release authority expansion',()=>{assert.equal(policyCompile({policy_id:'p',authority:'MASTER',scope:'x',predicate:'x',failure:'x',precedence:1,can_release:true}).status,'AUTHORITY_EXPANSION_BLOCKED');});
+test('planner detects cycle',()=>{assert.equal(plan({operations:['a','b'],dependencies:[['a','b'],['b','a']]}).status,'UNSAT');});
+test('semantic adapter rejects missing contract',()=>{assert.equal(compatible({},{}).compatible,false);});
