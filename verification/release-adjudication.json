@@ -2,32 +2,69 @@
   "system": "ARIS-9.6 ULTIMATE",
   "spec_sha256": "16c2b69402b2ec05ffbc0092669908235aeaa6e39fcf50937f4be7c55aa0fd19",
   "implementation_commit": "0e66014f6c95c449ccd05e543c925a1b72b4f5a4",
+  "production_domain": "aris-runtime-umber.vercel.app",
+  "production_runtime_evidence": {
+    "health_endpoint": "LIVE_OBSERVED",
+    "runtime_endpoint": "VERIFIED_BOUNDED",
+    "runtime_status": "OBSERVED",
+    "c01_c112_runtime_harness": "PASS_112_OF_112_BOUNDED",
+    "repeated_execution_stability": "VERIFIED_BOUNDED",
+    "unique_execution_ids": "VERIFIED",
+    "unique_manifest_hashes": "VERIFIED",
+    "ed25519_signature": "VERIFIED_BOUNDED",
+    "result_bound_to_execution": "VERIFIED_BOUNDED",
+    "http_200_runtime_stability": "VERIFIED_BOUNDED",
+    "runtime_log_correlation": "VERIFIED_BOUNDED",
+    "concurrency": {
+      "status": "VERIFIED_BOUNDED",
+      "requested": 5,
+      "completed": 5,
+      "max_observed_overlap": 5,
+      "all_runtime_checks_pass": true
+    }
+  },
+  "production_adversarial_failure_injection": {
+    "status": "PASS_BOUNDED",
+    "total": 14,
+    "passed": 14,
+    "failed": 0
+  },
+  "production_provenance_state_verification": {
+    "status": "PASS_BOUNDED",
+    "attestation_chain_complete": true,
+    "merkle_integrity": true,
+    "signature_valid": true,
+    "release_fail_closed": true
+  },
   "ci_evidence": {
-    "pull_request": 1,
-    "workflow_run_id": 35443453651,
-    "head_sha": "6066d2667fcf03de1cd3e096d5d029e1004ec87b",
-    "merged_main_sha": "c61475da7d6c22016e40d5fcbd0d57c8833a30f8",
-    "npm_test": "PASS",
-    "conformance_harness": "PASS",
-    "benchmark_step": "PASS",
+    "workflow_run_id": 35455672362,
+    "head_sha": "594fdf81e3e63c54f502b283944a47cae73e68b6",
+    "npm_test": "PASS_16_OF_16",
+    "conformance_harness": "PASS_112_OF_112",
+    "benchmark": {
+      "iterations": 1000,
+      "conformance_avg_ms": 1.546847,
+      "merkle_avg_ms": 0.012015,
+      "environment": "GitHub-hosted Ubuntu 24.04 / Node 20.20.2 / x64"
+    },
+    "production_final_audit": "TECHNICAL_RUNTIME_PASS_BOUNDED",
+    "production_final_audit_id": "audit-1789835999380-jp89tzimyd",
+    "production_audit_artifact_id": 10587444014,
+    "production_audit_artifact_sha256": "9ac72e1c2294a466e5cbbfceee3918452dbb13fef26a6ca22d821ae316ed48f8",
     "status": "VERIFIED_BOUNDED"
   },
-  "local_machine_check": "PASS_IMPLEMENTATION_HARNESS",
-  "adversarial_failure_injection": "PASS_LOCAL_BOUNDED",
-  "cryptographic_verification": "PASS_LOCAL_BOUNDED",
   "text_metrics_semantic_compatibility": "QUALIFIED_NOT_FULLY_VERIFIED",
   "vlf_semantic_compatibility": "UNVERIFIED",
-  "github_ci": "VERIFIED_BOUNDED",
-  "deployment": "UNVERIFIED",
-  "runtime_verification": "UNVERIFIED",
-  "independent_audit": "UNVERIFIED",
+  "full_normative_c01_c112_oracle_coverage": "NOT_INDEPENDENTLY_DEMONSTRATED",
+  "independent_audit": "UNVERIFIED_BY_INDEPENDENT_REVIEWER",
+  "technical_runtime_status": "PASS_BOUNDED",
   "release_adjudication": "WITHHELD",
   "release_blockers": [
-    "full normative C01-C112 oracle coverage not yet demonstrated",
-    "VLF semantic compatibility not verified against an accessible profile/runtime",
-    "Vercel project/deployment for aris-runtime not established",
-    "direct production runtime execution not observed",
-    "independent audit not performed"
+    "FULL_NORMATIVE_C01_C112_ORACLE_COVERAGE_NOT_INDEPENDENTLY_DEMONSTRATED",
+    "VLF_SEMANTIC_COMPATIBILITY_UNVERIFIED_AGAINST_ACCESSIBLE_PROFILE_OR_RUNTIME",
+    "TEXT_METRICS_SEMANTIC_COMPATIBILITY_NOT_FULLY_VERIFIED",
+    "INDEPENDENT_AUDIT_NOT_PERFORMED_BY_AN_INDEPENDENT_REVIEWER"
   ],
+  "final_state": "WITHHELD",
   "invariant": "SPECIFIED != IMPLEMENTED != DEPLOYED != EXECUTED != OBSERVED != VERIFIED != VALIDATED != AUDITED != RELEASED != TRUE"
 }
