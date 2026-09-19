@@ -1,0 +1,27 @@
+name: ARIS External Independent Audit Gate
+on:
+  pull_request:
+    paths:
+      - 'audit/independent-attestation.json'
+      - 'audit/independent-attestation.schema.json'
+      - 'scripts/verify-independent-audit.js'
+      - '.github/workflows/external-audit.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'audit/independent-attestation.json'
+      - 'audit/independent-attestation.schema.json'
+      - 'scripts/verify-independent-audit.js'
+      - '.github/workflows/external-audit.yml'
+permissions:
+  contents: read
+jobs:
+  independent-audit-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Verify external independent audit attestation
+        run: npm run verify:independent-audit
