@@ -16,3 +16,28 @@ jobs:
       - run: npm test
       - run: npm run conformance
       - run: npm run benchmark
+      - name: Wait for production final-audit endpoint and verify
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL='https://aris-runtime-umber.vercel.app/api/final-audit'
+          ok=0
+          for i in $(seq 1 24); do
+            code=$(curl -sS -o final-audit.json -w '%{http_code}' --max-time 30 "$URL" || true)
+            echo "attempt=$i http=$code"
+            if [ "$code" = "200" ]; then
+              node -e "const fs=require('fs');const x=JSON.parse(fs.readFileSync('final-audit.json','utf8')); if(x.status!=='TECHNICAL_RUNTIME_PASS_BOUNDED') process.exit(2); if(!x.signed?.valid) process.exit(3); if(x.release_adjudication!=='WITHHELD') process.exit(4); console.log(JSON.stringify({audit_id:x.audit_id,status:x.status,checks:x.checks,evidence:x.evidence,release_adjudication:x.release_adjudication,blockers:x.unresolved_release_blockers},null,2));"
+              ok=1
+              break
+            fi
+            sleep 10
+          done
+          test "$ok" = 1
+      - name: Upload production audit evidence
+        if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-final-audit
+          path: final-audit.json
+          if-no-files-found: ignore
