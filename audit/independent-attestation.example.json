@@ -1,0 +1,22 @@
+{
+  "audit_id": "external-audit-example",
+  "reviewer": {
+    "identity": "REPLACE_WITH_INDEPENDENT_REVIEWER_IDENTITY",
+    "independent_from": ["lengocphung09-debug", "implementation author", "deployment operator", "implementation agent"],
+    "method": "Independent inspection of normative requirements, implementation, test oracles, production evidence, and sibling capability contracts."
+  },
+  "reviewed_commit": "0000000000000000000000000000000000000000",
+  "reviewed_production_domain": "aris-runtime-umber.vercel.app",
+  "review_timestamp": "2026-09-19T00:00:00Z",
+  "determinations": {
+    "normative_oracle_coverage": "UNVERIFIED",
+    "vlf_semantic_compatibility": "UNVERIFIED",
+    "text_metrics_semantic_compatibility": "UNVERIFIED",
+    "production_reproduction": "UNVERIFIED",
+    "release_gate_5": "UNVERIFIED"
+  },
+  "evidence": ["replace-1","replace-2","replace-3","replace-4","replace-5"],
+  "limitations": ["Example only; not an audit result."],
+  "overall": "UNVERIFIED",
+  "statement": "This example is a non-authoritative template and must not be treated as an independent audit result."
+}
