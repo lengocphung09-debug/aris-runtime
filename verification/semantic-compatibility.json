@@ -1,0 +1,14 @@
+{
+  "text_metrics": {
+    "repository": "lengocphung09-debug/text-metrics-runtime",
+    "observed_version": "1.9.1",
+    "observed_authority_boundary": "measurement only",
+    "readme_blob_sha": "1c0b1f2152169b80309b47828df7cbdec242b527",
+    "status": "QUALIFIED_NOT_FULLY_VERIFIED",
+    "reason": "Authority boundary is compatible, but a full formal failure/semantic compatibility profile was not found in the inspected README."
+  },
+  "vlf": {
+    "status": "UNVERIFIED",
+    "reason": "No accessible VLF runtime/capability profile was located in the inspected GitHub repositories."
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "iterations": 1000,
+  "conformance_total_ms": 2159.148,
+  "conformance_avg_ms": 2.159148,
+  "merkle_total_ms": 12.883,
+  "merkle_avg_ms": 0.012883,
+  "environment": {"node":"v22.16.0","platform":"linux","arch":"x64"},
+  "scope": "local container benchmark; not production latency"
+}

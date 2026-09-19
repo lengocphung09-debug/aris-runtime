@@ -1,0 +1,10 @@
+{
+  "cryptographic_verification": "PASS_LOCAL_BOUNDED",
+  "signature_algorithm": "ed25519",
+  "signature_valid": true,
+  "execution_attestation_highest": "CONFIGURATION_VERIFIED",
+  "deployment_verified": false,
+  "runtime_observed": false,
+  "execution_observed": false,
+  "boundary": "VALID_SIGNATURE != CLAIM_TRUE; local cryptographic integrity does not establish deployment/runtime truth."
+}

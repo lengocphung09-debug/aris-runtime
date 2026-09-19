@@ -1,0 +1,24 @@
+{
+  "system": "ARIS-9.6 ULTIMATE",
+  "spec_sha256": "16c2b69402b2ec05ffbc0092669908235aeaa6e39fcf50937f4be7c55aa0fd19",
+  "implementation_commit": "0e66014f6c95c449ccd05e543c925a1b72b4f5a4",
+  "local_machine_check": "PASS_IMPLEMENTATION_HARNESS",
+  "adversarial_failure_injection": "PASS_LOCAL_BOUNDED",
+  "cryptographic_verification": "PASS_LOCAL_BOUNDED",
+  "text_metrics_semantic_compatibility": "QUALIFIED_NOT_FULLY_VERIFIED",
+  "vlf_semantic_compatibility": "UNVERIFIED",
+  "github_ci": "UNVERIFIED_NO_WORKFLOW_RUN_OBSERVED",
+  "deployment": "UNVERIFIED",
+  "runtime_verification": "UNVERIFIED",
+  "independent_audit": "UNVERIFIED",
+  "release_adjudication": "WITHHELD",
+  "release_blockers": [
+    "full normative C01-C112 oracle coverage not yet demonstrated",
+    "GitHub Actions run not observed",
+    "VLF semantic compatibility not verified against an accessible profile/runtime",
+    "Vercel project/deployment for aris-runtime not established",
+    "direct production runtime execution not observed",
+    "independent audit not performed"
+  ],
+  "invariant": "SPECIFIED != IMPLEMENTED != DEPLOYED != EXECUTED != OBSERVED != VERIFIED != VALIDATED != AUDITED != RELEASED != TRUE"
+}
