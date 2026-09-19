@@ -1,0 +1,135 @@
+{
+  "audit_id": "owner-audit-YYYYMMDD-HHMMSS",
+  "reviewer": {
+    "identity": "REPLACE_WITH_REVIEWER_IDENTITY",
+    "independence_class": "OWNER_INTERNAL_REVIEW",
+    "role": "repository owner / researcher / deployment operator as applicable",
+    "method": "Manual owner/internal audit using audit/OWNER_AUDIT_CHECKLIST.md with direct source, CI, production endpoint, log, compatibility, provenance and release-gate evidence."
+  },
+  "reviewed_commit": "REPLACE_WITH_40_CHARACTER_GIT_COMMIT_SHA",
+  "reviewed_production_domain": "aris-runtime-umber.vercel.app",
+  "review_timestamp": "YYYY-MM-DDTHH:MM:SSZ",
+  "specification": {
+    "name": "ARIS-9.6 ULTIMATE",
+    "sha256": "16c2b69402b2ec05ffbc0092669908235aeaa6e39fcf50937f4be7c55aa0fd19"
+  },
+  "reviewed_siblings": {
+    "vlf": {
+      "version": "3.3",
+      "profile_status": "REVIEW_REQUIRED"
+    },
+    "text_metrics": {
+      "version": "REPLACE_WITH_CURRENT_VERSION",
+      "profile_status": "REVIEW_REQUIRED"
+    }
+  },
+  "determinations": {
+    "normative_oracle_coverage": "UNVERIFIED",
+    "vlf_semantic_compatibility": "UNVERIFIED",
+    "text_metrics_semantic_compatibility": "UNVERIFIED",
+    "production_reproduction": "UNVERIFIED",
+    "release_gate_5_technical": "UNVERIFIED"
+  },
+  "production_checks": {
+    "health": {
+      "status": "UNVERIFIED",
+      "evidence": []
+    },
+    "runtime": {
+      "status": "UNVERIFIED",
+      "expected": {
+        "http_status": 200,
+        "runtime_status": "OBSERVED",
+        "conformance_total": 112,
+        "conformance_pass": 112,
+        "conformance_fail": 0,
+        "signed_valid": true,
+        "highest_attestation": "RESULT_BOUND_TO_EXECUTION"
+      },
+      "evidence": []
+    },
+    "repeated_execution": {
+      "status": "UNVERIFIED",
+      "run_count": 0,
+      "unique_execution_ids": false,
+      "unique_manifest_hashes": false,
+      "evidence": []
+    },
+    "concurrency": {
+      "status": "UNVERIFIED",
+      "requested": 5,
+      "completed": 0,
+      "max_observed_overlap": 0,
+      "all_runtime_checks_pass": false,
+      "evidence": []
+    },
+    "adversarial_failure_injection": {
+      "status": "UNVERIFIED",
+      "pass_count": 0,
+      "fail_count": 0,
+      "evidence": []
+    },
+    "provenance_state": {
+      "status": "UNVERIFIED",
+      "merkle_or_hash_integrity": "UNVERIFIED",
+      "signature_validity": "UNVERIFIED",
+      "release_fail_closed": "UNVERIFIED",
+      "evidence": []
+    },
+    "final_audit_endpoint": {
+      "status": "UNVERIFIED",
+      "evidence": []
+    },
+    "vercel_logs": {
+      "status": "UNVERIFIED",
+      "http_200_observed": false,
+      "timestamp_correlation": false,
+      "evidence": []
+    }
+  },
+  "oracle_review": {
+    "status": "UNVERIFIED",
+    "positive_paths_sampled": [],
+    "negative_paths_sampled": [],
+    "release_critical_tests_inspected": [],
+    "oracle_gaps": [],
+    "evidence": []
+  },
+  "vlf_review": {
+    "status": "UNVERIFIED",
+    "authority_boundary_preserved": "UNVERIFIED",
+    "interface_semantics_reviewed": "UNVERIFIED",
+    "failure_semantics_reviewed": "UNVERIFIED",
+    "provenance_semantics_reviewed": "UNVERIFIED",
+    "version_compatibility_reviewed": "UNVERIFIED",
+    "limitations": [],
+    "evidence": []
+  },
+  "text_metrics_review": {
+    "status": "UNVERIFIED",
+    "authority_boundary_preserved": "UNVERIFIED",
+    "measurement_semantics_reviewed": "UNVERIFIED",
+    "normalization_unit_method_reviewed": "UNVERIFIED",
+    "failure_semantics_reviewed": "UNVERIFIED",
+    "provenance_semantics_reviewed": "UNVERIFIED",
+    "version_compatibility_reviewed": "UNVERIFIED",
+    "limitations": [],
+    "evidence": []
+  },
+  "release_gate_5_review": {
+    "technical_status": "UNVERIFIED",
+    "unresolved_technical_blockers": [],
+    "external_independent_audit": "NOT_SATISFIED_BY_THIS_REVIEW",
+    "release_authority": "NOT_GRANTED_BY_OWNER_AUDIT"
+  },
+  "evidence": [
+    "REPLACE_WITH_AT_LEAST_ONE_CONCRETE_EVIDENCE_REFERENCE",
+    "REPLACE_WITH_ADDITIONAL_EVIDENCE_REFERENCE"
+  ],
+  "limitations": [
+    "This is an owner/internal review and is not an external independent audit."
+  ],
+  "owner_audit_result": "UNVERIFIED",
+  "external_independent_audit": "NOT_SATISFIED_BY_THIS_REVIEW",
+  "statement": "This owner/internal audit does not satisfy the External Independent Audit Gate and does not itself authorize release. Technical findings are bounded to the reviewed commit, production deployment, test evidence, and stated limitations."
+}
