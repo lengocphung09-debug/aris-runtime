@@ -7,6 +7,7 @@
   "scripts": {
     "test": "node --test tests/*.test.js",
     "conformance": "node scripts/conformance.js",
-    "benchmark": "node scripts/benchmark.js"
+    "benchmark": "node scripts/benchmark.js",
+    "verify:independent-audit": "node scripts/verify-independent-audit.js"
   }
 }
