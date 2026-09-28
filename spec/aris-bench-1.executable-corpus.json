@@ -1,0 +1,5449 @@
+{
+  "corpus_id": "ARIS-BENCH-1",
+  "revision": "1.0-derived-executable",
+  "status": "DERIVED_EXECUTABLE_CORPUS_NOT_CANONICAL_SOURCE_TEXT",
+  "source_spec_sha256": "bb406627e31052bde176f33681b056c7c545def7cc87dca3d240178389e4e763",
+  "derivation_rule": "One deterministic executable case per canonical workload family x P0-P4 stratum; 16x5=80 cases. Gold oracles test process/control invariants, not open-domain factual truth.",
+  "profiles": [
+    "P0_MINIMAL",
+    "P1_STANDARD",
+    "P2_SPECIALIST",
+    "P3_ADVANCED",
+    "P4_FULL_AUDIT"
+  ],
+  "workload_families": [
+    "RESEARCH_ONLY",
+    "EVIDENCE_RETRIEVAL",
+    "SOURCE_CRITICISM",
+    "CONFLICTING_EVIDENCE",
+    "ARIS_PLUS_VLF",
+    "ARIS_PLUS_TEXT_METRICS",
+    "ARIS_PLUS_VLF_PLUS_TEXT_METRICS",
+    "FAILURE_RETRY_RECOVERY",
+    "STATE_CONFLICT",
+    "LARGE_TAXONOMY_LOOKUP",
+    "DATABASE_MUTATION_STAGED",
+    "FULL_RELEASE_AUDIT",
+    "NOVELTY_DETECTION",
+    "COVERAGE_GAP_DETECTION",
+    "LONG_DOCUMENT_ANALYSIS",
+    "MULTI_DOMAIN_SYNTHESIS"
+  ],
+  "case_count": 80,
+  "cases": [
+    {
+      "CASE_ID": "AB1-001",
+      "TASK_CLASS": "RESEARCH_ONLY",
+      "RISK_PROFILE": "P0_MINIMAL",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://research_only/p0_minimal",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-002",
+      "TASK_CLASS": "RESEARCH_ONLY",
+      "RISK_PROFILE": "P1_STANDARD",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://research_only/p1_standard",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-003",
+      "TASK_CLASS": "RESEARCH_ONLY",
+      "RISK_PROFILE": "P2_SPECIALIST",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://research_only/p2_specialist",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-004",
+      "TASK_CLASS": "RESEARCH_ONLY",
+      "RISK_PROFILE": "P3_ADVANCED",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://research_only/p3_advanced",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-005",
+      "TASK_CLASS": "RESEARCH_ONLY",
+      "RISK_PROFILE": "P4_FULL_AUDIT",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://research_only/p4_full_audit",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-006",
+      "TASK_CLASS": "EVIDENCE_RETRIEVAL",
+      "RISK_PROFILE": "P0_MINIMAL",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://evidence_retrieval/p0_minimal",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-007",
+      "TASK_CLASS": "EVIDENCE_RETRIEVAL",
+      "RISK_PROFILE": "P1_STANDARD",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://evidence_retrieval/p1_standard",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-008",
+      "TASK_CLASS": "EVIDENCE_RETRIEVAL",
+      "RISK_PROFILE": "P2_SPECIALIST",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://evidence_retrieval/p2_specialist",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-009",
+      "TASK_CLASS": "EVIDENCE_RETRIEVAL",
+      "RISK_PROFILE": "P3_ADVANCED",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://evidence_retrieval/p3_advanced",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-010",
+      "TASK_CLASS": "EVIDENCE_RETRIEVAL",
+      "RISK_PROFILE": "P4_FULL_AUDIT",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://evidence_retrieval/p4_full_audit",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-011",
+      "TASK_CLASS": "SOURCE_CRITICISM",
+      "RISK_PROFILE": "P0_MINIMAL",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://source_criticism/p0_minimal",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-012",
+      "TASK_CLASS": "SOURCE_CRITICISM",
+      "RISK_PROFILE": "P1_STANDARD",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://source_criticism/p1_standard",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-013",
+      "TASK_CLASS": "SOURCE_CRITICISM",
+      "RISK_PROFILE": "P2_SPECIALIST",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://source_criticism/p2_specialist",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-014",
+      "TASK_CLASS": "SOURCE_CRITICISM",
+      "RISK_PROFILE": "P3_ADVANCED",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://source_criticism/p3_advanced",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-015",
+      "TASK_CLASS": "SOURCE_CRITICISM",
+      "RISK_PROFILE": "P4_FULL_AUDIT",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://source_criticism/p4_full_audit",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-016",
+      "TASK_CLASS": "CONFLICTING_EVIDENCE",
+      "RISK_PROFILE": "P0_MINIMAL",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://conflicting_evidence/p0_minimal",
+      "GOLD_ORACLE_TYPE": "ABSTENTION_BOUNDARY_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": true,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "ABSTAIN",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-017",
+      "TASK_CLASS": "CONFLICTING_EVIDENCE",
+      "RISK_PROFILE": "P1_STANDARD",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://conflicting_evidence/p1_standard",
+      "GOLD_ORACLE_TYPE": "ABSTENTION_BOUNDARY_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": true,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "ABSTAIN",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-018",
+      "TASK_CLASS": "CONFLICTING_EVIDENCE",
+      "RISK_PROFILE": "P2_SPECIALIST",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://conflicting_evidence/p2_specialist",
+      "GOLD_ORACLE_TYPE": "ABSTENTION_BOUNDARY_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": true,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "ABSTAIN",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-019",
+      "TASK_CLASS": "CONFLICTING_EVIDENCE",
+      "RISK_PROFILE": "P3_ADVANCED",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://conflicting_evidence/p3_advanced",
+      "GOLD_ORACLE_TYPE": "ABSTENTION_BOUNDARY_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": true,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "ABSTAIN",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-020",
+      "TASK_CLASS": "CONFLICTING_EVIDENCE",
+      "RISK_PROFILE": "P4_FULL_AUDIT",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://conflicting_evidence/p4_full_audit",
+      "GOLD_ORACLE_TYPE": "ABSTENTION_BOUNDARY_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": true,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "ABSTAIN",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-021",
+      "TASK_CLASS": "ARIS_PLUS_VLF",
+      "RISK_PROFILE": "P0_MINIMAL",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://aris_plus_vlf/p0_minimal",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-022",
+      "TASK_CLASS": "ARIS_PLUS_VLF",
+      "RISK_PROFILE": "P1_STANDARD",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://aris_plus_vlf/p1_standard",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-023",
+      "TASK_CLASS": "ARIS_PLUS_VLF",
+      "RISK_PROFILE": "P2_SPECIALIST",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://aris_plus_vlf/p2_specialist",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-024",
+      "TASK_CLASS": "ARIS_PLUS_VLF",
+      "RISK_PROFILE": "P3_ADVANCED",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://aris_plus_vlf/p3_advanced",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-025",
+      "TASK_CLASS": "ARIS_PLUS_VLF",
+      "RISK_PROFILE": "P4_FULL_AUDIT",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://aris_plus_vlf/p4_full_audit",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-026",
+      "TASK_CLASS": "ARIS_PLUS_TEXT_METRICS",
+      "RISK_PROFILE": "P0_MINIMAL",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://aris_plus_text_metrics/p0_minimal",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-027",
+      "TASK_CLASS": "ARIS_PLUS_TEXT_METRICS",
+      "RISK_PROFILE": "P1_STANDARD",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://aris_plus_text_metrics/p1_standard",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-028",
+      "TASK_CLASS": "ARIS_PLUS_TEXT_METRICS",
+      "RISK_PROFILE": "P2_SPECIALIST",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://aris_plus_text_metrics/p2_specialist",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-029",
+      "TASK_CLASS": "ARIS_PLUS_TEXT_METRICS",
+      "RISK_PROFILE": "P3_ADVANCED",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://aris_plus_text_metrics/p3_advanced",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-030",
+      "TASK_CLASS": "ARIS_PLUS_TEXT_METRICS",
+      "RISK_PROFILE": "P4_FULL_AUDIT",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://aris_plus_text_metrics/p4_full_audit",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-031",
+      "TASK_CLASS": "ARIS_PLUS_VLF_PLUS_TEXT_METRICS",
+      "RISK_PROFILE": "P0_MINIMAL",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://aris_plus_vlf_plus_text_metrics/p0_minimal",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-032",
+      "TASK_CLASS": "ARIS_PLUS_VLF_PLUS_TEXT_METRICS",
+      "RISK_PROFILE": "P1_STANDARD",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://aris_plus_vlf_plus_text_metrics/p1_standard",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-033",
+      "TASK_CLASS": "ARIS_PLUS_VLF_PLUS_TEXT_METRICS",
+      "RISK_PROFILE": "P2_SPECIALIST",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://aris_plus_vlf_plus_text_metrics/p2_specialist",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-034",
+      "TASK_CLASS": "ARIS_PLUS_VLF_PLUS_TEXT_METRICS",
+      "RISK_PROFILE": "P3_ADVANCED",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://aris_plus_vlf_plus_text_metrics/p3_advanced",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-035",
+      "TASK_CLASS": "ARIS_PLUS_VLF_PLUS_TEXT_METRICS",
+      "RISK_PROFILE": "P4_FULL_AUDIT",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://aris_plus_vlf_plus_text_metrics/p4_full_audit",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-036",
+      "TASK_CLASS": "FAILURE_RETRY_RECOVERY",
+      "RISK_PROFILE": "P0_MINIMAL",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://failure_retry_recovery/p0_minimal",
+      "GOLD_ORACLE_TYPE": "STATE_TRANSITION_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [
+        "INJECTED_FAILURE_OR_CONFLICT"
+      ],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "WITHHOLD",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-037",
+      "TASK_CLASS": "FAILURE_RETRY_RECOVERY",
+      "RISK_PROFILE": "P1_STANDARD",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://failure_retry_recovery/p1_standard",
+      "GOLD_ORACLE_TYPE": "STATE_TRANSITION_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [
+        "INJECTED_FAILURE_OR_CONFLICT"
+      ],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "WITHHOLD",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-038",
+      "TASK_CLASS": "FAILURE_RETRY_RECOVERY",
+      "RISK_PROFILE": "P2_SPECIALIST",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://failure_retry_recovery/p2_specialist",
+      "GOLD_ORACLE_TYPE": "STATE_TRANSITION_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [
+        "INJECTED_FAILURE_OR_CONFLICT"
+      ],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "WITHHOLD",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-039",
+      "TASK_CLASS": "FAILURE_RETRY_RECOVERY",
+      "RISK_PROFILE": "P3_ADVANCED",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://failure_retry_recovery/p3_advanced",
+      "GOLD_ORACLE_TYPE": "STATE_TRANSITION_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [
+        "INJECTED_FAILURE_OR_CONFLICT"
+      ],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "WITHHOLD",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-040",
+      "TASK_CLASS": "FAILURE_RETRY_RECOVERY",
+      "RISK_PROFILE": "P4_FULL_AUDIT",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://failure_retry_recovery/p4_full_audit",
+      "GOLD_ORACLE_TYPE": "STATE_TRANSITION_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [
+        "INJECTED_FAILURE_OR_CONFLICT"
+      ],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "WITHHOLD",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-041",
+      "TASK_CLASS": "STATE_CONFLICT",
+      "RISK_PROFILE": "P0_MINIMAL",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://state_conflict/p0_minimal",
+      "GOLD_ORACLE_TYPE": "STATE_TRANSITION_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [
+        "INJECTED_FAILURE_OR_CONFLICT"
+      ],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "WITHHOLD",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-042",
+      "TASK_CLASS": "STATE_CONFLICT",
+      "RISK_PROFILE": "P1_STANDARD",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://state_conflict/p1_standard",
+      "GOLD_ORACLE_TYPE": "STATE_TRANSITION_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [
+        "INJECTED_FAILURE_OR_CONFLICT"
+      ],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "WITHHOLD",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-043",
+      "TASK_CLASS": "STATE_CONFLICT",
+      "RISK_PROFILE": "P2_SPECIALIST",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://state_conflict/p2_specialist",
+      "GOLD_ORACLE_TYPE": "STATE_TRANSITION_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [
+        "INJECTED_FAILURE_OR_CONFLICT"
+      ],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "WITHHOLD",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-044",
+      "TASK_CLASS": "STATE_CONFLICT",
+      "RISK_PROFILE": "P3_ADVANCED",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://state_conflict/p3_advanced",
+      "GOLD_ORACLE_TYPE": "STATE_TRANSITION_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [
+        "INJECTED_FAILURE_OR_CONFLICT"
+      ],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "WITHHOLD",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-045",
+      "TASK_CLASS": "STATE_CONFLICT",
+      "RISK_PROFILE": "P4_FULL_AUDIT",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://state_conflict/p4_full_audit",
+      "GOLD_ORACLE_TYPE": "STATE_TRANSITION_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [
+        "INJECTED_FAILURE_OR_CONFLICT"
+      ],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "WITHHOLD",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-046",
+      "TASK_CLASS": "LARGE_TAXONOMY_LOOKUP",
+      "RISK_PROFILE": "P0_MINIMAL",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://large_taxonomy_lookup/p0_minimal",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-047",
+      "TASK_CLASS": "LARGE_TAXONOMY_LOOKUP",
+      "RISK_PROFILE": "P1_STANDARD",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://large_taxonomy_lookup/p1_standard",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-048",
+      "TASK_CLASS": "LARGE_TAXONOMY_LOOKUP",
+      "RISK_PROFILE": "P2_SPECIALIST",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://large_taxonomy_lookup/p2_specialist",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-049",
+      "TASK_CLASS": "LARGE_TAXONOMY_LOOKUP",
+      "RISK_PROFILE": "P3_ADVANCED",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://large_taxonomy_lookup/p3_advanced",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-050",
+      "TASK_CLASS": "LARGE_TAXONOMY_LOOKUP",
+      "RISK_PROFILE": "P4_FULL_AUDIT",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://large_taxonomy_lookup/p4_full_audit",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-051",
+      "TASK_CLASS": "DATABASE_MUTATION_STAGED",
+      "RISK_PROFILE": "P0_MINIMAL",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://database_mutation_staged/p0_minimal",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-052",
+      "TASK_CLASS": "DATABASE_MUTATION_STAGED",
+      "RISK_PROFILE": "P1_STANDARD",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://database_mutation_staged/p1_standard",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-053",
+      "TASK_CLASS": "DATABASE_MUTATION_STAGED",
+      "RISK_PROFILE": "P2_SPECIALIST",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://database_mutation_staged/p2_specialist",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-054",
+      "TASK_CLASS": "DATABASE_MUTATION_STAGED",
+      "RISK_PROFILE": "P3_ADVANCED",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://database_mutation_staged/p3_advanced",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-055",
+      "TASK_CLASS": "DATABASE_MUTATION_STAGED",
+      "RISK_PROFILE": "P4_FULL_AUDIT",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://database_mutation_staged/p4_full_audit",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-056",
+      "TASK_CLASS": "FULL_RELEASE_AUDIT",
+      "RISK_PROFILE": "P0_MINIMAL",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://full_release_audit/p0_minimal",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-057",
+      "TASK_CLASS": "FULL_RELEASE_AUDIT",
+      "RISK_PROFILE": "P1_STANDARD",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://full_release_audit/p1_standard",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-058",
+      "TASK_CLASS": "FULL_RELEASE_AUDIT",
+      "RISK_PROFILE": "P2_SPECIALIST",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://full_release_audit/p2_specialist",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-059",
+      "TASK_CLASS": "FULL_RELEASE_AUDIT",
+      "RISK_PROFILE": "P3_ADVANCED",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://full_release_audit/p3_advanced",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-060",
+      "TASK_CLASS": "FULL_RELEASE_AUDIT",
+      "RISK_PROFILE": "P4_FULL_AUDIT",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://full_release_audit/p4_full_audit",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-061",
+      "TASK_CLASS": "NOVELTY_DETECTION",
+      "RISK_PROFILE": "P0_MINIMAL",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://novelty_detection/p0_minimal",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-062",
+      "TASK_CLASS": "NOVELTY_DETECTION",
+      "RISK_PROFILE": "P1_STANDARD",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://novelty_detection/p1_standard",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-063",
+      "TASK_CLASS": "NOVELTY_DETECTION",
+      "RISK_PROFILE": "P2_SPECIALIST",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://novelty_detection/p2_specialist",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-064",
+      "TASK_CLASS": "NOVELTY_DETECTION",
+      "RISK_PROFILE": "P3_ADVANCED",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://novelty_detection/p3_advanced",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-065",
+      "TASK_CLASS": "NOVELTY_DETECTION",
+      "RISK_PROFILE": "P4_FULL_AUDIT",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://novelty_detection/p4_full_audit",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-066",
+      "TASK_CLASS": "COVERAGE_GAP_DETECTION",
+      "RISK_PROFILE": "P0_MINIMAL",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://coverage_gap_detection/p0_minimal",
+      "GOLD_ORACLE_TYPE": "ABSTENTION_BOUNDARY_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": true,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "ABSTAIN",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-067",
+      "TASK_CLASS": "COVERAGE_GAP_DETECTION",
+      "RISK_PROFILE": "P1_STANDARD",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://coverage_gap_detection/p1_standard",
+      "GOLD_ORACLE_TYPE": "ABSTENTION_BOUNDARY_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": true,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "ABSTAIN",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-068",
+      "TASK_CLASS": "COVERAGE_GAP_DETECTION",
+      "RISK_PROFILE": "P2_SPECIALIST",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://coverage_gap_detection/p2_specialist",
+      "GOLD_ORACLE_TYPE": "ABSTENTION_BOUNDARY_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": true,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "ABSTAIN",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-069",
+      "TASK_CLASS": "COVERAGE_GAP_DETECTION",
+      "RISK_PROFILE": "P3_ADVANCED",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://coverage_gap_detection/p3_advanced",
+      "GOLD_ORACLE_TYPE": "ABSTENTION_BOUNDARY_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": true,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "ABSTAIN",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-070",
+      "TASK_CLASS": "COVERAGE_GAP_DETECTION",
+      "RISK_PROFILE": "P4_FULL_AUDIT",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://coverage_gap_detection/p4_full_audit",
+      "GOLD_ORACLE_TYPE": "ABSTENTION_BOUNDARY_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": true,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "ABSTAIN",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-071",
+      "TASK_CLASS": "LONG_DOCUMENT_ANALYSIS",
+      "RISK_PROFILE": "P0_MINIMAL",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://long_document_analysis/p0_minimal",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-072",
+      "TASK_CLASS": "LONG_DOCUMENT_ANALYSIS",
+      "RISK_PROFILE": "P1_STANDARD",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://long_document_analysis/p1_standard",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-073",
+      "TASK_CLASS": "LONG_DOCUMENT_ANALYSIS",
+      "RISK_PROFILE": "P2_SPECIALIST",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://long_document_analysis/p2_specialist",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-074",
+      "TASK_CLASS": "LONG_DOCUMENT_ANALYSIS",
+      "RISK_PROFILE": "P3_ADVANCED",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://long_document_analysis/p3_advanced",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-075",
+      "TASK_CLASS": "LONG_DOCUMENT_ANALYSIS",
+      "RISK_PROFILE": "P4_FULL_AUDIT",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://long_document_analysis/p4_full_audit",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-076",
+      "TASK_CLASS": "MULTI_DOMAIN_SYNTHESIS",
+      "RISK_PROFILE": "P0_MINIMAL",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://multi_domain_synthesis/p0_minimal",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-077",
+      "TASK_CLASS": "MULTI_DOMAIN_SYNTHESIS",
+      "RISK_PROFILE": "P1_STANDARD",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://multi_domain_synthesis/p1_standard",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-078",
+      "TASK_CLASS": "MULTI_DOMAIN_SYNTHESIS",
+      "RISK_PROFILE": "P2_SPECIALIST",
+      "MATERIALITY": "BOUNDED",
+      "INPUT_REF": "fixture://multi_domain_synthesis/p2_specialist",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-079",
+      "TASK_CLASS": "MULTI_DOMAIN_SYNTHESIS",
+      "RISK_PROFILE": "P3_ADVANCED",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://multi_domain_synthesis/p3_advanced",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    },
+    {
+      "CASE_ID": "AB1-080",
+      "TASK_CLASS": "MULTI_DOMAIN_SYNTHESIS",
+      "RISK_PROFILE": "P4_FULL_AUDIT",
+      "MATERIALITY": "HIGH",
+      "INPUT_REF": "fixture://multi_domain_synthesis/p4_full_audit",
+      "GOLD_ORACLE_TYPE": "DETERMINISTIC_INVARIANT_ORACLE",
+      "EXPECTED_CAPABILITIES": [
+        "TASK_CONTRACT",
+        "PROVENANCE",
+        "FAIL_CLOSED",
+        "TRACE"
+      ],
+      "REQUIRED_STEPS": [
+        "STEP-01",
+        "STEP-02",
+        "STEP-23",
+        "STEP-24",
+        "STEP-25"
+      ],
+      "REQUIRED_MODULES": [
+        "M01",
+        "M22"
+      ],
+      "REQUIRED_ENGINES": [
+        "OAE"
+      ],
+      "REQUIRED_PROTOCOLS": [
+        "RD-O"
+      ],
+      "EXPECTED_FAILURES": [],
+      "EXPECTED_ABSTENTION": false,
+      "QUALITY_METRICS": [
+        "OUTPUT_QUALITY",
+        "TRACE_RECONSTRUCTION_RATE",
+        "UNSUPPORTED_RELEASE_RATE"
+      ],
+      "PERFORMANCE_METRICS": [
+        "END_TO_END_LATENCY",
+        "P50_LATENCY",
+        "P95_LATENCY"
+      ],
+      "GOVERNANCE_METRICS": [
+        "GOVERNANCE_VIOLATION_RATE"
+      ],
+      "AUDIT_METRICS": [
+        "AUDIT_PASS_RATE"
+      ],
+      "TRACE_REQUIREMENTS": [
+        "execution_id",
+        "case_id",
+        "input_hash",
+        "output_hash",
+        "decision",
+        "start_monotonic",
+        "end_monotonic"
+      ],
+      "REPRODUCTION_REQUIREMENTS": {
+        "runs": 5,
+        "deterministic_oracle": true
+      },
+      "GOLD_ORACLE": {
+        "must_trace": true,
+        "must_fail_closed": true,
+        "expected_decision": "PASS",
+        "unsupported_release": false
+      }
+    }
+  ],
+  "authority": "benchmark/test only; no release authority",
+  "release_status": "WITHHELD"
+}
