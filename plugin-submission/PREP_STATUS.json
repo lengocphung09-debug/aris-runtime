@@ -1,0 +1,57 @@
+{
+  "record_id": "ARIS-97K-PLUGIN-SUBMISSION-PREP-20260928",
+  "submission_type": "REMOTE_MCP_ONLY_WITH_MCP",
+  "production_mcp_url": "https://aris-97k-mcp-production.up.railway.app/mcp",
+  "production_deployment": {
+    "railway_deployment_id": "98455e01-68ea-485b-b125-77d77f457b42",
+    "commit_sha": "870432c85609746ccfbd00a7b67adb61c86189b1",
+    "status": "SUCCESS"
+  },
+  "live_smoke": {
+    "github_workflow_run_id": 36389855835,
+    "status": "COMPLETED_SUCCESS",
+    "artifact_id": 10955697665,
+    "artifact_sha256": "303252b44a8abbfb13abf4c478a917262fe731b8ff0ec2cd1625e9bdc1bc6bb1",
+    "verified": [
+      "GET /, /health, /support, /privacy, /terms return HTTP 200",
+      "domain challenge route returns the expected not-configured state before portal token issuance",
+      "MCP initialize protocolVersion 2025-06-18",
+      "tools/list exposes exactly four ARIS tools",
+      "all four tools advertise readOnlyHint=true, openWorldHint=false, destructiveHint=false, idempotentHint=true",
+      "aris_identity returns the canonical ARIS-9.7k specification SHA-256 and external-runtime evidence-bundle SHA-256",
+      "aris_identity omits unnecessary execution telemetry fields"
+    ]
+  },
+  "prepared_materials": [
+    "production MCP endpoint",
+    "required tool annotations",
+    "public website",
+    "support URL",
+    "privacy policy URL",
+    "terms URL",
+    "square logo asset",
+    "starter prompts",
+    "exactly five positive test cases",
+    "exactly three negative test cases",
+    "tool-annotation justifications",
+    "release notes",
+    "reviewer demo recording script",
+    "domain-challenge route controlled by OPENAI_APPS_CHALLENGE"
+  ],
+  "remaining_portal_gates": {
+    "verified_developer_or_business_identity": "REQUIRES_PUBLISHER_PORTAL_ACTION",
+    "apps_management_write_permission": "REQUIRES_OPENAI_PLATFORM_ORG_PERMISSION",
+    "create_plugin_draft_with_mcp": "REQUIRES_PLUGIN_SUBMISSION_PORTAL",
+    "portal_generated_domain_token": "NOT_AVAILABLE_BEFORE_DRAFT",
+    "scan_tools": "REQUIRES_PORTAL_ACTION",
+    "demo_recording_url": "REQUIRES_PUBLISHER_RECORDING_AND_HOSTED_URL",
+    "policy_attestations": "REQUIRES_VERIFIED_PUBLISHER",
+    "submit_for_review": "REQUIRES_VERIFIED_PUBLISHER"
+  },
+  "explicit_nonclaims": {
+    "plugin_approved": false,
+    "plugin_published": false,
+    "native_chatgpt_registration": "UNVERIFIED_NOT_CLAIMED",
+    "physical_chatgpt_host_parallel_execution": "UNVERIFIED_NOT_CLAIMED"
+  }
+}
