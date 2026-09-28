@@ -1,0 +1,8 @@
+{
+  "contract_id": "ARIS-9.7l-AUTOMATED-ASSURANCE-CONTRACT-v1.0",
+  "spec_version": "9.7l",
+  "spec_sha256": "65bcbd4cc514805cc79470b1f80e3a37346818b792ae5e1f0e5f52eb34e6e4e4",
+  "assurance_model": "AUTOMATED_VERIFICATION_WITH_VERIFIER_SEPARATION",
+  "human_or_independent_auditor_required": false,
+  "requirements": ["frozen_target","executor_verifier_separation","immutable_evidence","oracle_precommitment","fail_closed","reproduction","method_distinct_checking","negative_testing","traceability","non_mutating_adjudication"]
+}
