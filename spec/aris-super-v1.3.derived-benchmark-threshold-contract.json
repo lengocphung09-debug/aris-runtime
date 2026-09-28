@@ -1,0 +1,88 @@
+{
+  "contract_id": "ARIS-SUPER-v1.3-DERIVED-BENCHMARK-THRESHOLD-CONTRACT-v1.0",
+  "status": "APPROVED_DERIVED_PREDECLARED_NOT_CANONICAL",
+  "authorization": {
+    "decision": "AUTHORIZED_BY_HUMAN_OWNER_BEFORE_BENCHMARK_RESULTS",
+    "scope": [
+      "C38",
+      "C45",
+      "C46"
+    ],
+    "candidate_results_observed_before_registration": false
+  },
+  "source_basis": {
+    "canonical_spec_sha256": "bb406627e31052bde176f33681b056c7c545def7cc87dca3d240178389e4e763",
+    "rules": [
+      "MARGINS_AND_TARGETS_PREDECLARED",
+      "PROTECTED_DIMENSIONS_NONINFERIOR",
+      "COMPARABILITY_REQUIRED",
+      "PRACTICAL_EFFECT_AND_UNCERTAINTY_REQUIRED"
+    ]
+  },
+  "benchmark_envelope": {
+    "kind": "BOUNDED_RUNTIME_MICROBENCHMARK",
+    "workload": "deterministic coordination transaction: dependency-DAG validation + material handoff ACK + revision-safe state commit + trace digest",
+    "profiles": [
+      "P0_MINIMAL",
+      "P1_STANDARD",
+      "P2_SPECIALIST",
+      "P3_ADVANCED",
+      "P4_FULL_AUDIT"
+    ],
+    "run_count_per_profile": 200,
+    "warmup_runs": 30,
+    "clock_source": "performance.now monotonic clock",
+    "randomization_policy": "alternating baseline/candidate order by iteration parity",
+    "missing_data_policy": "any missing measurement => BLOCKED",
+    "outlier_policy": "retain all finite observations; report p50/p95/max",
+    "scope_boundary": "Thresholds apply only to this declared microbenchmark envelope; no universal or production-wide performance claim."
+  },
+  "protected_dimensions": {
+    "required_noninferiority": [
+      "functional_correctness",
+      "authority_integrity",
+      "state_consistency",
+      "trace_reconstructability",
+      "failure_closedness"
+    ],
+    "margin": "ZERO observed protected-dimension failures in either candidate or baseline fixtures"
+  },
+  "thresholds": {
+    "C38": {
+      "metric": "coordination_benefit_overhead",
+      "pass_rule": "candidate must provide all four coordination safeguards (DAG validation, ACK, revision conflict control, trace digest), baseline must lack at least one safeguard, candidate p95 latency overhead ratio <= 1.50, and candidate absolute p95 overhead <= 2.0 ms",
+      "fail_rule": "protected-dimension failure OR no demonstrated coordination safeguard benefit OR p95 ratio >1.50 OR absolute p95 overhead >2.0 ms",
+      "blocked_rule": "non-comparable manifests, missing measurements, clock unavailable, or insufficient runs"
+    },
+    "C45": {
+      "metric": "control_density",
+      "definition": "executed material controls / declared material controls",
+      "pass_rule": "candidate control density >=1.00; unnecessary-control rate = 0 in declared fixture; protected dimensions noninferior",
+      "fail_rule": "control density <1.00 OR unnecessary-control rate >0 OR protected-dimension regression",
+      "blocked_rule": "material-control denominator unavailable or fixture classification unresolved"
+    },
+    "C46": {
+      "metric": "latency_cost_regression",
+      "pass_rule": "candidate p95 latency <= baseline p95*1.50 AND candidate absolute p95 overhead <=2.0 ms AND candidate operation-count cost <= baseline operation-count+4; protected dimensions noninferior",
+      "fail_rule": "any bound exceeded or protected-dimension regression",
+      "blocked_rule": "baseline/candidate not comparable or required latency/cost observation missing"
+    }
+  },
+  "statistical_reporting": {
+    "required": [
+      "n",
+      "p50",
+      "p95",
+      "max",
+      "mean",
+      "standard_deviation",
+      "effect_size_absolute",
+      "effect_size_ratio",
+      "environment_limitations"
+    ],
+    "significance_test": "NOT_REQUIRED_FOR_DETERMINISTIC_MICROBENCHMARK",
+    "adjudication": "threshold plus uncertainty/dispersion report"
+  },
+  "authority": "DERIVED threshold authority granted by explicit human-owner decision; does not alter canonical source text and does not authorize release.",
+  "release_status": "WITHHELD"
+}
