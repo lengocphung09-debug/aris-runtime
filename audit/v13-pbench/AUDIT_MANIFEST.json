@@ -1,0 +1,62 @@
+{
+  "package_id": "ARIS-SUPER-v1.3-PBENCH-INDEPENDENT-AUDIT-PACKAGE-20260928",
+  "status": "READY_FOR_INDEPENDENT_REVIEW_NOT_AUDITED",
+  "subject": {
+    "repository": "lengocphung09-debug/aris-runtime",
+    "production_commit": "6d58dbb8d544127aae35031d207b66d5bfb50980",
+    "production_deployment_id": "dpl_CT3sSHhP24fTrHvNML7DR43XQCes",
+    "production_alias": "https://aris-runtime-umber.vercel.app",
+    "paired_pbench_execution_id": "7267b5a2-5dc6-4497-9049-b3ab90067fec"
+  },
+  "locked_evidence": {
+    "canonical_v13_spec_sha256": "bb406627e31052bde176f33681b056c7c545def7cc87dca3d240178389e4e763",
+    "baseline_97k_source_sha256": "06b0f0c6dc2e814e5f43053e694bab3f4096d4349ef3ba7369d093e51a869a76",
+    "corpus": {
+      "id": "ARIS-BENCH-1",
+      "revision": "1.0-derived-executable",
+      "git_blob_sha": "346a88b7a02d3fbbd8d303967b802f3d937ae2cd"
+    },
+    "threshold_contract": {
+      "id": "ARIS-SUPER-v1.3-DERIVED-BENCHMARK-THRESHOLD-CONTRACT-v1.0",
+      "git_blob_sha": "e7d51b66e75104eafe75aae7a74ca6f078ddd13b"
+    },
+    "baseline_profile_git_blob_sha": "6cb7c85f423334b1c66221559633b2c4ac1d7aab",
+    "margin_approval": "ARIS-SUPER-v1.3-C38-C45-C46-MARGIN-APPROVAL-20260928"
+  },
+  "observed_result": {
+    "baseline_n": 400,
+    "candidate_n": 400,
+    "baseline_p95_ms": 0.014941000001272187,
+    "candidate_p95_ms": 0.014757999999346794,
+    "p95_ratio": 0.9877518237126156,
+    "p95_delta_ms": -0.000183000001925393,
+    "C38": "PASS",
+    "C45": "PASS",
+    "C46": "PASS",
+    "technical_acceptance": "PASS",
+    "audit_review": "PENDING_INDEPENDENT_AUDIT",
+    "full_pbench_pass": false
+  },
+  "required_independent_checks": [
+    "benchmark preregistration",
+    "corpus identity and revision",
+    "no hidden case deletion",
+    "baseline/candidate comparability",
+    "metric definitions",
+    "protected-dimension margins predeclared",
+    "direct parallel traces where claimed",
+    "failure-injection evidence where applicable",
+    "reproduction runs",
+    "evidence hashes",
+    "conflicts of authority",
+    "claims bounded to tested envelope"
+  ],
+  "allowed_dispositions": [
+    "AUDIT_PASS",
+    "AUDIT_PASS_WITH_QUALIFICATION",
+    "AUDIT_FAIL",
+    "AUDIT_INCONCLUSIVE"
+  ],
+  "separation_of_authority": "The implementation/benchmark agent may prepare and integrity-check this package but MUST NOT self-certify independent audit.",
+  "release_status": "WITHHELD"
+}
