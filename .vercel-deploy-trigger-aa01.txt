@@ -1,0 +1,3 @@
+Purpose: trigger Vercel Git integration after ARIS-SUPER v1.3 AA-01 QNR merge.
+No runtime or normative semantics are changed by this file.
+Target predecessor merge: 2dab725e2eb640651b5215857b0b2a173d506495
