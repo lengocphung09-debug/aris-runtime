@@ -1,0 +1,50 @@
+{
+  "amendment_id": "ARIS-SUPER-v1.3-GOVERNANCE-AMENDMENT-AA-01",
+  "applies_to": {
+    "spec_version": "1.3",
+    "spec_sha256": "bb406627e31052bde176f33681b056c7c545def7cc87dca3d240178389e4e763"
+  },
+  "status": "OWNER_AUTHORIZED_GOVERNANCE_AMENDMENT_DESIGN_CANDIDATE",
+  "purpose": "Remove mandatory third-party/independent auditor dependency from the v1.3 evidence-closure workflow without representing automated verification as independent audit.",
+  "scope": "Governance/evidence-acceptance semantics only; no renumbering or redesignation as ARIS-SUPER v1.4.",
+  "preserved": [
+    "ARIS-SUPER v1.3 identity and component inventory",
+    "C01-C50 except audit-slot satisfaction semantics amended below",
+    "PEXV direct runtime evidence",
+    "PBENCH preregistration, comparability, protected dimensions and bounded claims",
+    "BCL load ladder, bottleneck classification and bounded claims",
+    "QNR protected-dimension firewall",
+    "RER hash-addressed reproducibility",
+    "fail-closed behavior",
+    "human release/canonicalization authority"
+  ],
+  "amended_semantics": {
+    "PBENCH.AUDIT_REVIEW": "AUTOMATED_ASSURANCE_REVIEW",
+    "BCL.AUDIT_PASS": "AUTOMATED_ASSURANCE_PASS",
+    "RER.INDEPENDENT_AUDIT_RESULT": "AUTOMATED_ASSURANCE_RESULT",
+    "IBA": "OPTIONAL_EXTERNAL_AUDIT; not a mandatory technical-closure dependency"
+  },
+  "automated_assurance_requirements": [
+    "locked immutable evidence identities",
+    "verification execution separated from evidence-producing execution",
+    "fresh replay from locked commit/deployment where applicable",
+    "deterministic machine-checkable predicates where feasible",
+    "predeclared thresholds cannot be relaxed after result observation",
+    "missing/inconsistent evidence => BLOCKED or INCONCLUSIVE",
+    "hash-addressed verification result",
+    "bounded claims only",
+    "automated assurance must never be labeled independent human/third-party audit"
+  ],
+  "authority": {
+    "amendment_authorized_by": "HUMAN_OWNER_IN_CHAT_2026-09-28",
+    "technical_gate_execution": "AUTOMATABLE",
+    "external_audit": "OPTIONAL",
+    "release_transition": "HUMAN_OWNER_REQUIRED",
+    "self_release": false
+  },
+  "compatibility": {
+    "v14_experimental_artifacts": "NON_NORMATIVE_PROTOTYPE_EVIDENCE_ONLY",
+    "rename_or_promotion_to_v14": false
+  },
+  "release_status": "WITHHELD"
+}
