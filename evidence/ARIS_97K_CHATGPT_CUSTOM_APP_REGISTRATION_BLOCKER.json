@@ -1,0 +1,27 @@
+{
+  "record_id": "ARIS-97K-CHATGPT-CUSTOM-APP-REGISTRATION-BLOCKER-20260928",
+  "status": "BLOCKED_BY_CHATGPT_PLAN_AND_UI_CAPABILITY",
+  "verified_prerequisites": {
+    "public_remote_mcp_runtime": "PASS",
+    "public_endpoint": "https://aris-97k-mcp-production.up.railway.app/mcp",
+    "railway_deployment": "SUCCESS",
+    "mcp_initialize": "PASS",
+    "tools_list": "PASS",
+    "aris_identity": "PASS",
+    "aris_run": "PASS"
+  },
+  "chatgpt_registration_gate": {
+    "current_chat_surface_tooling": "NO_CUSTOM_APP_CREATE_OR_REGISTER_ACTION_EXPOSED",
+    "plan_context": "CHATGPT_PLUS",
+    "official_availability_observed": "CUSTOM/FULL_MCP_DEVELOPER_MODE IS DOCUMENTED FOR BUSINESS AND ENTERPRISE/EDU; PRO HAS LIMITED READ/FETCH MCP SUPPORT; PLUS IS NOT LISTED FOR CUSTOM MCP DEVELOPER MODE",
+    "mobile_constraint": "MCP apps are documented as web-only for setup/use in developer mode"
+  },
+  "remaining_unverified_gates": {
+    "chatgpt_custom_app_registration": "BLOCKED",
+    "chatgpt_standalone_routing": "NOT_TESTABLE",
+    "chatgpt_multi_capability_orchestration": "NOT_TESTABLE",
+    "built_in_native_chatgpt_skill_registration": "UNVERIFIED_NOT_CLAIMED",
+    "physical_chatgpt_host_parallel_execution": "UNVERIFIED_NOT_CLAIMED"
+  },
+  "next_user_action": "Use ChatGPT web in an eligible Business or Enterprise/Edu workspace (or another plan/workspace that exposes Developer Mode and Apps > Create), register the public /mcp endpoint, then return to continue direct ChatGPT invocation tests."
+}
