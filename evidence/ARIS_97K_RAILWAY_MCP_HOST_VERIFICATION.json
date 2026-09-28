@@ -1,0 +1,41 @@
+{
+  "record_id": "ARIS-97K-RAILWAY-MCP-HOST-20260928",
+  "status": "PUBLIC_REMOTE_MCP_RUNTIME_VERIFIED",
+  "railway": {
+    "project_id": "0c29d4ac-4aae-4e79-a46c-093d964eb7b7",
+    "environment_id": "ad48c30f-3c0d-4993-b09e-be60c39d0a5e",
+    "service_id": "fbed0b4e-20f4-47e5-8ede-757bf8bf1bf3",
+    "deployment_id": "8800df8b-e487-496d-8411-7be3945acc57",
+    "deployment_status": "SUCCESS",
+    "domain": "https://aris-97k-mcp-production.up.railway.app",
+    "mcp_endpoint": "https://aris-97k-mcp-production.up.railway.app/mcp",
+    "health_endpoint": "https://aris-97k-mcp-production.up.railway.app/health"
+  },
+  "github_smoke": {
+    "workflow_run_id": 36383762694,
+    "workflow_name": "ARIS Railway MCP Smoke",
+    "conclusion": "success",
+    "head_sha": "47e9f06bb7d379e17a16806f5fd8c5c499f1ce6e",
+    "artifact_id": 10953881203,
+    "artifact_sha256": "7a7d7eeab8d545fd29c0d9b7878e5b71c4eac3025bd8462e0007557fa663a2fd"
+  },
+  "verified_operations": [
+    "GET /health returns HTTP 200",
+    "MCP initialize succeeds with protocolVersion 2025-06-18",
+    "tools/list exposes aris_identity, aris_conformance, aris_benchmark, aris_run",
+    "aris_identity returns canonical ARIS-9.7k spec SHA-256 binding",
+    "aris_identity returns external-runtime evidence-bundle SHA-256 binding",
+    "aris_run returns bounded executable result without MCP error"
+  ],
+  "canonical_bindings": {
+    "aris_9_7k_spec_sha256": "06b0f0c6dc2e814e5f43053e694bab3f4096d4349ef3ba7369d093e51a869a76",
+    "external_runtime_evidence_bundle_sha256": "f180b39e73be8cd807ea788976232ffa2e00b5eeaefb3788cefc42cdb1eb7920"
+  },
+  "remaining_gates": {
+    "chatgpt_custom_app_registration": "BLOCKED_NO_REGISTRATION_ACTION_AVAILABLE_IN_CURRENT_TOOLSET",
+    "chatgpt_standalone_routing": "NOT_TESTABLE_UNTIL_APP_REGISTRATION",
+    "chatgpt_multi_capability_orchestration": "NOT_TESTABLE_UNTIL_APP_REGISTRATION",
+    "built_in_native_chatgpt_skill_registration": "UNVERIFIED_NOT_CLAIMED",
+    "physical_chatgpt_host_parallel_execution": "UNVERIFIED_NOT_CLAIMED"
+  }
+}
