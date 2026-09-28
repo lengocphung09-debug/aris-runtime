@@ -2,7 +2,7 @@ import { runV13 } from "../src/v13/harness.js";
 import { runPBench } from "../src/v13/pbench.js";
 import { run97kBaseline } from "../src/baseline97k/runner.js";
 
-const SERVER_INFO = { name: "aris-9.7k", version: "0.2.0" };
+const SERVER_INFO = { name: "aris-9.7k-chatgpt-plugin", version: "0.2.0" };
 const PROTOCOL_VERSION = "2025-06-18";
 const CANONICAL_SPEC_SHA256 = "06b0f0c6dc2e814e5f43053e694bab3f4096d4349ef3ba7369d093e51a869a76";
 const EXTERNAL_RUNTIME_BUNDLE_SHA256 = "f180b39e73be8cd807ea788976232ffa2e00b5eeaefb3788cefc42cdb1eb7920";
