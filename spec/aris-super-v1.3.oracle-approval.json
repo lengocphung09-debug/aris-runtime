@@ -1,0 +1,13 @@
+{
+  "decision_id": "ARIS-SUPER-v1.3-ORACLE-CONTRACT-APPROVAL-20260928",
+  "contract_id": "ARIS-SUPER-v1.3-NORMATIVE-ORACLE-CONTRACT-v1.0-PROPOSAL",
+  "decision": "APPROVED_AS_NORMATIVE_CONTRACT_WITH_EXPLICIT_BLOCKERS",
+  "approver_role": "AUTHORIZED_HUMAN_OWNER",
+  "approval_source": "Explicit owner decision in the controlling ChatGPT conversation",
+  "approval_text": "Tôi phê chuẩn ARIS-SUPER v1.3 Normative Oracle Contract v1.0 Proposal làm normative contract. Các ngưỡng C38/C45/C46 chưa được phê chuẩn và tiếp tục BLOCKED cho đến khi có baseline thực nghiệm.",
+  "unresolved_thresholds": ["C38","C45","C46"],
+  "threshold_policy": "No numeric acceptance threshold may be invented. C38/C45/C46 remain BLOCKED until empirical baselines exist and the applicable threshold decision is separately authorized.",
+  "self_authorizing": false,
+  "release_authorization": false,
+  "release_status": "WITHHELD"
+}
