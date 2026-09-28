@@ -1,0 +1,16 @@
+{
+  "record_id": "ARIS-OPENAI-API-429-BLOCKER-20260928",
+  "status": "BLOCKED",
+  "runner_service": "openai-aris-integration-runner",
+  "railway_deployment_id": "c8bb2522-3381-461f-b64b-418a392b4eb1",
+  "openai_endpoint": "https://api.openai.com/v1/responses",
+  "model": "gpt-5.6-luna",
+  "http_status": 429,
+  "http_ok": false,
+  "mcp_call_count": 0,
+  "mcp_error_count": 0,
+  "observed_result": "The request was rejected by the OpenAI API before any remote MCP call executed.",
+  "interpretation": "HTTP 429 can indicate rate limiting, exhausted prepaid credit, organization/project spend limit, or usage limit. Exact error.code was not captured by the current harness, so the specific cause is not yet adjudicated.",
+  "next_required_action": "Inspect OpenAI Platform billing/usage/limits or capture error.code from a retry after billing/limit state is corrected.",
+  "secret_handling": "OPENAI_API_KEY is present in Railway but is not recorded in this evidence file."
+}
