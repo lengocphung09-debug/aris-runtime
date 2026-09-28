@@ -1,0 +1,89 @@
+{
+  "profile_id": "ARIS-SUPER-v1.3-sibling-adapter-qualification",
+  "spec_sha256": "bb406627e31052bde176f33681b056c7c545def7cc87dca3d240178389e4e763",
+  "status": "EVIDENCE_BOUND_QUALIFICATION_PROFILE",
+  "sources": {
+    "vlf": {
+      "capability_family": "VLF",
+      "capability_id": "VLF-3.3",
+      "version": "3.3",
+      "library_file_id": "file_00000000b8e882119baccc083cd6a74f",
+      "library_version_id": "1",
+      "source_size_bytes": 82303,
+      "source_sha256": "7c9b066c59dc495f8440983ecee8c4b2c539ec23baadae3b0027cf735403c0c6",
+      "declared_capabilities": [
+        "textual_integrity",
+        "language_transformation",
+        "editorial_transformation",
+        "order_sequence_integrity",
+        "structural_integrity",
+        "ocr_integrity",
+        "enumeration_integrity"
+      ],
+      "authority_boundary": "TEXTUAL_TRANSFORMATION_ONLY_UNDER_KERNEL_MASTER_AUTHORIZATION",
+      "semantic_guarantees": [
+        "source_version_provenance",
+        "raw_source_immutability",
+        "minimum_sufficient_controls",
+        "dependency_validation",
+        "rollback_on_failed_postcondition",
+        "audit_trace"
+      ],
+      "limitations": [
+        "NOT_GENERAL_EPISTEMIC_AUTHORITY",
+        "NOT_RESEARCH_KERNEL",
+        "NOT_RELEASE_AUTHORITY"
+      ]
+    },
+    "text_metrics": {
+      "capability_family": "TEXT_METRICS",
+      "capability_id": "Text-Metrics-v1.9.1",
+      "version": "1.9.1",
+      "library_file_id": "file_000000007bd48206a9d658d7177dfde0",
+      "library_version_id": "1",
+      "source_size_bytes": 83466,
+      "source_sha256": "db0688a0dbb38516ac715da2116762df019f304260eeafb2aa5bc9cbda4de62b",
+      "declared_capabilities": [
+        "observation",
+        "measurement",
+        "deterministic_derivation",
+        "bounded_heuristic_analysis",
+        "validation_of_own_outputs",
+        "before_after_delta"
+      ],
+      "authority_boundary": "MEASUREMENT_ONLY_NO_ARIS_VLF_KERNEL_GOVERNANCE",
+      "result_schema_version": "1.9.1",
+      "semantic_guarantees": [
+        "source_immutability",
+        "declared_normalization",
+        "versioned_measurement_semantics",
+        "run_manifest",
+        "stable_result_namespaces",
+        "before_after_delta"
+      ],
+      "limitations": [
+        "LEXICAL_ALIASES_NOT_NATIVE_REGISTRATION_EVIDENCE",
+        "DESIGN_DOES_NOT_PROVE_RUNTIME_ACTIVATION",
+        "NO_PARALLELISM_INFERENCE_FROM_ROUTING"
+      ]
+    }
+  },
+  "compatibility_dimensions": [
+    "schema",
+    "semantic",
+    "authority",
+    "unit",
+    "normalization",
+    "state",
+    "failure",
+    "provenance",
+    "regression"
+  ],
+  "qualification": {
+    "C18": "PASS_IF_BOTH_PROFILES_MEET_VERSION_AGNOSTIC_COMPATIBILITY_DIMENSIONS",
+    "C36": "PASS_IF_VLF_PROFILE_MEETS_APPLICABLE_SEMANTIC_ADAPTER_DIMENSIONS",
+    "C37": "PASS_IF_TEXT_METRICS_PROFILE_MEETS_APPLICABLE_SEMANTIC_ADAPTER_DIMENSIONS"
+  },
+  "epistemic_boundary": "This profile qualifies declared semantic contracts from exact versioned Library artifacts. It does not prove native host registration, runtime activation, physical parallel execution, empirical performance, or release.",
+  "release_status": "WITHHELD"
+}
