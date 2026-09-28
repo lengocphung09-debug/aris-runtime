@@ -1,0 +1,73 @@
+name: ARIS Plugin Submission Live Smoke
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'api/mcp.js'
+      - 'server.mjs'
+      - 'plugin-submission/**'
+      - '.github/workflows/plugin-submission-live-smoke.yml'
+  workflow_dispatch:
+
+jobs:
+  live-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify public pages and MCP metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE='https://aris-97k-mcp-production.up.railway.app'
+
+          for path in / /health /support /privacy /terms; do
+            code=$(curl -sS -o /tmp/body -w '%{http_code}' "$BASE$path")
+            test "$code" = '200'
+          done
+
+          code=$(curl -sS -o /tmp/challenge -w '%{http_code}' "$BASE/.well-known/openai-apps-challenge")
+          test "$code" = '404'
+          grep -q 'OPENAI_APPS_CHALLENGE_NOT_CONFIGURED' /tmp/challenge
+
+          curl -sS -X POST "$BASE/mcp" \
+            -H 'content-type: application/json' \
+            -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{}}' > initialize.json
+
+          curl -sS -X POST "$BASE/mcp" \
+            -H 'content-type: application/json' \
+            -d '{"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}' > tools.json
+
+          curl -sS -X POST "$BASE/mcp" \
+            -H 'content-type: application/json' \
+            -d '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"aris_identity","arguments":{}}}' > identity.json
+
+          node <<'NODE'
+          const fs=require('fs');
+          const init=JSON.parse(fs.readFileSync('initialize.json'));
+          const tools=JSON.parse(fs.readFileSync('tools.json'));
+          const id=JSON.parse(fs.readFileSync('identity.json'));
+          if(init?.result?.protocolVersion !== '2025-06-18') throw new Error('protocol mismatch');
+          const list=tools?.result?.tools || [];
+          const names=list.map(t=>t.name);
+          const expected=['aris_identity','aris_conformance','aris_benchmark','aris_run'];
+          if(JSON.stringify(names)!==JSON.stringify(expected)) throw new Error(`tool list mismatch: ${JSON.stringify(names)}`);
+          for(const tool of list){
+            const a=tool.annotations||{};
+            if(a.readOnlyHint!==true || a.openWorldHint!==false || a.destructiveHint!==false || a.idempotentHint!==true){
+              throw new Error(`annotation mismatch: ${tool.name}`);
+            }
+          }
+          const value=id?.result?.structuredContent;
+          if(value?.canonical_spec_sha256!=='06b0f0c6dc2e814e5f43053e694bab3f4096d4349ef3ba7369d093e51a869a76') throw new Error('spec hash mismatch');
+          if(value?.external_runtime_evidence_bundle_sha256!=='f180b39e73be8cd807ea788976232ffa2e00b5eeaefb3788cefc42cdb1eb7920') throw new Error('bundle hash mismatch');
+          if('execution_id' in value || 'observed_at' in value || 'deployment_url' in value) throw new Error('identity leaks unnecessary telemetry');
+          console.log(JSON.stringify({live_smoke:'PASS',tools:names,protocol:init.result.protocolVersion,registration_scope:value.registration_scope},null,2));
+          NODE
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: plugin-submission-live-smoke-evidence
+          path: |
+            initialize.json
+            tools.json
+            identity.json
