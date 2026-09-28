@@ -1,0 +1,72 @@
+name: ARIS MCP Production Smoke
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for production MCP endpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL='https://aris-runtime-lengocphung09-2297.vercel.app/api/mcp'
+          ok=0
+          for i in $(seq 1 30); do
+            code=$(curl -sS -o /tmp/mcp-get.json -w '%{http_code}' --max-time 20 "$URL" || true)
+            echo "attempt=$i get_http=$code"
+            if [ "$code" = "405" ]; then ok=1; break; fi
+            sleep 10
+          done
+          test "$ok" = 1
+      - name: MCP initialize, discovery, and identity call
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL='https://aris-runtime-lengocphung09-2297.vercel.app/api/mcp'
+          mkdir -p mcp-evidence
+          curl -sS --fail-with-body -X POST "$URL" \
+            -H 'content-type: application/json' \
+            -H 'accept: application/json, text/event-stream' \
+            --data '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"github-actions-smoke","version":"1"}}}' \
+            > mcp-evidence/initialize.json
+          curl -sS --fail-with-body -X POST "$URL" \
+            -H 'content-type: application/json' \
+            -H 'accept: application/json, text/event-stream' \
+            --data '{"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}' \
+            > mcp-evidence/tools-list.json
+          curl -sS --fail-with-body -X POST "$URL" \
+            -H 'content-type: application/json' \
+            -H 'accept: application/json, text/event-stream' \
+            --data '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"aris_identity","arguments":{}}}' \
+            > mcp-evidence/identity.json
+          node --input-type=module <<'NODE'
+          import fs from 'fs';
+          import crypto from 'crypto';
+          const read=f=>JSON.parse(fs.readFileSync(f,'utf8'));
+          const init=read('mcp-evidence/initialize.json');
+          const list=read('mcp-evidence/tools-list.json');
+          const ident=read('mcp-evidence/identity.json');
+          if(init.result?.serverInfo?.name!=='aris-9.7k-chatgpt-plugin') process.exit(2);
+          const names=list.result?.tools?.map(x=>x.name)||[];
+          const expected=['aris_identity','aris_conformance','aris_benchmark','aris_run'];
+          if(JSON.stringify(names)!==JSON.stringify(expected)) process.exit(3);
+          const x=ident.result?.structuredContent;
+          if(x?.canonical_spec_sha256!=='06b0f0c6dc2e814e5f43053e694bab3f4096d4349ef3ba7369d093e51a869a76') process.exit(4);
+          if(x?.external_runtime_evidence_bundle_sha256!=='f180b39e73be8cd807ea788976232ffa2e00b5eeaefb3788cefc42cdb1eb7920') process.exit(5);
+          if(x?.registration_scope!=='REMOTE_MCP_PLUGIN_CAPABILITY') process.exit(6);
+          if(x?.explicit_nonclaims?.built_in_native_chatgpt_skill_registration!=='UNVERIFIED_NOT_CLAIMED') process.exit(7);
+          const files=['initialize.json','tools-list.json','identity.json'];
+          const sums=files.map(f=>crypto.createHash('sha256').update(fs.readFileSync('mcp-evidence/'+f)).digest('hex')+'  '+f).join('\n')+'\n';
+          fs.writeFileSync('mcp-evidence/SHA256SUMS.txt',sums);
+          fs.writeFileSync('mcp-evidence/summary.json',JSON.stringify({mcp_transport:'HTTPS_POST_JSONRPC',initialize:'PASS',tool_discovery:'PASS',identity_binding:'PASS',tool_names:names,canonical_spec_sha256:x.canonical_spec_sha256,external_runtime_evidence_bundle_sha256:x.external_runtime_evidence_bundle_sha256,native_host_claim:x.explicit_nonclaims.built_in_native_chatgpt_skill_registration},null,2));
+          NODE
+      - name: Upload MCP smoke evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: aris-mcp-production-smoke-evidence
+          path: mcp-evidence/
+          if-no-files-found: error
