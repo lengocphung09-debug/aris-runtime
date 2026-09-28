@@ -1,0 +1,31 @@
+{
+  "evidence_id": "ARIS-SUPER-v1.3-PEXV-EVIDENCE-20260928",
+  "run_id": "d08a5ecb-74ce-4a19-a7f5-9e02c4bac5b8",
+  "production_commit": "7530b9f52777129036c4b9c8add8b50fb51d5ae4",
+  "deployment_id": "dpl_6nQp5jGkH9PHnMVBt2MQRkpfg4MC",
+  "clock": "process.hrtime.bigint monotonic",
+  "clock_resolution_margin_ns": "1000000",
+  "reproduction_runs": 5,
+  "overlap_ns": [
+    "39905072",
+    "15909979",
+    "25428034",
+    "24568898",
+    "36641285"
+  ],
+  "serial_false_positive_rate": 0,
+  "acceptance": {
+    "dependency_cleared": true,
+    "distinct_runtime_spans": true,
+    "observed_execution_overlap": true,
+    "state_conflict_correctly_resolved": true,
+    "join_valid": true,
+    "trace_complete": true,
+    "result_nonregression": true,
+    "environment_scope_explicit": true
+  },
+  "pexv_pass": true,
+  "physical_parallel_execution_proven_within_tested_envelope": true,
+  "scope": "Node.js worker_threads inside tested Vercel serverless deployment; synthetic CPU-bound worker workload only",
+  "release_status": "WITHHELD"
+}
