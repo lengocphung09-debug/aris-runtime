@@ -1,0 +1,21 @@
+{
+  "profile_id": "ARIS-9.7k-EXECUTABLE-BASELINE-v1.0",
+  "spec_version": "9.7k",
+  "source_status": "RELEASED_CANONICAL_LIBRARY_SPECIFICATION_WITH_DECLARED_LIMITATIONS",
+  "source_library_file_id": "file_00000000c0808209a9bccb1ad844ea60",
+  "source_library_version_id": "1",
+  "source_size_bytes": 686444,
+  "source_sha256": "06b0f0c6dc2e814e5f43053e694bab3f4096d4349ef3ba7369d093e51a869a76",
+  "implementation_status": "DERIVED_EXECUTABLE_BASELINE_ADAPTER_NOT_NATIVE_HOST",
+  "benchmark_corpus_id": "ARIS-BENCH-1",
+  "benchmark_corpus_revision": "1.0-derived-executable",
+  "binding_rule": "Baseline evidence is valid only when exact source SHA-256, git commit, Vercel deployment identity, corpus revision, runtime context and execution ID are retained.",
+  "claims": {
+    "native_host_registration": false,
+    "physical_parallel_execution": false,
+    "real_world_performance_improvement": false,
+    "universal_equivalence_to_full_9_7k": false
+  },
+  "authority": "benchmark baseline only; no release authority",
+  "release_status": "WITHHELD"
+}
