@@ -1,0 +1,50 @@
+{
+  "record_id": "ARIS-V13-PBENCH-AUTOMATED-AUDIT-20260928",
+  "audit_type": "AUTOMATED_VERIFICATION_REVIEW",
+  "independent_human_audit_claimed": false,
+  "workflow_run_id": 36379033352,
+  "commit_sha": "279e56d5e7f706dafa772c3e06821a0afb95d379",
+  "attempts": [
+    {
+      "attempt": 1,
+      "artifact_id": 10951858699,
+      "artifact_zip_sha256": "3e6c69f5c2c4636fc00844c6733e4ac414c8872e04580ca142cf788a6eceaf24",
+      "comparative_sha256": "fb938c7f087a42dfcd440b28d3fd2061461c3855512c44e7006bc6df8102ec43",
+      "baseline_sha256": "f4dd612c1b789adc4255d75dc2e877e8a2abdb13fdbaad510d03788943ef3209",
+      "candidate_sha256": "157e07163c78d7a4e5fe928af83a3554d81223e7c8776eb782721097554496ad",
+      "performance": {"paired_case_count": 80, "p95_ratio_median": 0.9685534591199465, "p95_ratio_p95": 1.3353306227248036}
+    },
+    {
+      "attempt": 2,
+      "artifact_id": 10951538696,
+      "artifact_zip_sha256": "188eb0f80cf4c78415d4775d87a38bb6db4ea4721acec1f6fe2dd29c8a702a3f",
+      "comparative_sha256": "473eed8b862ee1b6002c4ef93c4d58cf895d71eab928168dff7d262f68bc34eb",
+      "baseline_sha256": "5dd6821360bd5b8300073b9713284effa178d83c59d54c72ee2860163f75c232",
+      "candidate_sha256": "fd59b4a23adba1b688a079521db92981ae0158983e487cf1ee869381a553c8c1",
+      "performance": {"paired_case_count": 80, "p95_ratio_median": 0.9893820344018522, "p95_ratio_p95": 1.4882154882156873}
+    }
+  ],
+  "checks": {
+    "same_commit_across_attempts": true,
+    "baseline_execution_pass_both": true,
+    "candidate_core_execution_pass_both": true,
+    "shared_cases_80_both": true,
+    "comparability_all_true_both": true,
+    "protected_dimensions_noninferior_both": true,
+    "candidate_zero_failed_cases_both": true,
+    "candidate_trace_reconstruction_rate_1_both": true,
+    "candidate_unsupported_release_rate_0_both": true,
+    "candidate_governance_violation_rate_0_both": true,
+    "no_new_latency_threshold_introduced": true
+  },
+  "audit_verdict": "PASS",
+  "pbench_acceptance": "PASS_BY_AUTOMATED_VERIFICATION_WITH_REPRODUCTION",
+  "release_authority": false,
+  "scope_boundary": [
+    "Deterministic benchmark/runtime evidence only.",
+    "Does not establish native ChatGPT host registration.",
+    "Does not establish physical host-level parallel execution.",
+    "Does not establish open-domain factual quality or universal equivalence to full ARIS-9.7k.",
+    "Latency ratios are descriptive because no preregistered PBENCH latency threshold exists in this comparative workflow."
+  ]
+}
