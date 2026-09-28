@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "package_id": "ARIS-SUPER-v1.3-PBENCH-INDEPENDENT-AUDIT-PACKAGE-20260928",
+  "auditor": {
+    "identity": "REQUIRED",
+    "role": "REQUIRED",
+    "independence_statement": "REQUIRED: explain why auditor is independent of implementation and benchmark execution"
+  },
+  "reviewed_commit": "6d58dbb8d544127aae35031d207b66d5bfb50980",
+  "reviewed_deployment_id": "dpl_CT3sSHhP24fTrHvNML7DR43XQCes",
+  "reviewed_execution_id": "7267b5a2-5dc6-4497-9049-b3ab90067fec",
+  "checks": {
+    "preregistration": "UNREVIEWED",
+    "corpus_identity": "UNREVIEWED",
+    "no_hidden_case_deletion": "UNREVIEWED",
+    "comparability": "UNREVIEWED",
+    "metric_definitions": "UNREVIEWED",
+    "predeclared_margins": "UNREVIEWED",
+    "parallel_trace_scope": "UNREVIEWED",
+    "failure_injection": "UNREVIEWED",
+    "reproduction": "UNREVIEWED",
+    "evidence_hashes": "UNREVIEWED",
+    "authority_conflicts": "UNREVIEWED",
+    "claim_scope": "UNREVIEWED"
+  },
+  "disposition": "AUDIT_INCONCLUSIVE",
+  "qualifications": [],
+  "evidence_refs": [],
+  "auditor_timestamp": "REQUIRED",
+  "statement": "This attestation must be completed by an independent reviewer. Template defaults are not audit evidence."
+}
