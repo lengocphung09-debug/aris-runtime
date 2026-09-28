@@ -13,7 +13,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          URL='https://aris-runtime-lengocphung09-2297.vercel.app/api/mcp'
+          URL='https://aris-runtime-production.up.railway.app/mcp'
           ok=0
           for i in $(seq 1 30); do
             code=$(curl -sS -o /tmp/mcp-get.json -w '%{http_code}' --max-time 20 "$URL" || true)
@@ -26,7 +26,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          URL='https://aris-runtime-lengocphung09-2297.vercel.app/api/mcp'
+          URL='https://aris-runtime-production.up.railway.app/mcp'
           mkdir -p mcp-evidence
           curl -sS --fail-with-body -X POST "$URL" \
             -H 'content-type: application/json' \
@@ -62,7 +62,7 @@ jobs:
           const files=['initialize.json','tools-list.json','identity.json'];
           const sums=files.map(f=>crypto.createHash('sha256').update(fs.readFileSync('mcp-evidence/'+f)).digest('hex')+'  '+f).join('\n')+'\n';
           fs.writeFileSync('mcp-evidence/SHA256SUMS.txt',sums);
-          fs.writeFileSync('mcp-evidence/summary.json',JSON.stringify({mcp_transport:'HTTPS_POST_JSONRPC',initialize:'PASS',tool_discovery:'PASS',identity_binding:'PASS',tool_names:names,canonical_spec_sha256:x.canonical_spec_sha256,external_runtime_evidence_bundle_sha256:x.external_runtime_evidence_bundle_sha256,native_host_claim:x.explicit_nonclaims.built_in_native_chatgpt_skill_registration},null,2));
+          fs.writeFileSync('mcp-evidence/summary.json',JSON.stringify({mcp_transport:'HTTPS_POST_JSONRPC',endpoint:'https://aris-runtime-production.up.railway.app/mcp',initialize:'PASS',tool_discovery:'PASS',identity_binding:'PASS',tool_names:names,canonical_spec_sha256:x.canonical_spec_sha256,external_runtime_evidence_bundle_sha256:x.external_runtime_evidence_bundle_sha256,native_host_claim:x.explicit_nonclaims.built_in_native_chatgpt_skill_registration},null,2));
           NODE
       - name: Upload MCP smoke evidence
         uses: actions/upload-artifact@v4
