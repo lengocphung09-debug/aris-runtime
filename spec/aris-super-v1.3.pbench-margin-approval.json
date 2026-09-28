@@ -1,0 +1,13 @@
+{
+  "approval_id": "ARIS-SUPER-v1.3-C38-C45-C46-MARGIN-APPROVAL-20260928",
+  "approved_contract_id": "ARIS-SUPER-v1.3-DERIVED-BENCHMARK-THRESHOLD-CONTRACT-v1.0",
+  "decision": "APPROVED_BY_HUMAN_OWNER_FOR_PAIRED_PBENCH_USE",
+  "scope": [
+    "C38",
+    "C45",
+    "C46"
+  ],
+  "approval_basis": "User explicitly approved a threshold/margin contract for C38/C45/C46 and instructed sequential autonomous execution.",
+  "immutability": "Threshold values in the approved v1.0 contract remain unchanged during fresh baseline/candidate comparison.",
+  "release_authorization": false
+}
