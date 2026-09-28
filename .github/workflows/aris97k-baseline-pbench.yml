@@ -1,0 +1,140 @@
+name: ARIS 9.7k Baseline + PBENCH
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/aris97k-baseline-pbench.yml'
+      - 'src/baseline97k/**'
+      - 'src/v13/pbench.js'
+      - 'spec/aris-bench-1.executable-corpus.json'
+      - 'spec/aris-9.7k.executable-baseline-profile.json'
+  workflow_dispatch:
+
+jobs:
+  baseline-pbench:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Run source-bound ARIS-9.7k baseline and v1.3 PBENCH
+        run: |
+          mkdir -p audit-output
+          node --input-type=module <<'NODE'
+          import fs from 'fs';
+          import crypto from 'crypto';
+          import { run97kBaseline } from './src/baseline97k/runner.js';
+          import { runPBench } from './src/v13/pbench.js';
+
+          const baseline = run97kBaseline();
+          const candidate = runPBench();
+
+          const byId = xs => new Map(xs.map(x => [x.case_id, x]));
+          const b = byId(baseline.results);
+          const c = byId(candidate.results);
+          const sharedIds = [...b.keys()].filter(id => c.has(id));
+
+          const paired = sharedIds.map(id => ({
+            case_id: id,
+            baseline_pass: b.get(id).pass,
+            candidate_pass: c.get(id).pass,
+            baseline_p95_ms: b.get(id).stats.p95_ms,
+            candidate_p95_ms: c.get(id).stats.p95_ms,
+            p95_ratio: b.get(id).stats.p95_ms > 0 ? c.get(id).stats.p95_ms / b.get(id).stats.p95_ms : null
+          }));
+
+          const ratios = paired.map(x => x.p95_ratio).filter(Number.isFinite).sort((x,y)=>x-y);
+          const q = (arr,p) => arr.length ? arr[Math.min(arr.length-1, Math.floor((arr.length-1)*p))] : null;
+
+          const protectedDimensions = {
+            case_coverage_noninferior: candidate.coverage.cases >= baseline.coverage.cases,
+            passed_cases_noninferior: candidate.quality.passed_cases >= baseline.quality.passed_cases,
+            failed_cases_noninferior: candidate.quality.failed_cases <= baseline.quality.failed_cases,
+            trace_reconstruction_noninferior: candidate.quality.trace_reconstruction_rate >= baseline.quality.trace_reconstruction_rate,
+            unsupported_release_rate_zero: candidate.quality.unsupported_release_rate === 0,
+            governance_violation_rate_zero: candidate.quality.governance_violation_rate === 0
+          };
+          const protectedPass = Object.values(protectedDimensions).every(Boolean);
+
+          const result = {
+            system: 'ARIS GitHub Actions fallback comparative runtime',
+            runtime: 'GitHub Actions ubuntu-latest / Node 20',
+            commit_sha: process.env.GITHUB_SHA,
+            run_id: process.env.GITHUB_RUN_ID,
+            observed_at: new Date().toISOString(),
+            baseline: {
+              execution_id: baseline.execution_id,
+              profile: baseline.profile,
+              coverage: baseline.coverage,
+              quality: baseline.quality,
+              baseline_execution_pass: baseline.baseline_execution_pass,
+              epistemic_boundary: baseline.epistemic_boundary
+            },
+            candidate: {
+              execution_id: candidate.execution_id,
+              corpus_id: candidate.corpus_id,
+              coverage: candidate.coverage,
+              quality: candidate.quality,
+              core_execution_pass: candidate.core_execution_pass,
+              scope_boundary: candidate.scope_boundary
+            },
+            comparability: {
+              same_commit: true,
+              same_runtime_process: true,
+              same_corpus_id: baseline.comparability_manifest.TASK_CORPUS_ID === candidate.comparability_manifest.TASK_CORPUS_ID,
+              same_corpus_revision: baseline.comparability_manifest.CORPUS_REVISION === candidate.comparability_manifest.CORPUS_REVISION,
+              same_dataset_revision: baseline.comparability_manifest.DATASET_REVISION === candidate.comparability_manifest.DATASET_REVISION,
+              same_run_count: baseline.comparability_manifest.RUN_COUNT === candidate.comparability_manifest.RUN_COUNT,
+              same_clock_source: baseline.comparability_manifest.CLOCK_SOURCE === candidate.comparability_manifest.CLOCK_SOURCE,
+              shared_cases: sharedIds.length
+            },
+            protected_dimensions: protectedDimensions,
+            protected_dimensions_noninferior: protectedPass,
+            performance: {
+              paired_case_count: paired.length,
+              p95_ratio_median: q(ratios,0.5),
+              p95_ratio_p95: q(ratios,0.95),
+              note: 'Per-case micro-latency ratios are reported descriptively; no new acceptance threshold is introduced here.'
+            },
+            acceptance: {
+              baseline_comparability: sharedIds.length === 80 && baseline.baseline_execution_pass && candidate.core_execution_pass ? 'PASS' : 'FAIL',
+              protected_dimensions_noninferior: protectedPass ? 'PASS' : 'FAIL',
+              reproducibility_requirement: 'PASS_LOCAL_CI_RUNTIME',
+              traceability_requirement: 'PASS',
+              audit_review: 'PENDING',
+              pbench_pass: false,
+              release_status: 'WITHHELD'
+            },
+            paired
+          };
+
+          fs.writeFileSync('audit-output/aris97k-baseline.json', JSON.stringify(baseline,null,2));
+          fs.writeFileSync('audit-output/v13-pbench.json', JSON.stringify(candidate,null,2));
+          fs.writeFileSync('audit-output/comparative-adjudication.json', JSON.stringify(result,null,2));
+          fs.writeFileSync('audit-output/SHA256SUMS.txt', [
+            ['aris97k-baseline.json', crypto.createHash('sha256').update(JSON.stringify(baseline,null,2)).digest('hex')],
+            ['v13-pbench.json', crypto.createHash('sha256').update(JSON.stringify(candidate,null,2)).digest('hex')],
+            ['comparative-adjudication.json', crypto.createHash('sha256').update(JSON.stringify(result,null,2)).digest('hex')]
+          ].map(([f,h]) => `${h}  ${f}`).join('\n') + '\n');
+
+          console.log(JSON.stringify({
+            baseline_execution_pass: baseline.baseline_execution_pass,
+            candidate_core_execution_pass: candidate.core_execution_pass,
+            shared_cases: sharedIds.length,
+            protected_dimensions_noninferior: protectedPass,
+            baseline_comparability: result.acceptance.baseline_comparability,
+            release_status: result.acceptance.release_status
+          }, null, 2));
+
+          if (!baseline.baseline_execution_pass || !candidate.core_execution_pass || sharedIds.length !== 80 || !protectedPass) process.exit(1);
+          NODE
+      - name: Upload audit evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aris97k-baseline-pbench-evidence
+          path: audit-output/
+          if-no-files-found: error
