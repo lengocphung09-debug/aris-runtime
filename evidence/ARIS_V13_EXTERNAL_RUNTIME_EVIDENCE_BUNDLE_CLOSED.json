@@ -1,0 +1,30 @@
+{
+  "bundle_id": "ARIS-V13-EXTERNAL-RUNTIME-EVIDENCE-BUNDLE-20260928",
+  "state": "CLOSED",
+  "execution_path": "GitHub Actions fallback runtime",
+  "workflow_run_id": 36379033352,
+  "workflow_attempts": [1,2],
+  "commit_sha": "279e56d5e7f706dafa772c3e06821a0afb95d379",
+  "evidence": [
+    {"artifact_id":10951858699,"zip_sha256":"3e6c69f5c2c4636fc00844c6733e4ac414c8872e04580ca142cf788a6eceaf24"},
+    {"artifact_id":10951538696,"zip_sha256":"188eb0f80cf4c78415d4775d87a38bb6db4ea4721acec1f6fe2dd29c8a702a3f"},
+    {"audit_file":"ARIS_V13_PBENCH_AUTOMATED_AUDIT.json","sha256":"87888829e8ba6470ebe87b643d3c97f160e486d634a523f2055f20803485b4e7"}
+  ],
+  "adjudication": {
+    "baseline_execution":"PASS",
+    "candidate_core_execution":"PASS",
+    "baseline_comparability":"PASS",
+    "protected_dimensions_noninferior":"PASS",
+    "reproduction":"PASS_TWO_CI_ATTEMPTS",
+    "traceability":"PASS",
+    "automated_audit_review":"PASS",
+    "pbench_acceptance":"PASS"
+  },
+  "residual_boundaries": {
+    "native_host_skill_registration":"UNVERIFIED",
+    "standalone_host_routing":"UNVERIFIED",
+    "physical_host_parallel_execution":"UNVERIFIED"
+  },
+  "release_status":"WITHHELD_FOR_HOST_EVIDENCE_BOUNDARY",
+  "bundle_sha256":"f180b39e73be8cd807ea788976232ffa2e00b5eeaefb3788cefc42cdb1eb7920"
+}
