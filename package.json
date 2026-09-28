@@ -5,6 +5,7 @@
   "type": "module",
   "engines": {"node": ">=20"},
   "scripts": {
+    "start": "node server.mjs",
     "test": "node --test tests/*.test.js",
     "conformance": "node scripts/conformance.js",
     "benchmark": "node scripts/benchmark.js",
