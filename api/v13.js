@@ -10,6 +10,7 @@ import { verifyAutomatedGate } from "../src/v13/automated-verifier.js";
 import { runBCL } from "../src/v13/bcl.js";
 import { runAAV } from "../src/v14/aav.js";
 import { runQNR } from "../src/v14/qnr.js";
+import { runV13AAQNR } from "../src/v13/qnr-aa01.js";
 import { runRER } from "../src/v14/rer.js";
 import { runV13AA } from "../src/v13/automated-assurance-aa01.js";
 const read=p=>JSON.parse(readFileSync(new URL(p,import.meta.url),"utf8"));
@@ -24,7 +25,8 @@ export default async function handler(req,res){
  if(action==="avg") return res.status(200).json(verifyAutomatedGate());
  if(action==="bcl") return res.status(200).json(runBCL());
  if(action==="aav") return res.status(200).json(runAAV());
- if(action==="qnr") return res.status(200).json(runQNR());
+ if(action==="qnr") return res.status(200).json(runV13AAQNR());
+ if(action==="qnr-v14-legacy") return res.status(200).json(runQNR());
  if(action==="rer") return res.status(200).json(runRER());
  if(action==="aa01") return res.status(200).json(runV13AA());
  if(action==="benchmark") return res.status(200).json(runBenchmark());
