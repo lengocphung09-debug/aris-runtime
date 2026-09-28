@@ -2,6 +2,7 @@ import crypto from "crypto";
 import {authorityMatrix,can,handoff,dag,stateCommit,compact,citationIntegrity,claimBound,releaseGate,adapter,retry,assuranceIndependent,sha256,outcome} from "./primitives.js";
 import {fixtures,blocked,evidenceSchema} from "./fixtures.js";
 import siblingProfiles from "../../spec/aris-super-v1.3.sibling-adapter-qualification.json" with { type: "json" };
+import benchmarkEvidence from "../../evidence/v13-c38-c45-c46-empirical.json" with { type: "json" };
 const SPEC="bb406627e31052bde176f33681b056c7c545def7cc87dca3d240178389e4e763";
 const CONTRACT="5c46497075c398c345a79a10be0c0e207bee4c530813b32230f78df39e6a946b";
 const ids=Array.from({length:50},(_,i)=>"C"+String(i+1).padStart(2,"0"));
@@ -9,7 +10,7 @@ const steps=Array.from({length:25},(_,i)=>"STEP-"+String(i+1).padStart(2,"0"));
 const mods=Array.from({length:22},(_,i)=>"M"+String(i+1).padStart(2,"0"));
 function evaluate(id){
  const ev={fixture:fixtures[id],spec_sha256:SPEC,contract_sha256:CONTRACT};
- if(blocked.has(id))return outcome(id,"BLOCKED",ev,"Human-approved threshold unresolved pending empirical baseline.");
+ if(blocked.has(id)){const observed=benchmarkEvidence.adjudication?.[id];return outcome(id,observed==="PASS"?"PASS":observed==="FAIL"?"FAIL":"BLOCKED",{...ev,benchmark_evidence_id:benchmarkEvidence.evidence_id,benchmark_execution_id:benchmarkEvidence.execution_id,benchmark_effects:benchmarkEvidence.effects},observed?`Bound to preregistered production benchmark adjudication: ${observed}.`:"No bound empirical adjudication.");}
  switch(id){
  case"C01":return outcome(id,steps.length===25&&mods.length===22?"PASS":"FAIL",ev,"Protected baseline inventory.");
  case"C02":return outcome(id,can("KERNEL","release")&&!can("MASTER","release")?"PASS":"FAIL",ev,"Singular release authority.");

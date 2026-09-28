@@ -1,0 +1,30 @@
+{
+  "evidence_id": "ARIS-SUPER-v1.3-C38-C45-C46-EMPIRICAL-EVIDENCE-20260928",
+  "execution_id": "95a58d08-6e87-4f8f-a4b2-b34e8e7feb3d",
+  "production_commit": "32fcefa1dd7bc7003cdd660ed7cda42f1854ba49",
+  "deployment_id": "dpl_4Qat1tboL84FcH9bqxVRjNDiMc8Q",
+  "threshold_contract_id": "ARIS-SUPER-v1.3-DERIVED-BENCHMARK-THRESHOLD-CONTRACT-v1.0",
+  "sample_size_each": 1000,
+  "baseline": {
+    "p95_ms": 0.008488000000397733
+  },
+  "candidate": {
+    "p95_ms": 0.010339999999814609
+  },
+  "effects": {
+    "p95_ratio": 1.2181903863489743,
+    "p95_absolute_overhead_ms": 0.0018519999994168757,
+    "operation_count_delta": 4,
+    "coordination_safeguard_benefit": true,
+    "candidate_control_density": 1,
+    "candidate_unnecessary_control_rate": 0,
+    "protected_dimensions_noninferior": true
+  },
+  "adjudication": {
+    "C38": "PASS",
+    "C45": "PASS",
+    "C46": "PASS"
+  },
+  "scope_boundary": "Bounded Vercel serverless microbenchmark only; not a production-wide or universal performance claim.",
+  "release_status": "WITHHELD"
+}
