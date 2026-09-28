@@ -8,6 +8,7 @@ import { run97kBaseline } from "../src/baseline97k/runner.js";
 import { runPairedPBench } from "../src/v13/paired-pbench.js";
 import { verifyAutomatedGate } from "../src/v13/automated-verifier.js";
 import { runBCL } from "../src/v13/bcl.js";
+import { runAAV } from "../src/v14/aav.js";
 const read=p=>JSON.parse(readFileSync(new URL(p,import.meta.url),"utf8"));
 const sha256=x=>crypto.createHash("sha256").update(x).digest("hex");
 export default async function handler(req,res){
@@ -19,6 +20,7 @@ export default async function handler(req,res){
  if(action==="pairedpbench") return res.status(200).json(runPairedPBench());
  if(action==="avg") return res.status(200).json(verifyAutomatedGate());
  if(action==="bcl") return res.status(200).json(runBCL());
+ if(action==="aav") return res.status(200).json(runAAV());
  if(action==="benchmark") return res.status(200).json(runBenchmark());
  if(action==="identity"){const p=read("../spec/aris-super-v1.3.runtime-profile.json");const commit=process.env.VERCEL_GIT_COMMIT_SHA||null,url=process.env.VERCEL_URL||null;const complete=Boolean(commit&&url&&p.spec_sha256);return res.status(complete?200:503).json({system:"ARIS-SUPER v1.3 runtime profile",profile_id:p.profile_id,spec_version:p.spec_version,spec_sha256:p.spec_sha256,implementation_hash:commit,implementation_hash_type:"git_commit_sha",deployment_url:url,execution_id:crypto.randomUUID(),observed_at:new Date().toISOString(),binding_complete:complete,evidence_state:complete?"RUNTIME_OBSERVED_IDENTITY_BOUND":"INCOMPLETE",release_status:"WITHHELD"});}
  if(action==="source-binding"){const p=read("../spec/aris-super-v1.3.runtime-profile.json"),b=read("../spec/aris-super-v1.3.source-binding.json");const checks={spec_version_match:p.spec_version===b.spec_version,spec_hash_match:p.spec_sha256===b.source_sha256,library_file_id_match:p.source_library_file_id===b.source_library_file_id,source_size_bound:b.source_size_bytes===323380,self_authorizing_false:b.self_authorizing===false};const pass=Object.values(checks).every(Boolean);return res.status(pass?200:409).json({system:"ARIS-SUPER v1.3 source binding",checks,source_binding_pass:pass,release_status:"WITHHELD"});}
