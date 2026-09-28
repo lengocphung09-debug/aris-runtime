@@ -1,6 +1,8 @@
 import crypto from "crypto";
-import profile from "../spec/aris-super-v1.3.runtime-profile.json" with { type: "json" };
-import binding from "../spec/aris-super-v1.3.source-binding.json" with { type: "json" };
+import { readFileSync } from "fs";
+
+const profile = JSON.parse(readFileSync(new URL("../spec/aris-super-v1.3.runtime-profile.json", import.meta.url), "utf8"));
+const binding = JSON.parse(readFileSync(new URL("../spec/aris-super-v1.3.source-binding.json", import.meta.url), "utf8"));
 
 export default function handler(req, res) {
   const execution_id = crypto.randomUUID();
