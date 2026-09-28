@@ -16,6 +16,17 @@ jobs:
       - run: npm test
       - run: npm run conformance
       - run: npm run benchmark
+      - name: Generate frozen automated-assurance evidence
+        run: npm run assurance:generate
+      - name: Verify automated assurance fail-closed
+        run: npm run assurance:verify
+      - name: Upload automated-assurance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: automated-assurance-evidence
+          path: audit-output/
+          if-no-files-found: error
       - name: Wait for production final-audit endpoint and verify
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         shell: bash
@@ -34,10 +45,10 @@ jobs:
             sleep 10
           done
           test "$ok" = 1
-      - name: Upload production audit evidence
+      - name: Upload production technical-assurance evidence
         if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v4
         with:
-          name: production-final-audit
+          name: production-technical-assurance
           path: final-audit.json
           if-no-files-found: ignore
