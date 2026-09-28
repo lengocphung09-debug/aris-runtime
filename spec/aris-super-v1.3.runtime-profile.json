@@ -1,0 +1,21 @@
+{
+  "profile_id": "ARIS-SUPER-v1.3-runtime-profile",
+  "spec_version": "1.3",
+  "spec_sha256": "bb406627e31052bde176f33681b056c7c545def7cc87dca3d240178389e4e763",
+  "source_library_file_id": "file_00000000eea882068a7a8e4baef4b2b0",
+  "status": "IMPLEMENTATION_PROFILE_NOT_RELEASE",
+  "self_authorizing": false,
+  "binding_rule": "Runtime evidence is valid only when spec_sha256, git_commit_sha and Vercel deployment identity are all observed and retained.",
+  "empirical_claim_defaults": {
+    "physical_parallel_execution_proven": false,
+    "production_performance_measured": false,
+    "no_material_bottleneck_detected_within_tested_envelope": false
+  },
+  "required_runtime_evidence": [
+    "SPEC_HASH",
+    "GIT_COMMIT_SHA",
+    "DEPLOYMENT_ID",
+    "RUNTIME_OBSERVATION",
+    "EXECUTION_ID"
+  ]
+}
