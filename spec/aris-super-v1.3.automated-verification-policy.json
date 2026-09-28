@@ -1,0 +1,35 @@
+{
+  "policy_id": "ARIS-SUPER-v1.3-AUTOMATED-VERIFICATION-POLICY-v1.0",
+  "status": "DERIVED_AUTOMATED_GATE_NOT_INDEPENDENT_AUDIT",
+  "purpose": "Permit deterministic technical evidence verification and downstream evidence collection without misrepresenting independent audit.",
+  "locked_subject": {
+    "pbench_execution_id": "7267b5a2-5dc6-4497-9049-b3ab90067fec",
+    "production_commit": "6d58dbb8d544127aae35031d207b66d5bfb50980",
+    "deployment_id": "dpl_CT3sSHhP24fTrHvNML7DR43XQCes",
+    "corpus_blob_sha": "346a88b7a02d3fbbd8d303967b802f3d937ae2cd",
+    "threshold_blob_sha": "e7d51b66e75104eafe75aae7a74ca6f078ddd13b"
+  },
+  "checks": [
+    "identity_binding",
+    "corpus_80_cases",
+    "threshold_contract_approved",
+    "C38_PASS",
+    "C45_PASS",
+    "C46_PASS",
+    "baseline_comparability",
+    "protected_dimensions_noninferior",
+    "measurement_complete",
+    "reproducibility",
+    "traceability",
+    "no_undisclosed_exclusion",
+    "no_metric_postselection",
+    "bounded_claim_scope"
+  ],
+  "pass_semantics": {
+    "automated_verification": "PASS",
+    "pbench_technical_closure": "PASS",
+    "independent_audit": "NOT_PERFORMED",
+    "release_status": "WITHHELD"
+  },
+  "authority_boundary": "This gate may authorize downstream evidence collection only. It cannot satisfy or waive canonical independent audit/release requirements."
+}
