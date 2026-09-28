@@ -1,0 +1,52 @@
+{
+  "spec_id": "ARIS-SUPER-v1.4-AUTOMATED-ASSURANCE-AMENDMENT",
+  "spec_version": "1.4",
+  "status": "NORMATIVE_REVISION_AUTHORIZED_BY_OWNER_NOT_SELF_RELEASING",
+  "predecessor": {
+    "version": "1.3",
+    "spec_sha256": "bb406627e31052bde176f33681b056c7c545def7cc87dca3d240178389e4e763"
+  },
+  "change_scope": "Replace mandatory independent-auditor acceptance with deterministic automated assurance for technical gates while preserving evidence immutability, fail-closed semantics, bounded claims, provenance, reproducibility, and human release authority.",
+  "preserved": [
+    "25-Step/M01-M22 and v1.3 component semantics",
+    "C01-C50 except audit-authority semantics amended here",
+    "PEXV direct-evidence requirements",
+    "PBENCH corpus/comparability/predeclared-margin/statistical requirements",
+    "BCL load ladder and bounded bottleneck claims",
+    "QNR protected-dimension firewall",
+    "RER hash-addressed evidence and correction-by-new-revision",
+    "release remains non-self-authorizing"
+  ],
+  "superseded_requirements": {
+    "PBENCH.AUDIT_REVIEW": "AUTOMATED_ASSURANCE_REVIEW",
+    "BCL.AUDIT_PASS": "AUTOMATED_ASSURANCE_PASS",
+    "RER.INDEPENDENT_AUDIT_RESULT": "AUTOMATED_ASSURANCE_RESULT",
+    "IBA": "AAV — Automated Assurance Verification"
+  },
+  "aav": {
+    "principles": [
+      "immutable input identities",
+      "deterministic machine-checkable predicates where feasible",
+      "separate verification execution from evidence-producing execution",
+      "fresh checkout/replay from locked commit",
+      "fail closed on missing/inconsistent evidence",
+      "hash-addressed result bundle",
+      "no post-hoc threshold relaxation",
+      "claims bounded to tested envelope"
+    ],
+    "dispositions": [
+      "AAV_PASS",
+      "AAV_PASS_WITH_QUALIFICATION",
+      "AAV_FAIL",
+      "AAV_INCONCLUSIVE"
+    ],
+    "prohibition": "AAV results MUST NOT be described as independent human/third-party audit.",
+    "release_effect": "AAV_PASS may satisfy technical audit slots for PBENCH/BCL/QNR/RER, but does not itself authorize RELEASED."
+  },
+  "authority": {
+    "design_revision_authorization": "EXPLICIT_HUMAN_OWNER_IN_CHAT_2026-09-28",
+    "technical_execution": "AUTOMATABLE",
+    "release_transition": "HUMAN_OWNER_REQUIRED",
+    "self_release": false
+  }
+}
