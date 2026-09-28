@@ -5,6 +5,7 @@ import { runBenchmark } from "../src/v13/benchmark.js";
 import { runPEXV } from "../src/v13/pexv.js";
 import { runPBench } from "../src/v13/pbench.js";
 import { run97kBaseline } from "../src/baseline97k/runner.js";
+import { runPairedPBench } from "../src/v13/paired-pbench.js";
 const read=p=>JSON.parse(readFileSync(new URL(p,import.meta.url),"utf8"));
 const sha256=x=>crypto.createHash("sha256").update(x).digest("hex");
 export default async function handler(req,res){
@@ -13,6 +14,7 @@ export default async function handler(req,res){
  if(action==="pexv") return res.status(200).json(await runPEXV());
  if(action==="pbench") return res.status(200).json(runPBench());
  if(action==="baseline97k") return res.status(200).json(run97kBaseline());
+ if(action==="pairedpbench") return res.status(200).json(runPairedPBench());
  if(action==="benchmark") return res.status(200).json(runBenchmark());
  if(action==="identity"){const p=read("../spec/aris-super-v1.3.runtime-profile.json");const commit=process.env.VERCEL_GIT_COMMIT_SHA||null,url=process.env.VERCEL_URL||null;const complete=Boolean(commit&&url&&p.spec_sha256);return res.status(complete?200:503).json({system:"ARIS-SUPER v1.3 runtime profile",profile_id:p.profile_id,spec_version:p.spec_version,spec_sha256:p.spec_sha256,implementation_hash:commit,implementation_hash_type:"git_commit_sha",deployment_url:url,execution_id:crypto.randomUUID(),observed_at:new Date().toISOString(),binding_complete:complete,evidence_state:complete?"RUNTIME_OBSERVED_IDENTITY_BOUND":"INCOMPLETE",release_status:"WITHHELD"});}
  if(action==="source-binding"){const p=read("../spec/aris-super-v1.3.runtime-profile.json"),b=read("../spec/aris-super-v1.3.source-binding.json");const checks={spec_version_match:p.spec_version===b.spec_version,spec_hash_match:p.spec_sha256===b.source_sha256,library_file_id_match:p.source_library_file_id===b.source_library_file_id,source_size_bound:b.source_size_bytes===323380,self_authorizing_false:b.self_authorizing===false};const pass=Object.values(checks).every(Boolean);return res.status(pass?200:409).json({system:"ARIS-SUPER v1.3 source binding",checks,source_binding_pass:pass,release_status:"WITHHELD"});}
@@ -20,5 +22,5 @@ export default async function handler(req,res){
  if(action==="oracle-coverage"){const r=read("../spec/aris-super-v1.3.c01-c50.oracles.json");const ids=r.tests.map(x=>x.test_id);const expected=Array.from({length:50},(_,i)=>"C"+String(i+1).padStart(2,"0"));const pass=r.tests.length===50&&expected.every((x,i)=>ids[i]===x)&&r.source_sha256==="bb406627e31052bde176f33681b056c7c545def7cc87dca3d240178389e4e763";return res.status(pass?200:409).json({system:"ARIS-SUPER v1.3 oracle registry",registry_pass:pass,total:50,release_status:"WITHHELD"});}
  if(action==="proposal"){const c=read("../spec/aris-super-v1.3.normative-oracle-contract.proposed.json");const pass=c.tests.length===50&&c.status==="PROPOSED_NOT_CANONICAL_NOT_SELF_AUTHORIZING";return res.status(pass?200:409).json({system:"ARIS-SUPER v1.3 oracle proposal integrity",proposal_integrity_pass:pass,total:c.tests.length,release_status:"WITHHELD"});}
  if(action==="approval"){const bytes=readFileSync(new URL("../spec/aris-super-v1.3.normative-oracle-contract.proposed.json",import.meta.url));const c=JSON.parse(bytes),a=read("../spec/aris-super-v1.3.oracle-approval.json");const pass=a.contract_id===c.contract_id&&a.decision==="APPROVED_AS_NORMATIVE_CONTRACT_WITH_EXPLICIT_BLOCKERS"&&a.unresolved_thresholds.join(",")==="C38,C45,C46";return res.status(pass?200:409).json({system:"ARIS-SUPER v1.3 normative oracle approval",approval_binding_pass:pass,contract_sha256:sha256(bytes),unresolved_thresholds:a.unresolved_thresholds,release_status:"WITHHELD"});}
- return res.status(404).json({error:"UNKNOWN_ACTION",allowed:["identity","source-binding","inventory","oracle-coverage","proposal","approval","conformance","benchmark","pexv","pbench","baseline97k"]});
+ return res.status(404).json({error:"UNKNOWN_ACTION",allowed:["identity","source-binding","inventory","oracle-coverage","proposal","approval","conformance","benchmark","pexv","pbench","baseline97k","pairedpbench"]});
 }
