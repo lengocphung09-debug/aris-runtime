@@ -1,0 +1,65 @@
+name: ARIS Railway MCP Smoke
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for Railway health endpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE='https://aris-97k-mcp-production.up.railway.app'
+          ok=0
+          for i in $(seq 1 30); do
+            code=$(curl -sS -o health.json -w '%{http_code}' --max-time 20 "$BASE/health" || true)
+            echo "attempt=$i http=$code"
+            if [ "$code" = "200" ]; then
+              cat health.json
+              ok=1
+              break
+            fi
+            sleep 5
+          done
+          test "$ok" = 1
+      - name: MCP initialize
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL='https://aris-97k-mcp-production.up.railway.app/mcp'
+          curl -fsS -X POST "$URL" -H 'content-type: application/json' -H 'accept: application/json' \
+            --data '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"github-actions-smoke","version":"1.0"}}}' > initialize.json
+          node -e "const x=require('./initialize.json'); if(x.result?.protocolVersion!=='2025-06-18') process.exit(2); if(x.result?.serverInfo?.name!=='aris-9.7k-chatgpt-plugin') process.exit(3); console.log(JSON.stringify(x,null,2));"
+      - name: MCP tools/list and aris_identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL='https://aris-97k-mcp-production.up.railway.app/mcp'
+          curl -fsS -X POST "$URL" -H 'content-type: application/json' -H 'accept: application/json' \
+            --data '{"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}' > tools.json
+          node -e "const x=require('./tools.json'); const n=x.result?.tools?.map(t=>t.name)||[]; for(const k of ['aris_identity','aris_conformance','aris_benchmark','aris_run']) if(!n.includes(k)) process.exit(4); console.log(JSON.stringify(n));"
+          curl -fsS -X POST "$URL" -H 'content-type: application/json' -H 'accept: application/json' \
+            --data '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"aris_identity","arguments":{}}}' > identity.json
+          node -e "const x=require('./identity.json'); const s=x.result?.structuredContent; if(s?.canonical_spec_sha256!=='06b0f0c6dc2e814e5f43053e694bab3f4096d4349ef3ba7369d093e51a869a76') process.exit(5); if(s?.external_runtime_evidence_bundle_sha256!=='f180b39e73be8cd807ea788976232ffa2e00b5eeaefb3788cefc42cdb1eb7920') process.exit(6); if(s?.registration_scope!=='REMOTE_MCP_PLUGIN_CAPABILITY') process.exit(7); console.log(JSON.stringify(s,null,2));"
+      - name: MCP aris_run bounded execution
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL='https://aris-97k-mcp-production.up.railway.app/mcp'
+          curl -fsS -X POST "$URL" -H 'content-type: application/json' -H 'accept: application/json' \
+            --data '{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"aris_run","arguments":{}}}' > aris-run.json
+          node -e "const x=require('./aris-run.json'); if(x.result?.isError) process.exit(8); const s=x.result?.structuredContent; if(!s) process.exit(9); console.log(JSON.stringify(s,null,2));"
+      - name: Upload Railway MCP smoke evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: railway-mcp-smoke-evidence
+          path: |
+            health.json
+            initialize.json
+            tools.json
+            identity.json
+            aris-run.json
