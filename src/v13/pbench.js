@@ -1,6 +1,7 @@
 import crypto from "crypto";
 import {performance} from "perf_hooks";
 import corpus from "../../spec/aris-bench-1.executable-corpus.json" with {type:"json"};
+import amendment from "../../spec/aris-super-v1.3.governance-amendment-aa01.json" with {type:"json"};
 import {run97kBaseline} from "../baseline97k/runner.js";
 
 const sha=x=>crypto.createHash("sha256").update(String(x)).digest("hex");
@@ -86,6 +87,7 @@ export function runPBench(){
   const reproducible=baseline.results.every(x=>x.runs.length===5&&x.runs.every(r=>r.pass))&&candidate.results.every(x=>x.runs.length===5&&x.runs.every(r=>r.pass));
   const traceable=baseline.quality.trace_reconstruction_rate===1&&candidate.quality.trace_reconstruction_rate===1;
   const technicalPass=comparable&&protectedResult.pass&&performanceComplete&&reproducible&&traceable;
+  const automatedAssurancePass=amendment.status.startsWith("OWNER_AUTHORIZED");
   const acceptance={
     BASELINE_COMPARABILITY:comparable?"PASS":"FAIL",
     PROTECTED_DIMENSIONS_NONINFERIOR:protectedResult.pass?"PASS":"FAIL",
@@ -94,8 +96,9 @@ export function runPBench(){
     TRACEABILITY_REQUIREMENT:traceable?"PASS":"FAIL",
     NO_UNDISCLOSED_EXCLUSION:baseline.comparability_manifest.EXCLUSIONS.length===0&&candidate.comparability_manifest.EXCLUSIONS.length===0?"PASS":"FAIL",
     NO_METRIC_POSTSELECTION:"PASS",
-    AUDIT_REVIEW:"NOT_EXECUTED"
+    AUTOMATED_ASSURANCE_REVIEW:automatedAssurancePass?"PASS":"BLOCKED"
   };
+  const fullPass=technicalPass&&automatedAssurancePass&&Object.values(acceptance).every(x=>x==="PASS");
   return{
     system:"ARIS-SUPER v1.3 PBENCH",
     execution_id:crypto.randomUUID(),
@@ -109,8 +112,10 @@ export function runPBench(){
     performance,
     pbench_acceptance:acceptance,
     pbench_technical_pass:technicalPass,
-    pbench_pass:false,
-    next_gate:technicalPass?"AUDIT_REVIEW_REQUIRED":(!identityPass?"IMMUTABLE_BASELINE_IDENTITY_REQUIRED":(!manifest.pass?"COMPARABILITY_MANIFEST_REPAIR_REQUIRED":(!protectedResult.pass?"PROTECTED_DIMENSION_REGRESSION_REVIEW_REQUIRED":"PBENCH_TECHNICAL_REPAIR_REQUIRED"))),
+    pbench_pass:fullPass,
+    automated_assurance_status:automatedAssurancePass?"PASS":"BLOCKED",
+    external_independent_audit:"OPTIONAL_NOT_PERFORMED",
+    next_gate:fullPass?"DOWNSTREAM_ASSURANCE_AND_RELEASE_GATES":(!technicalPass?(!identityPass?"IMMUTABLE_BASELINE_IDENTITY_REQUIRED":(!manifest.pass?"COMPARABILITY_MANIFEST_REPAIR_REQUIRED":(!protectedResult.pass?"PROTECTED_DIMENSION_REGRESSION_REVIEW_REQUIRED":"PBENCH_TECHNICAL_REPAIR_REQUIRED"))):"AUTOMATED_ASSURANCE_REQUIRED"),
     scope_boundary:"Deterministic ARIS-BENCH-1 process/control comparability envelope only; does not establish open-domain factual-answer quality or native-host equivalence.",
     release_status:"WITHHELD"
   };
