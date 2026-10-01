@@ -1,0 +1,13 @@
+{
+  "record_id": "ARIS-SUPER-v1.3-HUMAN-OWNER-RELEASE-2026-09-28",
+  "system": "ARIS-SUPER v1.3",
+  "approved_target_commit": "5b9449f46c157c866abec8164d17e6ad72e123d7",
+  "owner_authorization": "APPROVED_IN_CHAT_2026-09-28",
+  "governance_amendment": "AA-01",
+  "technical_gates": {"PBENCH":"PASS","AUTOMATED_ASSURANCE":"PASS","BCL":"PASS","QNR":"PASS"},
+  "independent_human_audit": "NOT_REQUIRED_UNDER_AA01",
+  "external_audit": "OPTIONAL_NOT_PERFORMED",
+  "release_transition": "HUMAN_OWNER_APPROVED",
+  "self_release": false,
+  "status": "RELEASE_AUTHORIZED"
+}
