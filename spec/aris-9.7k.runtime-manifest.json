@@ -1,0 +1,14 @@
+{
+  "profile_id": "ARIS-9.7k-INSTRUMENTED-RUNTIME-1",
+  "spec_version": "9.7k",
+  "spec_sha256": "7cca6b5b0414475d8af8f246e09e0aeea6a26ec6d9f787c443ebc3e476aec646",
+  "source_library_file_id": "file_00000000b25882099ad5e98aa1c97fa9",
+  "source_size_bytes": 632763,
+  "telemetry_schema_version": "1.0",
+  "event_taxonomy_version": "1.0",
+  "self_authorizing": false,
+  "claims": {
+    "native_chatgpt_host_registration": "UNVERIFIED",
+    "chatgpt_scheduler_physical_parallelism": "UNVERIFIED"
+  }
+}
