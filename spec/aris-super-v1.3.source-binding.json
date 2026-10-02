@@ -10,5 +10,5 @@
   "binding_status": "SOURCE_HASH_VERIFIED_LIBRARY_TO_RUNTIME_PROFILE",
   "self_authorizing": false,
   "release_status": "WITHHELD",
-  "epistemic_boundary": "This binding establishes byte identity of the Library source against the runtime profile hash. It does not establish 152-record execution, C01-C50 conformance, empirical closure, independent audit, or release."
+  "epistemic_boundary": "This binding establishes byte identity of the Library source against the runtime profile hash. It does not by itself establish execution, conformance, empirical closure, or release."
 }
