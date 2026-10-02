@@ -1,0 +1,21 @@
+{
+  "record_id": "ARIS-9.7k-EXTERNAL-RUNTIME-QUALIFICATION-2026-10-02",
+  "target": "ARIS-9.7k",
+  "spec_sha256": "7cca6b5b0414475d8af8f246e09e0aeea6a26ec6d9f787c443ebc3e476aec646",
+  "source_library_file_id": "file_00000000b25882099ad5e98aa1c97fa9",
+  "source_size_bytes": 632763,
+  "qualification_deployment": "dpl_25rdoEPEG4buUjM9YZuEhj27uTbW",
+  "qualification_commit": "460670ba9fb9f6d71ad4a722465543893f8820ec",
+  "checks": {
+    "identity_spec_bound": "PASS",
+    "serial_no_overlap": "PASS",
+    "instrumented_parallel_overlap_observed": "PASS",
+    "parallel_invariants": "PASS",
+    "failure_no_commit": "PASS",
+    "failure_invariant_check": "PASS"
+  },
+  "reproduction": {"runs": 5, "pass": 5, "fail": 0, "parallel_overlap_ms_each": 30},
+  "claim_boundary": "Observed overlap proves concurrency only inside this instrumented ARIS-9.7k runtime model. Native ChatGPT host registration and ChatGPT scheduler physical parallelism remain UNVERIFIED_NOT_CLAIMED.",
+  "self_authorizing": false,
+  "qualification_state": "PASS_WITHIN_STATED_RUNTIME_ENVELOPE"
+}
