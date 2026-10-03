@@ -311,3 +311,32 @@ export function runV84FinalVerdict(){
  return {test:"V84_FINAL_EVIDENCE_BUNDLE_VERDICT",boundedVerdict:a.allMandatory?"PASS_VERIFIED_WITH_DECLARED_LIMITATIONS":"BLOCKED_MISSING_EVIDENCE",
    releaseState:a.releaseState,openDefeaters:a.openDefeaters,universalCorrectnessClaimed:false,pass:a.allMandatory};
 }
+
+
+// Independent-evaluation target adapters. These functions contain no gold labels,
+// corpus generator, thresholds, or evaluator verdict logic.
+export function evaluateHeldOutClaimV22(c = {}) {
+  const sourceValid = c.sourceValid !== false;
+  const stale = c.stale === true;
+  const contradicted = c.contradicted === true;
+  const evidencePresent = typeof c.evidenceText === "string" && c.evidenceText.trim().length > 0;
+  const claim = String(c.claimText ?? "").toLowerCase();
+  const evidence = String(c.evidenceText ?? "").toLowerCase();
+  const toks = s => new Set((s.match(/[a-z0-9_-]+/g) ?? []).filter(x=>!["the","is","a","an","and","or","of","to","in","for","case"].includes(x)));
+  const ct=toks(claim), et=toks(evidence);
+  const overlap=[...ct].filter(x=>et.has(x)).length/Math.max(1,ct.size);
+  const claimNeg=/\\b(not|never|no|blocked|failed|false)\\b/.test(claim);
+  const evidenceNeg=/\\b(not|never|no|blocked|failed|false)\\b/.test(evidence);
+  const semanticallySupported=evidencePresent && overlap>=0.55 && claimNeg===evidenceNeg;
+  const supported=sourceValid && !stale && !contradicted && semanticallySupported;
+  return {caseId:c.caseId??null,supported,decision:supported?"SUPPORTED":"WITHHOLD",signals:{sourceValid,stale,contradicted,evidencePresent,semanticOverlap:overlap,polarityMatch:claimNeg===evidenceNeg}};
+}
+export function diagnoseHeldOutFaultV22(c = {}) {
+  const s=String(c.symptom??"").toLowerCase();
+  let root="UNRESOLVED", repair="NO_VERIFIED_REPAIR";
+  if(/predecessor|legacy runtime|old runtime|contamination/.test(s)){root="PREDECESSOR_RESOLUTION_CONTAMINATION";repair="REMOVE_PREDECESSOR_BINDING";}
+  else if(/canonical.*(write|mutation)|database.*write|db mutation/.test(s)){root="CANONICAL_DATABASE_MUTATION_PROHIBITED";repair="USE_READ_ONLY_DB_ADAPTER";}
+  else if(/empty.*(question|query)|blank.*(question|query)|missing research question/.test(s)){root="EMPTY_RESEARCH_QUESTION";repair="REQUIRE_NONEMPTY_QUESTION";}
+  else if(/authority.*(cross|crossover|collision)|unauthorized authority|wrong sibling authority/.test(s)){root="AUTHORITY_CROSSOVER_PROHIBITED";repair="DELEGATE_TO_AUTHORIZED_SIBLING";}
+  return {caseId:c.caseId??null,predictedRoot:root,repair};
+}
