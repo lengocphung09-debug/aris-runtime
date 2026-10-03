@@ -29,7 +29,7 @@ test("identity binds canonical spec and keeps native-host claims unverified",()=
 test("aris_run executes frozen 80-case bounded baseline",()=>{
   const r=rpc(4,"tools/call",{name:"aris_run",arguments:{}});
   const x=r.body.result.structuredContent;
-  assert.equal(x.coverage.cases,80);
+  assert.equal(x.candidate.coverage.cases,80);
   assert.equal(x.baseline_execution_pass,true);
 });
 
@@ -37,7 +37,7 @@ test("aris_benchmark executes candidate corpus",()=>{
   const r=rpc(5,"tools/call",{name:"aris_benchmark",arguments:{}});
   const x=r.body.result.structuredContent;
   assert.equal(x.coverage.cases,80);
-  assert.equal(x.core_execution_pass,true);
+  assert.equal(x.candidate.core_execution_pass,true);
 });
 
 test("unknown MCP tool fails closed",()=>{
