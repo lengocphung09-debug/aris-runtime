@@ -1,0 +1,12 @@
+{
+  "profile_id": "ARIS-9.7n-INSTRUMENTED-RUNTIME-1",
+  "spec_version": "9.7n",
+  "spec_sha256": "6a94851ef062e872d128c2ccf3aa05d6e9a0a0f4c0653a626f8f9e9b6de7c101",
+  "telemetry_schema_version": "1.0",
+  "event_taxonomy_version": "1.0",
+  "self_authorizing": false,
+  "claims": {
+    "native_chatgpt_host_registration": "UNVERIFIED",
+    "chatgpt_scheduler_physical_parallelism": "UNVERIFIED"
+  }
+}
