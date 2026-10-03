@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { frozenIdentity, resolveV22, executeResearchSmoke, runPredecessorAbsenceProbe } from "../src/v22/runtime.js";
+import { frozenIdentity, resolveV22, executeResearchSmoke, runPredecessorAbsenceProbe, runV63DatabaseProbe } from "../src/v22/runtime.js";
 
 const SHA = "5128655194f4af19291abe9b1bc5bc6adafc7addbe56af6dea925c15a037a20f";
 
@@ -29,4 +29,17 @@ test("standalone smoke is deterministic", () => {
   assert.equal(a.committed, true);
   assert.equal(a.transactionId, b.transactionId);
   assert.deepEqual(a.trace, b.trace);
+});
+
+test("V63 empty/minimal DB standalone oracle is deterministic and fail-closed", () => {
+  const r = runV63DatabaseProbe();
+  assert.equal(r.pass, true);
+  assert.equal(r.empty.first.dbClass, "EMPTY");
+  assert.equal(r.minimal.first.dbClass, "MINIMAL");
+  assert.equal(r.empty.first.canonicalDbMutated, false);
+  assert.equal(r.minimal.first.canonicalDbMutated, false);
+  assert.equal(r.empty.deterministic, true);
+  assert.equal(r.minimal.deterministic, true);
+  assert.equal(r.negativeControls.predecessor.failure, "PREDECESSOR_RESOLUTION_CONTAMINATION");
+  assert.equal(r.negativeControls.canonicalMutation.failure, "CANONICAL_DATABASE_MUTATION_PROHIBITED");
 });
