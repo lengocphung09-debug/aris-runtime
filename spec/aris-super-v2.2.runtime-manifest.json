@@ -1,0 +1,19 @@
+{
+  "system": "ARIS-SUPER v2.2",
+  "spec_version": "2.2",
+  "artifact_sha256": "5128655194f4af19291abe9b1bc5bc6adafc7addbe56af6dea925c15a037a20f",
+  "artifact_bytes": 697408,
+  "artifact_lines": 4757,
+  "binding_mode": "FROZEN_ARTIFACT_IDENTITY",
+  "predecessor_runtime_dependency": "NONE",
+  "predecessor_content_dependency_at_runtime": "NONE",
+  "predecessor_alias_dependency": "NONE",
+  "predecessor_configuration_dependency": "NONE",
+  "self_authorizing": false,
+  "native_host_registration_claimed": false,
+  "physical_parallelism_claimed": false,
+  "verification_pipeline": "V01-V84",
+  "installation_pipeline": "I01-I44",
+  "release_state": "WITHHOLDING",
+  "runtime_profile": "V2_2_VERIFICATION_HARNESS_1"
+}

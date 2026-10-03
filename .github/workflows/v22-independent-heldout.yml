@@ -1,0 +1,20 @@
+name: ARIS-SUPER v2.2 Independent Held-Out Evaluation
+on:
+  push:
+    branches: [verify/aris-super-v2.2-runtime]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  independent-heldout:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/independent-v22-heldout-evaluator.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aris-super-v22-independent-heldout-evidence
+          path: evidence/v22-independent-heldout-result.json
