@@ -1,0 +1,32 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { frozenIdentity, resolveV22, executeResearchSmoke, runPredecessorAbsenceProbe } from "../src/v22/runtime.js";
+
+const SHA = "5128655194f4af19291abe9b1bc5bc6adafc7addbe56af6dea925c15a037a20f";
+
+test("v2.2 frozen identity binding", () => {
+  assert.equal(frozenIdentity.artifactSha256, SHA);
+  assert.equal(frozenIdentity.specVersion, "2.2");
+});
+
+test("V62 predecessor absence injection", () => {
+  const r = runPredecessorAbsenceProbe();
+  assert.equal(r.pass, true);
+  assert.equal(r.clean.committed, true);
+  assert.equal(r.clean.resolution.dependencyClosure, "CLOSED_WITHOUT_PREDECESSORS");
+  assert.equal(r.negativeControl.committed, false);
+});
+
+test("predecessor contamination fails closed", () => {
+  const r = resolveV22({ env: { ARIS_9_7_RUNTIME: "present" } });
+  assert.equal(r.ready, false);
+  assert.deepEqual(r.predecessor.present, ["ARIS_9_7_RUNTIME"]);
+});
+
+test("standalone smoke is deterministic", () => {
+  const a = executeResearchSmoke("  alpha   beta ", { env: {} });
+  const b = executeResearchSmoke("alpha beta", { env: {} });
+  assert.equal(a.committed, true);
+  assert.equal(a.transactionId, b.transactionId);
+  assert.deepEqual(a.trace, b.trace);
+});
