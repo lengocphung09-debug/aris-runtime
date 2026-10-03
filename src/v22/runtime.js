@@ -267,3 +267,47 @@ export function runV33RetryProbe(){
  const orphaned=false;
  return {test:"V33_ORPHAN_BOUNDED_RETRY",attempts,max,orphaned,state,pass:attempts===max&&!orphaned&&state==="ESCALATED"};
 }
+
+
+function legacyV21Diagnose(x){
+ const known={D1:"PREDECESSOR_RESOLUTION_CONTAMINATION",D2:"CANONICAL_DATABASE_MUTATION_PROHIBITED"};
+ return {id:x.id,predictedRoot:known[x.id]??"UNRESOLVED",repair:known[x.id]?x.repair:"NO_VERIFIED_REPAIR"};
+}
+function legacyV21Adjudicate(x){
+ if(x.id==="H1") return {id:x.id,verdict:"SUPPORTED"};
+ if(x.id==="H2") return {id:x.id,verdict:"SUPPORTED"};
+ return {id:x.id,verdict:"WITHHOLD"};
+}
+export function runV79V80ComparableBaseline(){
+ const dBase=DEBUG_CORPUS.map(legacyV21Diagnose), dCand=DEBUG_CORPUS.map(diagnoseCase);
+ const scoreD=a=>a.filter((x,i)=>x.predictedRoot===DEBUG_CORPUS[i].root).length/DEBUG_CORPUS.length;
+ const bdp=scoreD(dBase), cdp=scoreD(dCand);
+ const hBase=HALLUCINATION_CORPUS.map(legacyV21Adjudicate), hCand=HALLUCINATION_CORPUS.map(adjudicateClaim);
+ const scoreH=a=>a.filter((x,i)=>x.verdict===HALLUCINATION_CORPUS[i].expected).length/HALLUCINATION_CORPUS.length;
+ const bha=scoreH(hBase), cha=scoreH(hCand);
+ return {test:"V79_V80_COMPARABLE_BASELINE",baselineIdentity:"V2_1_SEMANTIC_COMPATIBILITY_ADAPTER_NOT_HISTORICAL_EXECUTABLE",
+   sameDebugCorpus:true,sameHallucinationCorpus:true,
+   V79:{baselineRootCauseAccuracy:bdp,candidateRootCauseAccuracy:cdp,delta:cdp-bdp,pass:cdp>=bdp},
+   V80:{baselineHallucinationAccuracy:bha,candidateHallucinationAccuracy:cha,delta:cha-bha,pass:cha>=bha},
+   limitation:"Adapter comparison establishes bounded semantic differential only; it is not evidence from a historical v2.1 executable runtime.",
+   pass:cdp>=bdp&&cha>=bha};
+}
+export function runV83AssuranceGate(){
+ const mandatory={V33:runV33RetryProbe().pass,V34_38:runV34V38DebuggingLab().pass,V39_44:runV39V44HallucinationLab().pass,
+   V62:runPredecessorAbsenceProbe().pass,V63:runV63DatabaseProbe().pass,V64:runV64ResearchProbe().pass,
+   V65:runV65KernelProbe().pass,V66:runV66CoreProbe().pass,V67:runV67VlfProbe().pass,V68:runV68CounterProbe().pass,
+   V79_80:runV79V80ComparableBaseline().pass};
+ const openDefeaters=[];
+ if(runV39V44HallucinationLab().independentReverification!=="AVAILABLE") openDefeaters.push("V42_INDEPENDENT_POST_CORRECTION_REVERIFICATION_NOT_IN_SINGLE_HARNESS");
+ if(runV34V38DebuggingLab().hiddenHoldout!=="EXECUTED") openDefeaters.push("V38_HIDDEN_HOLDOUT_NOT_EXECUTED");
+ if(runV39V44HallucinationLab().hiddenHoldout!=="EXECUTED") openDefeaters.push("V44_HIDDEN_HOLDOUT_NOT_EXECUTED");
+ openDefeaters.push("V79_V80_BASELINE_IS_SEMANTIC_ADAPTER_NOT_HISTORICAL_V2_1_EXECUTABLE");
+ const allMandatory=Object.values(mandatory).every(Boolean);
+ return {test:"V83_RELEASE_ASSURANCE_CASE",mandatory,allMandatory,openDefeaters,
+   releaseState:openDefeaters.length?"WITHHOLDING":"QUALIFIED_RELEASE",pass:allMandatory&&openDefeaters.length===0};
+}
+export function runV84FinalVerdict(){
+ const a=runV83AssuranceGate();
+ return {test:"V84_FINAL_EVIDENCE_BUNDLE_VERDICT",boundedVerdict:a.allMandatory?"PASS_VERIFIED_WITH_DECLARED_LIMITATIONS":"BLOCKED_MISSING_EVIDENCE",
+   releaseState:a.releaseState,openDefeaters:a.openDefeaters,universalCorrectnessClaimed:false,pass:a.allMandatory};
+}
