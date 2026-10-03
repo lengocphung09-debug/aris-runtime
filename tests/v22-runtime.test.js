@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { frozenIdentity, resolveV22, executeResearchSmoke, runPredecessorAbsenceProbe, runV63DatabaseProbe, runV64ResearchProbe, runV65KernelProbe, runV66CoreProbe, runV67VlfProbe, runV68CounterProbe, runV69SiblingNonInterferenceProbe, runV34V38DebuggingLab, runV39V44HallucinationLab, runV77V80EmpiricalSuite, runV33RetryProbe } from "../src/v22/runtime.js";
+import { frozenIdentity, resolveV22, executeResearchSmoke, runPredecessorAbsenceProbe, runV63DatabaseProbe, runV64ResearchProbe, runV65KernelProbe, runV66CoreProbe, runV67VlfProbe, runV68CounterProbe, runV69SiblingNonInterferenceProbe, runV34V38DebuggingLab, runV39V44HallucinationLab, runV77V80EmpiricalSuite, runV33RetryProbe, runV79V80ComparableBaseline, runV83AssuranceGate, runV84FinalVerdict } from "../src/v22/runtime.js";
 
 const SHA = "5128655194f4af19291abe9b1bc5bc6adafc7addbe56af6dea925c15a037a20f";
 
@@ -70,3 +70,6 @@ test("V33 bounded retry terminates without orphan",()=>{const r=runV33RetryProbe
 test("V34-V38 debugging public corpus is deterministic",()=>{const r=runV34V38DebuggingLab();assert.equal(r.pass,true);assert.equal(r.rootCausePrecision,1);});
 test("V39-V44 hallucination public corpus fails unsupported claims closed",()=>{const r=runV39V44HallucinationLab();assert.equal(r.pass,true);assert.equal(r.unsupportedWithholdRecall,1);});
 test("V77-V80 empirical suite reports paired measurement without fabricating missing baselines",()=>{const r=runV77V80EmpiricalSuite();assert.equal(r.V78.paired,true);assert.equal(r.V79.pass,false);assert.equal(r.V80.pass,false);});
+
+test("V79-V80 semantic adapter baseline remains explicitly bounded",()=>{const r=runV79V80ComparableBaseline();assert.equal(r.pass,true);assert.match(r.baselineIdentity,/SEMANTIC_COMPATIBILITY_ADAPTER/);});
+test("V83-V84 preserve withholding while material defeaters remain",()=>{const a=runV83AssuranceGate(),v=runV84FinalVerdict();assert.equal(a.releaseState,"WITHHOLDING");assert.ok(a.openDefeaters.length>0);assert.equal(v.universalCorrectnessClaimed,false);});
