@@ -79,3 +79,54 @@ export function runPredecessorAbsenceProbe() {
       contaminated.failure === "PREDECESSOR_RESOLUTION_CONTAMINATION"
   };
 }
+
+
+function stableJson(value) {
+  if (Array.isArray(value)) return "[" + value.map(stableJson).join(",") + "]";
+  if (value && typeof value === "object") return "{" + Object.keys(value).sort().map(k => JSON.stringify(k)+":"+stableJson(value[k])).join(",") + "}";
+  return JSON.stringify(value);
+}
+
+function digestDb(db) {
+  return crypto.createHash("sha256").update(stableJson(db)).digest("hex");
+}
+
+export function executeDatabaseIndependentSmoke({ db = {}, env = process.env, mutateCanonical = false } = {}) {
+  const resolution = resolveV22({ env });
+  const before = digestDb(db);
+  if (!resolution.ready) return { committed:false, state:"WITHHOLDING", failure:"PREDECESSOR_RESOLUTION_CONTAMINATION", resolution, canonicalDbBefore:before, canonicalDbAfter:before };
+  if (mutateCanonical) return { committed:false, state:"WITHHOLDING", failure:"CANONICAL_DATABASE_MUTATION_PROHIBITED", resolution, canonicalDbBefore:before, canonicalDbAfter:before };
+  const keys = Object.keys(db).sort();
+  const dbClass = keys.length === 0 ? "EMPTY" : "MINIMAL";
+  const transactionId = crypto.createHash("sha256").update(manifest.artifact_sha256+"\nV63\n"+dbClass+"\n"+before).digest("hex");
+  const after = digestDb(db);
+  return {
+    committed:true, state:"QUALIFIED_RUNTIME_OBSERVATION", test:"V63_STANDALONE_EMPTY_MINIMAL_DB",
+    transactionId, resolution, dbClass, dbKeys:keys, canonicalDbBefore:before, canonicalDbAfter:after,
+    canonicalDbMutated:before!==after, predecessorFree:resolution.predecessor.predecessorFree,
+    trace:["PREPARE","DB_SNAPSHOT","VALIDATE_PREDECESSOR_ABSENCE","EXECUTE_WITHOUT_CANONICAL_DB_WRITE","VERIFY_DB_INVARIANCE","COMMIT","CLOSE"]
+  };
+}
+
+export function runV63DatabaseProbe() {
+  const emptyDb = Object.freeze({});
+  const minimalDb = Object.freeze({ schemaVersion:"11.0", records:[] });
+  const emptyA = executeDatabaseIndependentSmoke({db:emptyDb,env:{}});
+  const emptyB = executeDatabaseIndependentSmoke({db:emptyDb,env:{}});
+  const minimalA = executeDatabaseIndependentSmoke({db:minimalDb,env:{}});
+  const minimalB = executeDatabaseIndependentSmoke({db:minimalDb,env:{}});
+  const predecessorNegative = executeDatabaseIndependentSmoke({db:minimalDb,env:{ARIS_SUPER_V2_1_RUNTIME:"injected"}});
+  const mutationNegative = executeDatabaseIndependentSmoke({db:minimalDb,env:{},mutateCanonical:true});
+  return {
+    test:"V63_STANDALONE_EMPTY_MINIMAL_DB", artifactSha256:manifest.artifact_sha256,
+    empty:{first:emptyA,replay:emptyB,deterministic:emptyA.transactionId===emptyB.transactionId},
+    minimal:{first:minimalA,replay:minimalB,deterministic:minimalA.transactionId===minimalB.transactionId},
+    negativeControls:{predecessor:predecessorNegative,canonicalMutation:mutationNegative},
+    pass: emptyA.committed && minimalA.committed &&
+      !emptyA.canonicalDbMutated && !minimalA.canonicalDbMutated &&
+      emptyA.predecessorFree && minimalA.predecessorFree &&
+      emptyA.transactionId===emptyB.transactionId && minimalA.transactionId===minimalB.transactionId &&
+      predecessorNegative.committed===false && predecessorNegative.failure==="PREDECESSOR_RESOLUTION_CONTAMINATION" &&
+      mutationNegative.committed===false && mutationNegative.failure==="CANONICAL_DATABASE_MUTATION_PROHIBITED"
+  };
+}
