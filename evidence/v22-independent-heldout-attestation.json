@@ -1,0 +1,19 @@
+{
+  "evidence_id": "ARIS-SUPER-v2.2-INDEPENDENT-HELDOUT-20261003",
+  "target_commit": "468e2eb2d7401567818bec7e58a6f9cadc1ec3c7",
+  "target_artifact_sha256": "5128655194f4af19291abe9b1bc5bc6adafc7addbe56af6dea925c15a037a20f",
+  "github_actions_run_id": 37148310172,
+  "github_actions_job_id": 111276694935,
+  "workflow": "ARIS ULTIMATE CI",
+  "run_number": 140,
+  "job_conclusion": "success",
+  "npm_test_conclusion": "success",
+  "independent_bridge_test": "V38/V42/V44 independent source-bound held-out bridge",
+  "independent_bridge_test_result": "PASS",
+  "V38": "PASS_WITHIN_SOURCE_BOUND_RECONSTRUCTION",
+  "V42": "PASS_INDEPENDENT_REVERIFICATION",
+  "V44": "PASS_WITHIN_SOURCE_BOUND_RECONSTRUCTION",
+  "historical_v2_1_executable_claimed": false,
+  "v2_1_baseline_class": "PROVENANCE_BOUND_SEMANTIC_RECONSTRUCTION_NOT_HISTORICAL_EVENT",
+  "claim_boundary": "This attests bounded CI execution of the gold-blind target adapters against runtime-generated held-out instantiations. It does not create or claim a historical v2.1 executable event and does not prove universal correctness."
+}
