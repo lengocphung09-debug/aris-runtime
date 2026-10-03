@@ -1,0 +1,12 @@
+{
+  "profile_id": "ARIS-SUPER-v1.6-INSTRUMENTED-RUNTIME-1",
+  "spec_version": "1.6",
+  "spec_sha256": "1b6d21e23391fd34441534c575068f5504e5a5dce3268a160a9900f91fa4a8c0",
+  "telemetry_schema_version": "2.0",
+  "event_taxonomy_version": "2.0",
+  "self_authorizing": false,
+  "claims": {
+    "native_chatgpt_host_registration": "UNVERIFIED_NOT_CLAIMED",
+    "chatgpt_scheduler_physical_parallelism": "UNVERIFIED_NOT_CLAIMED"
+  }
+}
