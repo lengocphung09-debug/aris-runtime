@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { frozenIdentity, resolveV22, executeResearchSmoke, runPredecessorAbsenceProbe, runV63DatabaseProbe } from "../src/v22/runtime.js";
+import { frozenIdentity, resolveV22, executeResearchSmoke, runPredecessorAbsenceProbe, runV63DatabaseProbe, runV64ResearchProbe } from "../src/v22/runtime.js";
 
 const SHA = "5128655194f4af19291abe9b1bc5bc6adafc7addbe56af6dea925c15a037a20f";
 
@@ -42,4 +42,15 @@ test("V63 empty/minimal DB standalone oracle is deterministic and fail-closed", 
   assert.equal(r.minimal.deterministic, true);
   assert.equal(r.negativeControls.predecessor.failure, "PREDECESSOR_RESOLUTION_CONTAMINATION");
   assert.equal(r.negativeControls.canonicalMutation.failure, "CANONICAL_DATABASE_MUTATION_PROHIBITED");
+});
+
+test("V64 standalone research workflow binds claims to evidence and fails closed", () => {
+ const r=runV64ResearchProbe();
+ assert.equal(r.pass,true);
+ assert.equal(r.clean.committed,true);
+ assert.deepEqual(r.clean.unboundClaims,[]);
+ assert.equal(r.clean.unsupportedRelease,false);
+ assert.equal(r.deterministic,true);
+ assert.equal(r.negativeControls.predecessor.failure,"PREDECESSOR_RESOLUTION_CONTAMINATION");
+ assert.equal(r.negativeControls.emptyQuestion.failure,"EMPTY_RESEARCH_QUESTION");
 });
