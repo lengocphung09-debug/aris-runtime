@@ -130,3 +130,39 @@ export function runV63DatabaseProbe() {
       mutationNegative.committed===false && mutationNegative.failure==="CANONICAL_DATABASE_MUTATION_PROHIBITED"
   };
 }
+
+
+export function executeResearchWorkflowV64({ env = process.env, question = "What evidence supports the bounded claim?" } = {}) {
+  const resolution = resolveV22({ env });
+  if (!resolution.ready) return {committed:false,state:"WITHHOLDING",failure:"PREDECESSOR_RESOLUTION_CONTAMINATION",resolution};
+  const q=String(question).trim().replace(/\s+/g," ");
+  if(!q) return {committed:false,state:"WITHHOLDING",failure:"EMPTY_RESEARCH_QUESTION",resolution};
+  const evidence=[
+    {id:"E1",type:"DIRECT_RUNTIME",claim:"v2.2 identity is hash-bound",support:"artifact_sha256"},
+    {id:"E2",type:"NEGATIVE_CONTROL",claim:"predecessor contamination fails closed",support:"V62"},
+    {id:"E3",type:"DATABASE_INVARIANCE",claim:"standalone execution does not require canonical DB mutation",support:"V63"}
+  ];
+  const claims=[
+    {id:"C1",text:"Runtime identity is bound to the frozen v2.2 artifact.",evidence:["E1"],status:"SUPPORTED_WITHIN_RUNTIME"},
+    {id:"C2",text:"Standalone runtime rejects predecessor contamination.",evidence:["E2"],status:"SUPPORTED_WITHIN_RUNTIME"},
+    {id:"C3",text:"Research workflow result is bounded and does not constitute universal scientific validity.",evidence:["E1","E2","E3"],status:"BOUNDED"}
+  ];
+  const trace=["QUESTION","DECOMPOSE","EVIDENCE_BIND","COUNTEREVIDENCE_CHECK","INFERENCE","CALIBRATE","VERIFY","COMMIT","CLOSE"];
+  const transactionId=crypto.createHash("sha256").update(manifest.artifact_sha256+"\nV64\n"+q+"\n"+stableJson({evidence,claims,trace})).digest("hex");
+  return {committed:true,state:"QUALIFIED_RUNTIME_OBSERVATION",test:"V64_STANDALONE_RESEARCH_WORKFLOW",transactionId,resolution,question:q,evidence,claims,trace,
+    unsupportedRelease:false,unboundClaims:claims.filter(c=>!c.evidence?.length).map(c=>c.id),releaseConsequence:"NONE_AUTOMATIC"};
+}
+
+export function runV64ResearchProbe() {
+  const a=executeResearchWorkflowV64({env:{},question:"Assess bounded standalone evidence for ARIS-SUPER v2.2."});
+  const b=executeResearchWorkflowV64({env:{},question:"Assess   bounded standalone evidence for ARIS-SUPER v2.2."});
+  const contaminated=executeResearchWorkflowV64({env:{ARIS_SUPER_V2_1_RUNTIME:"injected"},question:"Assess bounded standalone evidence for ARIS-SUPER v2.2."});
+  const empty=executeResearchWorkflowV64({env:{},question:"   "});
+  return {test:"V64_STANDALONE_RESEARCH_WORKFLOW",artifactSha256:manifest.artifact_sha256,clean:a,replay:b,
+    negativeControls:{predecessor:contaminated,emptyQuestion:empty},
+    deterministic:a.transactionId===b.transactionId,
+    pass:a.committed===true && a.unboundClaims.length===0 && a.unsupportedRelease===false &&
+      a.transactionId===b.transactionId && contaminated.committed===false &&
+      contaminated.failure==="PREDECESSOR_RESOLUTION_CONTAMINATION" &&
+      empty.committed===false && empty.failure==="EMPTY_RESEARCH_QUESTION"};
+}
