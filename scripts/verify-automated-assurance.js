@@ -15,7 +15,9 @@ for(const [name,expected] of Object.entries(manifest.files||{})){
 }
 const conformance=json('audit-output/conformance.json');
 const baseline=json('audit-output/aris97k-baseline.json');
-const candidate=json('audit-output/v13-pbench.json');
+const pbench=json('audit-output/v13-pbench.json');
+const candidate=pbench.candidate;
+if(!candidate || !candidate.coverage || !candidate.quality) fail('PBENCH_CANDIDATE_SCHEMA_INVALID');
 const byId=xs=>new Map(xs.map(x=>[x.case_id,x]));
 const b=byId(baseline.results||[]), c=byId(candidate.results||[]);
 const shared=[...b.keys()].filter(id=>c.has(id));
@@ -38,7 +40,7 @@ const predicates={
   shared_cases_80:shared.length===80,
   protected_dimensions_noninferior:Object.values(protectedDimensions).every(Boolean),
   traceability:baseline.quality.trace_reconstruction_rate===1&&candidate.quality.trace_reconstruction_rate===1,
-  reproduction:candidate.pbench_acceptance.REPRODUCIBILITY_REQUIREMENT==='PASS',
+  reproduction:pbench.pbench_acceptance?.REPRODUCIBILITY_REQUIREMENT==='PASS',
   negative_testing:(conformance.checks||[]).some(x=>x.id==='C086'&&x.status==='PASS')&&(conformance.checks||[]).some(x=>x.id==='C103'&&x.status==='PASS')
 };
 const pass=Object.values(predicates).every(Boolean);
