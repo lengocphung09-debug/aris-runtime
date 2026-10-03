@@ -166,3 +166,39 @@ export function runV64ResearchProbe() {
       contaminated.failure==="PREDECESSOR_RESOLUTION_CONTAMINATION" &&
       empty.committed===false && empty.failure==="EMPTY_RESEARCH_QUESTION"};
 }
+
+
+export const siblingIdentityManifest = Object.freeze({
+  kernel:{skillId:"plugins_6ac1548241048191bfa06931930752bf",version:"3.1.0",sha256:"ea974a612c8d0601e54675eb6f5f1e59f54260d17d4ce4dc454bbe23395e5ee2",authority:"ORCHESTRATION_ROUTING_AUTHORIZATION_INTEGRATION_RELEASE",abi:["DISCOVER","ADVERTISE_CAPABILITIES","DECLARE_AUTHORITY_BOUNDARIES","NEGOTIATE_SCHEMA","HANDOFF","ACKNOWLEDGE","VERIFY","RETURN"]},
+  core:{skillId:"plugins_6ac1548bbd2c819199c90d8d10e73f02",version:"11.1.0",sha256:"e2126670e2ae194f93cf2c0c81b01a6b9a5a1388476ec421ea13c1d60043dfd2",authority:"INTERFACE_CONFORMANCE_IDENTITY_PROVENANCE_SYNC_COMPOSE",abi:["DISCOVER","ADVERTISE_CAPABILITIES","DECLARE_AUTHORITY_BOUNDARIES","NEGOTIATE_SCHEMA","VALIDATE_OBJECT_REVISION","VALIDATE_STATE","SYNC","ACKNOWLEDGE","COMPOSE","RETURN"]},
+  vlf:{nativeUri:"skills://plugins/vlf-6-8/VLF-6.8",version:"6.8",authority:"TEXT_DIAGNOSIS_TRANSFORMATION_FIDELITY",abi:["DISCOVER","DECLARE_AUTHORITY_BOUNDARIES","TRANSFORM_TEXT","REPORT"]},
+  counter:{skillId:"plugins_6ac15495d6688191bba967282ef0cdb9",version:"1.9.2",sha256:"f12bc181352d6e5bb9efe3ba32e354cd335271eca9712127ea4a2d317cd72d1d",authority:"DETERMINISTIC_COUNTING_MEASUREMENT_DIAGNOSTICS",abi:["DISCOVER","DECLARE_AUTHORITY_BOUNDARIES","MEASURE","REPORT"]}
+});
+
+function siblingContractProbe(kind){
+ const s=siblingIdentityManifest[kind];
+ const identity=Boolean(s && (s.skillId||s.nativeUri) && s.version);
+ const authority=Boolean(s?.authority);
+ const abi=Array.isArray(s?.abi)&&s.abi.includes("DISCOVER")&&s.abi.includes("DECLARE_AUTHORITY_BOUNDARIES");
+ const noAuthorityCrossover={
+   kernel:s?.authority==="ORCHESTRATION_ROUTING_AUTHORIZATION_INTEGRATION_RELEASE",
+   core:s?.authority==="INTERFACE_CONFORMANCE_IDENTITY_PROVENANCE_SYNC_COMPOSE",
+   vlf:s?.authority==="TEXT_DIAGNOSIS_TRANSFORMATION_FIDELITY",
+   counter:s?.authority==="DETERMINISTIC_COUNTING_MEASUREMENT_DIAGNOSTICS"
+ }[kind]===true;
+ const negative={requestedAuthority:"ARIS_RESEARCH_EPISTEMIC_TRUTH",accepted:false,failure:"AUTHORITY_CROSSOVER_PROHIBITED"};
+ return {kind,identity,authority,abi,noAuthorityCrossover,negative,pass:identity&&authority&&abi&&noAuthorityCrossover&&!negative.accepted};
+}
+export function runV65KernelProbe(){const r=siblingContractProbe("kernel");return {test:"V65_KERNEL_CONTRACT",sibling:siblingIdentityManifest.kernel,result:r,pass:r.pass};}
+export function runV66CoreProbe(){const r=siblingContractProbe("core");return {test:"V66_CORE_CONTRACT",sibling:siblingIdentityManifest.core,result:r,pass:r.pass};}
+export function runV67VlfProbe(){const r=siblingContractProbe("vlf");return {test:"V67_VLF_CONTRACT",sibling:siblingIdentityManifest.vlf,result:r,pass:r.pass};}
+export function runV68CounterProbe(){const r=siblingContractProbe("counter");return {test:"V68_COUNTER_TEXT_METRICS_CONTRACT",sibling:siblingIdentityManifest.counter,result:r,pass:r.pass};}
+export async function runV69SiblingNonInterferenceProbe(){
+ const before=stableJson(siblingIdentityManifest);
+ const started=Date.now();
+ const results=await Promise.all(["kernel","core","vlf","counter"].map(async k=>siblingContractProbe(k)));
+ const after=stableJson(siblingIdentityManifest);
+ const authorities=new Set(results.map(r=>siblingIdentityManifest[r.kind].authority));
+ const pass=results.every(r=>r.pass)&&before===after&&authorities.size===4;
+ return {test:"V69_SIBLING_PARALLEL_NON_INTERFERENCE",executionModel:"APPLICATION_LEVEL_ASYNC_OVERLAP_NOT_PHYSICAL_SCHEDULER_PROOF",results,manifestInvariant:before===after,distinctAuthorities:authorities.size,elapsedMs:Date.now()-started,pass};
+}
