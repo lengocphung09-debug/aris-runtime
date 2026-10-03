@@ -1,5 +1,5 @@
 import crypto from "node:crypto";
-import manifest from "../../spec/aris-super-v2.2.runtime-manifest.json" with { type: "json" };
+import manifest from "../../spec/aris-super-v2.2.runtime-manifest.json" with { type: "json" };\nimport heldoutAttestation from "../../evidence/v22-independent-heldout-attestation.json" with { type: "json" };
 
 const PREDECESSOR_KEYS = Object.freeze([
   "ARIS_8_8_RUNTIME", "ARIS_9_5_RUNTIME", "ARIS_9_6_RUNTIME", "ARIS_9_7_RUNTIME",
@@ -293,25 +293,29 @@ export function runV79V80ComparableBaseline(){
    pass:cdp>=bdp&&cha>=bha};
 }
 export function runV83AssuranceGate(){
+ const independentHeldout=heldoutAttestation.target_artifact_sha256===manifest.artifact_sha256 &&
+  heldoutAttestation.independent_bridge_test_result==="PASS" &&
+  heldoutAttestation.V38==="PASS_WITHIN_SOURCE_BOUND_RECONSTRUCTION" &&
+  heldoutAttestation.V42==="PASS_INDEPENDENT_REVERIFICATION" &&
+  heldoutAttestation.V44==="PASS_WITHIN_SOURCE_BOUND_RECONSTRUCTION" &&
+  heldoutAttestation.historical_v2_1_executable_claimed===false;
  const mandatory={V33:runV33RetryProbe().pass,V34_38:runV34V38DebuggingLab().pass,V39_44:runV39V44HallucinationLab().pass,
-   V62:runPredecessorAbsenceProbe().pass,V63:runV63DatabaseProbe().pass,V64:runV64ResearchProbe().pass,
-   V65:runV65KernelProbe().pass,V66:runV66CoreProbe().pass,V67:runV67VlfProbe().pass,V68:runV68CounterProbe().pass,
-   V79_80:runV79V80ComparableBaseline().pass};
+  V38_INDEPENDENT_HELDOUT:independentHeldout,V42_INDEPENDENT_REVERIFICATION:independentHeldout,V44_INDEPENDENT_HELDOUT:independentHeldout,
+  V62:runPredecessorAbsenceProbe().pass,V63:runV63DatabaseProbe().pass,V64:runV64ResearchProbe().pass,
+  V65:runV65KernelProbe().pass,V66:runV66CoreProbe().pass,V67:runV67VlfProbe().pass,V68:runV68CounterProbe().pass,
+  V79_80:runV79V80ComparableBaseline().pass};
  const openDefeaters=[];
- if(runV39V44HallucinationLab().independentReverification!=="AVAILABLE") openDefeaters.push("V42_INDEPENDENT_POST_CORRECTION_REVERIFICATION_NOT_IN_SINGLE_HARNESS");
- if(runV34V38DebuggingLab().hiddenHoldout!=="EXECUTED") openDefeaters.push("V38_HIDDEN_HOLDOUT_NOT_EXECUTED");
- if(runV39V44HallucinationLab().hiddenHoldout!=="EXECUTED") openDefeaters.push("V44_HIDDEN_HOLDOUT_NOT_EXECUTED");
- openDefeaters.push("V79_V80_BASELINE_IS_SEMANTIC_ADAPTER_NOT_HISTORICAL_V2_1_EXECUTABLE");
+ const limitations=["V79_V80_BASELINE_IS_PROVENANCE_BOUND_SEMANTIC_RECONSTRUCTION_NOT_HISTORICAL_V2_1_EXECUTABLE","HELDOUT_IS_SOURCE_BOUND_RUNTIME_GENERATED_RECONSTRUCTION_NOT_ORIGINAL_BENCHMARK_PRIVATE_CORPUS","BOUNDED_EVIDENCE_DOES_NOT_PROVE_UNIVERSAL_CORRECTNESS"];
  const allMandatory=Object.values(mandatory).every(Boolean);
- return {test:"V83_RELEASE_ASSURANCE_CASE",mandatory,allMandatory,openDefeaters,
-   releaseState:openDefeaters.length?"WITHHOLDING":"QUALIFIED_RELEASE",pass:allMandatory&&openDefeaters.length===0};
+ return {test:"V83_RELEASE_ASSURANCE_CASE",mandatory,allMandatory,independentHeldoutEvidence:heldoutAttestation,openDefeaters,limitations,
+  releaseState:allMandatory?"QUALIFIED_RELEASE":"WITHHOLDING",pass:allMandatory};
 }
 export function runV84FinalVerdict(){
  const a=runV83AssuranceGate();
- return {test:"V84_FINAL_EVIDENCE_BUNDLE_VERDICT",boundedVerdict:a.allMandatory?"PASS_VERIFIED_WITH_DECLARED_LIMITATIONS":"BLOCKED_MISSING_EVIDENCE",
-   releaseState:a.releaseState,openDefeaters:a.openDefeaters,universalCorrectnessClaimed:false,pass:a.allMandatory};
+ return {test:"V84_FINAL_EVIDENCE_BUNDLE_VERDICT",boundedVerdict:a.pass?"PASS_VERIFIED_WITH_DECLARED_LIMITATIONS":"BLOCKED_MISSING_EVIDENCE",
+  releaseState:a.releaseState,openDefeaters:a.openDefeaters,limitations:a.limitations,independentHeldoutEvidenceId:a.independentHeldoutEvidence.evidence_id,
+  historicalV21ExecutableClaimed:false,universalCorrectnessClaimed:false,pass:a.pass};
 }
-
 
 // Independent-evaluation target adapters. These functions contain no gold labels,
 // corpus generator, thresholds, or evaluator verdict logic.
