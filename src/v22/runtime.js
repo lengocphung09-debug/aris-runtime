@@ -1,5 +1,6 @@
 import crypto from "node:crypto";
-import manifest from "../../spec/aris-super-v2.2.runtime-manifest.json" with { type: "json" };\nimport heldoutAttestation from "../../evidence/v22-independent-heldout-attestation.json" with { type: "json" };
+import manifest from "../../spec/aris-super-v2.2.runtime-manifest.json" with { type: "json" };
+import heldoutAttestation from "../../evidence/v22-independent-heldout-attestation.json" with { type: "json" };
 
 const PREDECESSOR_KEYS = Object.freeze([
   "ARIS_8_8_RUNTIME", "ARIS_9_5_RUNTIME", "ARIS_9_6_RUNTIME", "ARIS_9_7_RUNTIME",
