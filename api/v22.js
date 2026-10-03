@@ -1,4 +1,4 @@
-import { runPredecessorAbsenceProbe, runV63DatabaseProbe, runV64ResearchProbe, runV65KernelProbe, runV66CoreProbe, runV67VlfProbe, runV68CounterProbe, runV69SiblingNonInterferenceProbe, runV34V38DebuggingLab, runV39V44HallucinationLab, runV77V80EmpiricalSuite, runV33RetryProbe, executeResearchSmoke, frozenIdentity } from "../src/v22/runtime.js";
+import { runPredecessorAbsenceProbe, runV63DatabaseProbe, runV64ResearchProbe, runV65KernelProbe, runV66CoreProbe, runV67VlfProbe, runV68CounterProbe, runV69SiblingNonInterferenceProbe, runV34V38DebuggingLab, runV39V44HallucinationLab, runV77V80EmpiricalSuite, runV33RetryProbe, runV79V80ComparableBaseline, runV83AssuranceGate, runV84FinalVerdict, executeResearchSmoke, frozenIdentity } from "../src/v22/runtime.js";
 
 export default function handler(req, res) {
   const mode = req.query?.mode || "identity";
@@ -14,6 +14,9 @@ export default function handler(req, res) {
   if (mode === "debug") return res.status(200).json(runV34V38DebuggingLab());
   if (mode === "hallucination") return res.status(200).json(runV39V44HallucinationLab());
   if (mode === "empirical") return res.status(200).json(runV77V80EmpiricalSuite());
+  if (mode === "paired-quality") return res.status(200).json(runV79V80ComparableBaseline());
+  if (mode === "v83") return res.status(200).json(runV83AssuranceGate());
+  if (mode === "v84") return res.status(200).json(runV84FinalVerdict());
   if (mode === "smoke") return res.status(200).json(executeResearchSmoke(req.query?.input || "ARIS-SUPER v2.2 standalone smoke"));
   return res.status(200).json({
     system: frozenIdentity.system,
