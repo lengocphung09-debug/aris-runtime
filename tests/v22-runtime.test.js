@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { frozenIdentity, resolveV22, executeResearchSmoke, runPredecessorAbsenceProbe, runV63DatabaseProbe, runV64ResearchProbe } from "../src/v22/runtime.js";
+import { frozenIdentity, resolveV22, executeResearchSmoke, runPredecessorAbsenceProbe, runV63DatabaseProbe, runV64ResearchProbe, runV65KernelProbe, runV66CoreProbe, runV67VlfProbe, runV68CounterProbe, runV69SiblingNonInterferenceProbe } from "../src/v22/runtime.js";
 
 const SHA = "5128655194f4af19291abe9b1bc5bc6adafc7addbe56af6dea925c15a037a20f";
 
@@ -53,4 +53,15 @@ test("V64 standalone research workflow binds claims to evidence and fails closed
  assert.equal(r.deterministic,true);
  assert.equal(r.negativeControls.predecessor.failure,"PREDECESSOR_RESOLUTION_CONTAMINATION");
  assert.equal(r.negativeControls.emptyQuestion.failure,"EMPTY_RESEARCH_QUESTION");
+});
+
+test("V65-V68 identity-bound sibling contracts preserve authority separation", () => {
+ for (const fn of [runV65KernelProbe,runV66CoreProbe,runV67VlfProbe,runV68CounterProbe]) {
+   const r=fn(); assert.equal(r.pass,true); assert.equal(r.result.negative.accepted,false);
+ }
+});
+test("V69 application-level async sibling probe is non-interfering", async () => {
+ const r=await runV69SiblingNonInterferenceProbe();
+ assert.equal(r.pass,true); assert.equal(r.manifestInvariant,true); assert.equal(r.distinctAuthorities,4);
+ assert.equal(r.executionModel,"APPLICATION_LEVEL_ASYNC_OVERLAP_NOT_PHYSICAL_SCHEDULER_PROOF");
 });
