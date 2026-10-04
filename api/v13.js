@@ -26,7 +26,7 @@ export default async function handler(req,res){
  if(action==="avg") return res.status(200).json(verifyAutomatedGate());
  if(action==="bcl") return res.status(200).json(runBCL());
  if(action==="aav") return res.status(200).json(runAAV());
- if(action==="qnr") return res.status(200).json(runV13AAQNR());
+ if(action==="qnr") return res.status(200).json(await runV13AAQNR());
  if(action==="qnr-v14-legacy") return res.status(200).json(runQNR());
  if(action==="rer") return res.status(200).json(runV13RER());
  if(action==="aa01") return res.status(200).json(runV13AA());
