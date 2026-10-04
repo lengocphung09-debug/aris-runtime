@@ -1,0 +1,22 @@
+name: ARIS-SUPER v2.7 Verification Harness
+on:
+  push:
+    branches: [verify/aris-super-v2.7-harness]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-v27:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 20}
+      - run: node --test tests/v27-runtime.test.js
+      - run: node scripts/independent-v27-evaluator.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aris-super-v27-evidence
+          path: evidence/v27-verification-result.json

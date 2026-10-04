@@ -1,0 +1,10 @@
+import test from "node:test";import assert from "node:assert/strict";
+import * as R from "../src/v27/runtime.js";
+test("v2.7 identity",()=>assert.equal(R.ID.sha256,"06564bf7d9dde3175a34a3d78eceb90d44e2009ebd5ed4b779b870503c880c8d"));
+test("V218-219 handoff failure controls",()=>{for(const m of ["stale","duplicate","timeout"]){const r=R.runFaultTransactionV27(m);assert.equal(r.sideEffect,false)}});
+test("V230 database migration operations",()=>{let d={schema:1,records:[{id:"A",label:"a",definition:"x",status:"ACTIVE"}]};d=R.migrateDbV27(d,{type:"relabel",id:"A",label:"b"});assert.equal(d.records[0].label,"b");d=R.migrateDbV27(d,{type:"split",id:"A",records:[{id:"A1"},{id:"A2"}]});assert.equal(d.records.length,2);d=R.migrateDbV27(d,{type:"merge",ids:["A1","A2"],record:{id:"A"}});assert.deepEqual(d.records.map(x=>x.id),["A"])});
+test("V232-233 digital twin and fault recovery",()=>assert.equal(R.runDigitalTwinV27().oracleCorrect,true));
+test("V234 predecessor absence",()=>{assert.equal(R.standaloneV27({}).predecessorFree,true);assert.equal(R.standaloneV27({ARIS_SUPER_V2_6_RUNTIME:"x"}).predecessorFree,false)});
+test("V235 optional sibling absence",()=>assert.equal(R.standaloneV27({}).state,"QUALIFIED_RUNTIME_OBSERVATION"));
+test("V236 authority separation",()=>{for(const s of ["kernel","core","vlf","counter"])assert.equal(R.negotiateSiblingV27(s).unauthorizedOverlap,false)});
+test("V237 alias version separation",()=>{assert.equal(R.resolveAliasV27("@SA",{defaultVersion:"2.2"}).version,"2.2");assert.equal(R.resolveAliasV27("@SA",{defaultVersion:"2.2",explicitVersion:"2.7"}).version,"2.7")});
