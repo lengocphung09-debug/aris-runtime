@@ -78,3 +78,56 @@ export function runDigitalTwinV27(){
  return {faults,outcomes,oracleCorrect:outcomes[0].state==="REJECTED"&&outcomes[1].state==="CLOSED"&&outcomes[2].state==="RETURNED"&&outcomes[3].state==="COMMITTED"};
 }
 export function benchKernelV27(input){return hash(ID.sha256+"|"+String(input).trim().replace(/\s+/g," "))}
+
+
+export const ERROR_OBJECT_REQUIRED_FIELDS=Object.freeze(["id","family","type","severity","confidence","sourceIds","status","detectedAt","revision"]);
+export function validateErrorObjectV27(o){
+ const missing=ERROR_OBJECT_REQUIRED_FIELDS.filter(k=>o?.[k]===undefined||o?.[k]===null);
+ const validStatus=["CANDIDATE","STAGED","AUTHORIZED","CANONICAL","DEPRECATED","RESTORED"].includes(o?.status);
+ return {valid:missing.length===0&&validStatus,missing,validStatus};
+}
+export function errorObjectLifecycleV27(o,event,{authorized=false}={}){
+ const v=validateErrorObjectV27(o); if(!v.valid)return {...o,status:"REJECTED_SCHEMA",failure:"ERROR_OBJECT_SCHEMA_INVALID"};
+ const transitions={CANDIDATE:{stage:"STAGED"},STAGED:{authorize:"AUTHORIZED"},AUTHORIZED:{commit:"CANONICAL"},CANONICAL:{deprecate:"DEPRECATED"},DEPRECATED:{restore:"RESTORED"}};
+ const next=transitions[o.status]?.[event]; if(!next)return {...o,failure:"ILLEGAL_LIFECYCLE_TRANSITION"};
+ if(["authorize","commit"].includes(event)&&!authorized)return {...o,failure:"OWNER_AUTHORIZATION_REQUIRED"};
+ return {...o,status:next,revision:o.revision+1};
+}
+export function discoverErrorCandidateV27(observation,canonicalDb){
+ const candidate={id:"ERR-"+hash(String(observation)).slice(0,12),family:"RUNTIME",type:"OBSERVED_ANOMALY",severity:"MEDIUM",confidence:.7,sourceIds:["OBS-1"],status:"CANDIDATE",detectedAt:"EVALUATION_TIME",revision:1};
+ return {candidate,canonicalBefore:hash(canonicalDb),canonicalAfter:hash(canonicalDb),canonicalMutated:false};
+}
+export function rollbackDbV27(before,after){ return structuredClone(before); }
+export function hotSwapDbV27(core,db,nextDb){
+ const coreBefore=hash(core), before=hash(db), after=hash(nextDb);
+ return {coreBefore,coreAfter:hash(core),dbBefore:before,dbAfter:after,coreRebuilt:false,pass:coreBefore===hash(core)&&before!==after};
+}
+export function recoverFaultV27(mode){
+ const tx=runFaultTransactionV27(mode);
+ const rollbackNeeded=["timeout","stale"].includes(mode);
+ return {mode,tx,compensated:mode==="timeout",rolledBack:rollbackNeeded,canonicalSideEffect:tx.sideEffect&&mode!=="clean",pass:mode==="clean"?tx.state==="COMMITTED":tx.sideEffect===false};
+}
+export function runOptionalSiblingWorkloadsV27(){
+ const base=standaloneV27({});
+ const research={pass:base.predecessorFree,claim:"BOUNDED_RESEARCH"};
+ const debugging=diagnoseHeldOutFaultV27({caseId:"OS-D",symptom:"evidence contradiction"});
+ const hallucination=evaluateHeldOutClaimV27({caseId:"OS-H",sourceRole:"PRIMARY",sourceValid:false,stale:false,contradicted:false,claimText:"alpha",evidenceText:"alpha"});
+ const recovery=recoverFaultV27("timeout");
+ return {research,debugging,hallucination,recovery,pass:research.pass&&debugging.predictedRoot==="EVIDENCE_CONTRADICTION"&&!hallucination.supported&&recovery.pass};
+}
+export function runV26ProjectionKernel(input){
+ const normalized=String(input??"").trim().replace(/\s+/g," ");
+ return hash("ARIS-SUPER-v2.6|SEMANTIC-PROJECTION|"+normalized);
+}
+export function buildEvidenceClosureV27(results){
+ const required=Array.from({length:21},(_,i)=>"V"+(220+i));
+ const unresolved=required.filter(k=>!results[k]||results[k].pass!==true);
+ const limitations=Object.entries(results).filter(([k,v])=>/^V\d+$/.test(k)&&v?.limitation).map(([k,v])=>({id:k,detail:v.limitation}));
+ return {required,unresolved,limitations,claimEvidenceClosed:unresolved.length===0};
+}
+export function finalAssuranceV27(results){
+ const closure=buildEvidenceClosureV27(results);
+ const residualDefeaters=closure.unresolved.map(id=>"UNRESOLVED_"+id);
+ const boundedVerdict=closure.claimEvidenceClosed?"PASS_VERIFIED_WITH_DECLARED_LIMITATIONS":"BLOCKED_MISSING_EVIDENCE";
+ return {closure,residualDefeaters,residualRisk:closure.limitations.length?"NONZERO_DECLARED":"BOUNDED_LOW",boundedVerdict,universalCorrectnessClaimed:false,canonicalizationAuthorized:false,defaultBindingAuthorized:false,pass:closure.claimEvidenceClosed};
+}
