@@ -2,6 +2,8 @@ name: ARIS-SUPER v2.7 Verification Harness
 on:
   push:
     branches: [verify/aris-super-v2.7-harness]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
