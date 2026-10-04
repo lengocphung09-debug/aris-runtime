@@ -1,7 +1,15 @@
 import fs from "node:fs";import crypto from "node:crypto";
 import {diagnoseHeldOutFaultV27,evaluateHeldOutClaimV27,correctAndReverifyV27,selectDebugTestV27,runDigitalTwinV27,standaloneV27,negotiateSiblingV27,resolveAliasV27,benchKernelV27,ID,validateErrorObjectV27,errorObjectLifecycleV27,discoverErrorCandidateV27,migrateDbV27,rollbackDbV27,hotSwapDbV27,recoverFaultV27,runOptionalSiblingWorkloadsV27,runV26ProjectionKernel,buildEvidenceClosureV27,finalAssuranceV27} from "../src/v27/runtime.js";
 import {verifierBClaim,verifierBFingerprint} from "./v27-independent-verifier-b.js";
-const seed=process.env.GITHUB_RUN_ID||"local";const h=s=>crypto.createHash("sha256").update(seed+"|"+s).digest("hex");
+const seed=process.env.GITHUB_RUN_ID||"local";
+const benchmarkHeldout=JSON.parse(fs.readFileSync("fixtures/benchmark-v3.2/hallucination-held_out.v3.2.0.json","utf8"));
+const benchmarkCases=benchmarkHeldout.cases.map(x=>({caseId:x.case_id,sourceRole:"PRIMARY",sourceValid:x.source_valid,stale:x.stale_evidence,contradicted:x.contradicted,claimText:x.claim_text,evidenceText:x.evidence_text,gold:x.gold_supported}));
+const benchmarkPred=benchmarkCases.map(x=>({x,a:evaluateHeldOutClaimV27(x),b:verifierBClaim(x)}));
+const benchmarkAccuracyA=benchmarkPred.filter(({x,a})=>x.gold===a.supported).length/benchmarkCases.length;
+const benchmarkAccuracyB=benchmarkPred.filter(({x,b})=>x.gold===b.supported).length/benchmarkCases.length;
+const benchmarkAgreement=benchmarkPred.filter(({a,b})=>a.supported===b.supported).length/benchmarkCases.length;
+const benchmarkFp=benchmarkPred.filter(({x,a})=>!x.gold&&a.supported).length;
+const benchmarkFn=benchmarkPred.filter(({x,a})=>x.gold&&!a.supported).length;const h=s=>crypto.createHash("sha256").update(seed+"|"+s).digest("hex");
 const debugPatterns=[["stale revision observed","STALE_REVISION"],["duplicate delivery observed","DUPLICATE_DELIVERY"],["timeout retry exhausted","RETRY_EXHAUSTED"],["authority crossover","AUTHORITY_CROSSOVER"],["database canonical write","CANONICAL_DB_MUTATION"],["evidence contradiction","EVIDENCE_CONTRADICTION"]];
 const debug=Array.from({length:180},(_,i)=>{const p=debugPatterns[i%6];return {caseId:"D"+i,symptom:p[0]+" "+h(i).slice(0,6),gold:p[1]}});
 const dp=debug.map(x=>({...x,p:diagnoseHeldOutFaultV27(x)})),root=dp.filter(x=>x.gold===x.p.predictedRoot).length/debug.length;
@@ -20,8 +28,8 @@ function measure(fn,n=12000){const t=process.hrtime.bigint();let z;for(let i=0;i
 const rounds=11,b=[],c=[];for(let i=0;i<rounds;i++){b.push(measure(runV26ProjectionKernel));c.push(measure(benchKernelV27))}const med=a=>[...a].sort((x,y)=>x-y)[Math.floor(a.length/2)],bm=med(b),cm=med(c);
 const R={};
 R.V220={n:debug.length,rootCauseTop1:root,pass:root>=.95};R.V221={selected:info?.id,pass:info?.id==="b"};R.V222={counterfactualDiscrimination:true,repairReplay:true,recurrence:true,sideEffectCheck:true,pass:root>=.95};
-R.V223={n:hall.length,accuracy:acc,fp,fn,pass:fp===0&&fn===0};R.V224={domainShiftAccuracy:shiftAcc,pass:shiftAcc>=.95};
-R.V225={verifierA:"runtime/evaluateHeldOutClaimV27",verifierB:"separate-module/v27-independent-verifier-b",verifierBFingerprint:verifierBFingerprint(),agreement:agree,phi,sharedCorpusOnly:true,implementationSeparation:true,limitation:"INDEPENDENT_IMPLEMENTATION_ON_SHARED_CORPUS; NOT INDEPENDENT_SOURCE EVIDENCE",pass:agree>=.95};
+R.V223={n:benchmarkCases.length,corpusId:benchmarkHeldout.corpus_id,adjudicator:benchmarkHeldout.cases[0]?.adjudicator,accuracy:benchmarkAccuracyA,fp:benchmarkFp,fn:benchmarkFn,pass:benchmarkFp===0&&benchmarkFn===0};R.V224={domainShiftAccuracy:shiftAcc,pass:shiftAcc>=.95};
+R.V225={verifierA:"runtime/evaluateHeldOutClaimV27",verifierB:"separate-module/v27-independent-verifier-b",verifierBFingerprint:verifierBFingerprint(),externalCorpus:benchmarkHeldout.corpus_id,externalGoldAdjudicator:benchmarkHeldout.cases[0]?.adjudicator,benchmarkAccuracyA,benchmarkAccuracyB,benchmarkAgreement,implementationSeparation:true,evidenceIndependence:"EXTERNAL_BENCHMARK_V3_2_HELD_OUT_GOLD_BOUND",pass:benchmarkAccuracyA>=.95&&benchmarkAccuracyB>=.95&&benchmarkAgreement>=.95};
 R.V226={postCorrectionN:corrections.length,reverifiedRate:reverify,independentVerifierBRate:corrections.filter(x=>verifierBClaim({...x.first,sourceRole:"PRIMARY",sourceValid:true,stale:false,contradicted:false,claimText:x.final.checks.entails?"alpha":"alpha",evidenceText:"alpha"}).supported).length/corrections.length,pass:reverify===1};
 R.V227={sourceRoleTemporalEntailmentContradiction:true,pass:acc===1};
 R.V228={schema,lifecycle:{staged:staged.status,unauthorized:denied.failure,authorized:authorized.status},pass:schema.valid&&staged.status==="STAGED"&&denied.failure==="OWNER_AUTHORIZATION_REQUIRED"&&authorized.status==="AUTHORIZED"};
@@ -37,5 +45,5 @@ const provisional={...R,V239:{...R.V239,pass:true},V240:{pass:true}};const assur
 R.V240={...assurance,pass:assurance.pass};
 const closure=buildEvidenceClosureV27(R);R.V239={...R.V239,unresolved:closure.unresolved,claimEvidenceClosed:closure.claimEvidenceClosed,pass:closure.claimEvidenceClosed};
 const final=finalAssuranceV27(R);R.V240={...final,pass:final.pass};
-const evidence={target:ID,provenance:"INDEPENDENT_GITHUB_ACTION_HERMETIC_EXECUTABLE_HARNESS",corpusPolicy:"RUNTIME_GENERATED_HELD_OUT; GOLD OUTSIDE TARGET ADAPTER",...R,claimBoundary:"V220-V240 verified only within this defined executable suite. V225 does not establish independent source evidence. V238 baseline is a frozen-source-derived v2.6 executable projection, not a historical runtime event. No universal correctness claim."};
+const evidence={target:ID,provenance:"INDEPENDENT_GITHUB_ACTION_HERMETIC_EXECUTABLE_HARNESS",corpusPolicy:"RUNTIME_GENERATED_HELD_OUT; GOLD OUTSIDE TARGET ADAPTER",...R,claimBoundary:"V220-V240 verified only within this defined executable suite. V225 is bound to the external Benchmark v3.2 held-out corpus and independent gold template; this is not organizationally independent replication. V238 baseline is a frozen-source-derived v2.6 executable projection, not a historical runtime event. No universal correctness claim."};
 evidence.pass=Array.from({length:21},(_,i)=>evidence["V"+(220+i)]?.pass===true).every(Boolean);fs.mkdirSync("evidence",{recursive:true});fs.writeFileSync("evidence/v27-verification-result.json",JSON.stringify(evidence,null,2));console.log(JSON.stringify(evidence,null,2));if(!evidence.pass)process.exit(1);
