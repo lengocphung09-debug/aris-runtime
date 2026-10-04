@@ -131,3 +131,29 @@ export function finalAssuranceV27(results){
  const boundedVerdict=closure.claimEvidenceClosed?"PASS_VERIFIED_WITH_DECLARED_LIMITATIONS":"BLOCKED_MISSING_EVIDENCE";
  return {closure,residualDefeaters,residualRisk:closure.limitations.length?"NONZERO_DECLARED":"BOUNDED_LOW",boundedVerdict,universalCorrectnessClaimed:false,canonicalizationAuthorized:false,defaultBindingAuthorized:false,pass:closure.claimEvidenceClosed};
 }
+
+
+// V201-V219 full-closure target primitives. Gold labels/oracles remain outside these adapters.
+export const V26_SOURCE_IDENTITY=Object.freeze({version:"2.6",sha256:"240bc8aa05fd979d282a8d10d403791e6dfe15b106786497061174c9e1ad5bfb"});
+export function compileSemanticV27(objects=[]){
+ const required=["id","kind","authority","mandatory"];
+ const normalized=objects.map(o=>{const missing=required.filter(k=>o?.[k]===undefined);if(missing.length)throw Object.assign(new Error("SEMANTIC_OBJECT_SCHEMA_INVALID"),{code:"SEMANTIC_OBJECT_SCHEMA_INVALID",missing});return {id:String(o.id),kind:String(o.kind),authority:String(o.authority),mandatory:Boolean(o.mandatory),deps:[...(o.deps||[])].map(String).sort(),state:String(o.state||"DEFINED")}}).sort((a,b)=>a.id.localeCompare(b.id));
+ const ids=new Set(normalized.map(o=>o.id)); if(ids.size!==normalized.length)throw Object.assign(new Error("DUPLICATE_SEMANTIC_OBJECT_ID"),{code:"DUPLICATE_SEMANTIC_OBJECT_ID"});
+ for(const o of normalized)for(const d of o.deps)if(!ids.has(d))throw Object.assign(new Error("UNRESOLVED_DEPENDENCY"),{code:"UNRESOLVED_DEPENDENCY",id:o.id,dependency:d});
+ const serialization=JSON.stringify(normalized);return {objects:normalized,serialization,sha256:hash(serialization),generated:{authorityGraph:normalized.map(o=>[o.id,o.authority]),dependencyGraph:normalized.map(o=>[o.id,o.deps]),stateGraph:normalized.map(o=>[o.id,o.state]),capabilityManifest:normalized.map(o=>({id:o.id,mandatory:o.mandatory}))}};
+}
+export function preservationProofV27(leaves=[]){
+ const ordered=[...leaves].map(x=>({id:String(x.id),baseline:String(x.baseline),candidate:String(x.candidate),authorityBefore:String(x.authorityBefore),authorityAfter:String(x.authorityAfter),depsBefore:[...(x.depsBefore||[])].sort(),depsAfter:[...(x.depsAfter||[])].sort()})).sort((a,b)=>a.id.localeCompare(b.id));
+ const results=ordered.map(x=>({id:x.id,semanticEqual:x.baseline===x.candidate,authorityPreserved:x.authorityBefore===x.authorityAfter,dependencyPreserved:JSON.stringify(x.depsBefore)===JSON.stringify(x.depsAfter)}));
+ const pass=results.every(x=>x.semanticEqual&&x.authorityPreserved&&x.dependencyPreserved);const root=hash(JSON.stringify(results));return {leafCount:results.length,results,root,pass};
+}
+export function planAssuranceV27({risk="LOW",controls=[]}={}){
+ const mandatory=controls.filter(c=>c.mandatory);const optional=controls.filter(c=>!c.mandatory).sort((a,b)=>(b.value??0)-(a.value??0));
+ const selected=[...mandatory,...optional.filter(c=>risk==="HIGH"?(c.value??0)>=0.2:(c.value??0)>=0.8)];
+ return {risk,selected:selected.map(c=>c.id),mandatoryRetained:mandatory.every(c=>selected.includes(c)),complexity:selected.length,total:controls.length,value:selected.reduce((s,c)=>s+(c.value??0),0)};
+}
+export function rpecClosureV27(contract={},evidence={}){
+ const req=[...(contract.requirements||[])];const missing=req.filter(r=>evidence[r]===undefined);const stale=req.filter(r=>evidence[r]?.stale===true);const unsatisfied=req.filter(r=>evidence[r]&&evidence[r].satisfied!==true);
+ const forward=req.map(r=>({requirement:r,evidence:evidence[r]?.id||null}));const reverse=Object.entries(evidence).map(([r,v])=>({evidence:v.id||r,requirement:req.includes(r)?r:null}));
+ return {forward,reverse,missing,stale,unsatisfied,closed:missing.length===0&&stale.length===0&&unsatisfied.length===0,feedback:[...new Set([...missing,...stale,...unsatisfied])].map(r=>({requirement:r,action:"SATISFY_BEFORE_EXECUTION"}))};
+}
