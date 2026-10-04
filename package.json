@@ -3,13 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "engines": {"node": ">=20"},
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "start": "node server.mjs",
     "test": "node --test tests/*.test.js",
     "conformance": "node scripts/conformance.js",
     "benchmark": "node scripts/benchmark.js",
     "assurance:generate": "node scripts/generate-automated-assurance-evidence.js",
-    "assurance:verify": "node scripts/verify-automated-assurance.js"
+    "assurance:verify": "node scripts/verify-automated-assurance.js",
+    "test:v97n": "node --test tests/v97n-runtime.test.js"
   }
 }
