@@ -330,9 +330,9 @@ export function evaluateHeldOutClaimV22(c = {}) {
   const toks = s => new Set((s.match(/[a-z0-9_-]+/g) ?? []).filter(x=>!["the","is","a","an","and","or","of","to","in","for","case"].includes(x)));
   const ct=toks(claim), et=toks(evidence);
   const overlap=[...ct].filter(x=>et.has(x)).length/Math.max(1,ct.size);
-  const claimNeg=/\\b(not|never|no|blocked|failed|false)\\b/.test(claim);
-  const evidenceNeg=/\\b(not|never|no|blocked|failed|false)\\b/.test(evidence);
-  const semanticallySupported=evidencePresent && overlap>=0.55 && claimNeg===evidenceNeg;
+  const claimNeg=/\b(not|never|no|blocked|failed|false)\b/.test(claim);
+  const evidenceNeg=/\b(not|never|no|blocked|failed|false)\b/.test(evidence);
+  const semanticallySupported=evidencePresent && overlap===1 && claimNeg===evidenceNeg;
   const supported=sourceValid && !stale && !contradicted && semanticallySupported;
   return {caseId:c.caseId??null,supported,decision:supported?"SUPPORTED":"WITHHOLD",signals:{sourceValid,stale,contradicted,evidencePresent,semanticOverlap:overlap,polarityMatch:claimNeg===evidenceNeg}};
 }
