@@ -1,0 +1,26 @@
+RVEH v2.3 GENUINE I5 INDEPENDENT-TRUST PROTOCOL
+STATUS: PREREGISTERED_PROTOCOL
+TARGET: RVEH-v2.3 implementation closure
+
+C5/I5 may PASS only with evidence that evaluator control, oracle control, execution environment, and final adjudication are outside the target-development trust domain.
+
+Mandatory predicates:
+EVALUATOR_CONTROL_INDEPENDENT = true
+ORACLE_CONTROL_INDEPENDENT = true
+TARGET_IMMUTABLE = true
+HELDOUT_PRISTINE = true
+RAW_EVIDENCE_EXPORTED = true
+NO_SELF_ATTESTATION = true
+ACCEPTANCE_CRITERION_FROZEN = true
+
+The evidence package shall bind evaluator source hash, oracle/held-out manifest hash, target commit and artifact hash, execution-environment identity, raw per-case results, aggregate metrics, platform-attributed run identity, and final independent adjudication.
+
+A run controlled by the target owner is C4 evidence only and is insufficient for I5.
+
+If any mandatory predicate is absent:
+C5 = BLOCKED
+I5 = UNVERIFIED
+SCIENTIFIC_RELEASE = WITHHELD
+
+NO EVIDENCE -> NO VERIFIED.
+BLOCKER REMOVAL MUST NOT LOWER THE ACCEPTANCE CRITERION.
