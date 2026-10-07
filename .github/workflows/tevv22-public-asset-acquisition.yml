@@ -1,4 +1,4 @@
-name: TEVV22 RHA Runtime Diagnostic
+name: TEVV22 TFDV Native Fixture Replay
 on:
   push:
     branches: [tevv22-public-asset-acquisition]
@@ -6,53 +6,94 @@ on:
 permissions:
   contents: read
 jobs:
-  diagnose:
+  replay:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: {python-version: '3.11'}
-      - name: Clone frozen upstream
-        run: |
-          git clone https://github.com/Yonas650/RewardHackingAgents.git upstream-rha
-          cd upstream-rha
-          git checkout 9ea7cdc8dde6c89b1ea75e2ba86a61ffff72eb34
-          test "$(git rev-parse HEAD)" = "9ea7cdc8dde6c89b1ea75e2ba86a61ffff72eb34"
-      - name: Install minimum upstream dependencies
-        run: python -m pip install --disable-pip-version-check --quiet numpy pandas scikit-learn xgboost joblib
-      - name: Execute untouched clean credit-risk scripts and preserve diagnostics
+        with: {python-version: '3.13'}
+      - name: Install exact public release
         shell: bash
         run: |
-          set -u
-          cd upstream-rha
-          export PYTHONPATH="$PWD"
-          mkdir -p ../evidence/tevv22-rha-diagnostic/workspace
-          cp -R rha/tasks/credit_risk/workspace_template/clean/. ../evidence/tevv22-rha-diagnostic/workspace/
-          W="$PWD/../evidence/tevv22-rha-diagnostic/workspace"
-          set +e
-          (cd "$W" && python src/train_model.py) > ../evidence/tevv22-rha-diagnostic/train.stdout 2> ../evidence/tevv22-rha-diagnostic/train.stderr
-          TRAIN_RC=$?
-          (cd "$W" && python src/evaluate.py) > ../evidence/tevv22-rha-diagnostic/eval.stdout 2> ../evidence/tevv22-rha-diagnostic/eval.stderr
-          EVAL_RC=$?
-          (cd "$W" && python src/metrics_ref.py) > ../evidence/tevv22-rha-diagnostic/ref.stdout 2> ../evidence/tevv22-rha-diagnostic/ref.stderr
-          REF_RC=$?
-          set -e
-          python - <<PY
-          import json,platform,sys,xgboost,sklearn,pandas,numpy,pathlib
-          root=pathlib.Path("../evidence/tevv22-rha-diagnostic")
-          out={
-            "upstream_commit":"9ea7cdc8dde6c89b1ea75e2ba86a61ffff72eb34",
-            "runtime":{"python":sys.version,"platform":platform.platform(),"xgboost":xgboost.__version__,"sklearn":sklearn.__version__,"pandas":pandas.__version__,"numpy":numpy.__version__},
-            "returncodes":{"train":int("$TRAIN_RC"),"eval":int("$EVAL_RC"),"ref":int("$REF_RC")},
-            "stdout":{k:(root/f"{k}.stdout").read_text(errors="replace") for k in ["train","eval","ref"]},
-            "stderr":{k:(root/f"{k}.stderr").read_text(errors="replace") for k in ["train","eval","ref"]},
-          }
-          (root/"diagnostic.json").write_text(json.dumps(out,indent=2)+"\n")
-          print(json.dumps(out,indent=2))
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --quiet tensorflow-data-validation==1.21.0
+          python - <<'PY'
+          import tensorflow_data_validation as tfdv
+          assert tfdv.__version__ == "1.21.0", tfdv.__version__
+          print(tfdv.__version__)
           PY
+      - name: Replay exact upstream weighted-feature fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence/tevv22-tfdv
+          python - <<'PY'
+          import json,platform,sys,hashlib
+          from google.protobuf import text_format
+          from tensorflow_metadata.proto.v0 import anomalies_pb2, schema_pb2, statistics_pb2
+          from tensorflow_data_validation.api import validation_api
+          import tensorflow_data_validation as tfdv
+          # Exact fixture text from tensorflow/data-validation v1.21.0
+          # commit 933dc6bcc0b7014c25522819095cd227242d0b56,
+          # validation_api_test.py blob 158cb68b4cf9821bdbf61c1cf43a2586956ed109,
+          # ValidationApiTest.test_validate_stats_weighted_feature.
+          schema_text = """
+          feature { name: "value" }
+          feature { name: "weight" }
+          weighted_feature {
+            name: "weighted_feature"
+            feature { step: "value" }
+            weight_feature { step: "weight" }
+          }
+          """
+          stats_text = """
+          datasets {
+            num_examples: 10
+            features {
+              path { step: 'weighted_feature' }
+              custom_stats { name: 'missing_weight' num: 1.0 }
+              custom_stats { name: 'missing_value' num: 2.0 }
+              custom_stats { name: 'min_weight_length_diff' num: 3.0 }
+              custom_stats { name: 'max_weight_length_diff' num: 4.0 }
+            }
+          }
+          """
+          expected = {
+            "WEIGHTED_FEATURE_MISSING_WEIGHT": "Found 1 examples missing weight feature.",
+            "WEIGHTED_FEATURE_MISSING_VALUE": "Found 2 examples missing value feature.",
+            "WEIGHTED_FEATURE_LENGTH_MISMATCH": "Mismatch between weight and value feature with min_weight_length_diff = 3 and max_weight_length_diff = 4.",
+          }
+          runs=[]
+          for rep in range(1,4):
+            schema=text_format.Parse(schema_text,schema_pb2.Schema())
+            stats=text_format.Parse(stats_text,statistics_pb2.DatasetFeatureStatisticsList())
+            anomalies=validation_api.validate_statistics(stats,schema)
+            info=anomalies.anomaly_info["weighted_feature"]
+            observed={anomalies_pb2.AnomalyInfo.Type.Name(r.type):r.description for r in info.reason}
+            runs.append({"repeat":rep,"observed":observed,"exact_match":observed==expected})
+          result={
+            "schema":"AIPF-TEVV22-TFDV-NATIVE-REPLAY-1",
+            "items":["AIPF-000148","AIPF-000149"],
+            "constructs":["WEIGHTED_FEATURE_MISSING_VALUE","WEIGHTED_FEATURE_MISSING_WEIGHT"],
+            "release":{"version":tfdv.__version__,"tag":"v1.21.0","commit":"933dc6bcc0b7014c25522819095cd227242d0b56"},
+            "native_fixture":{"path":"tensorflow_data_validation/api/validation_api_test.py","blob_sha":"158cb68b4cf9821bdbf61c1cf43a2586956ed109","test":"ValidationApiTest.test_validate_stats_weighted_feature"},
+            "expected":expected,
+            "runs":runs,
+            "repeatability":"3/3 identical" if all(x["observed"]==runs[0]["observed"] for x in runs) else "DIVERGENT",
+            "runtime":{"python":sys.version,"platform":platform.platform()},
+            "acceptance":"PASS only if all three runs exactly equal the native expected reasons",
+            "acceptance_criterion_lowered":False
+          }
+          p="evidence/tevv22-tfdv/tfdv_weighted_feature_replay.json"
+          open(p,"w").write(json.dumps(result,indent=2,sort_keys=True)+"\n")
+          print(json.dumps(result,indent=2,sort_keys=True))
+          assert all(x["exact_match"] for x in runs)
+          assert result["repeatability"]=="3/3 identical"
+          PY
+          sha256sum evidence/tevv22-tfdv/tfdv_weighted_feature_replay.json > evidence/tevv22-tfdv/tfdv_weighted_feature_replay.sha256
       - uses: actions/upload-artifact@v4
         with:
-          name: tevv22-rha-runtime-diagnostic
+          name: tevv22-tfdv-native-replay
           retention-days: 7
-          path: evidence/tevv22-rha-diagnostic/
+          path: evidence/tevv22-tfdv/
