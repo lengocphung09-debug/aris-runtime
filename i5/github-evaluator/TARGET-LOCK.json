@@ -1,0 +1,6 @@
+{
+  "predecessor_sha256": "9dedc765cd824f5eb60f62f0de5243860105f3a7e213afbcae72aa8dd01d7de2",
+  "successor_evidence_sha256": "401d085eb99b2f0d92bda997e38b335d960711f4d573689003638d282300df5c",
+  "identity_rule": "Both identities must be bound; neither replaces the other.",
+  "mismatch": "BLOCKED_TARGET_IDENTITY_SCOPE"
+}
