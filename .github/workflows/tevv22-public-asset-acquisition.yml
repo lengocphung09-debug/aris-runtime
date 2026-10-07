@@ -1,0 +1,84 @@
+name: TEVV22 Public Asset Acquisition
+on:
+  push:
+    branches: [tevv22-public-asset-acquisition]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Acquire frozen public assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence/tevv22-assets
+          HF_SHA="$(git ls-remote https://huggingface.co/datasets/Yuchen111/CodeHaluEval refs/heads/main | awk '{print $1}')"
+          test -n "$HF_SHA"
+          printf '%s\n' "$HF_SHA" | tee evidence/tevv22-assets/codehalu_hf_commit.txt
+          curl -L --fail --retry 3 --retry-delay 2 \
+            "https://huggingface.co/datasets/Yuchen111/CodeHaluEval/resolve/$HF_SHA/data_compliance_hallucination.json" \
+            -o evidence/tevv22-assets/data_compliance_hallucination.json
+          curl -L --fail --retry 3 --retry-delay 2 \
+            "https://raw.githubusercontent.com/anonymizedName/COBOLAssist/68a54eb768378655ec93722a2a023c4efcae04e2/data/COBOLErrorSet.xlsx" \
+            -o evidence/tevv22-assets/COBOLErrorSet.xlsx
+          sha256sum evidence/tevv22-assets/data_compliance_hallucination.json evidence/tevv22-assets/COBOLErrorSet.xlsx \
+            | tee evidence/tevv22-assets/assets.sha256
+      - name: Inspect schemas without changing source bytes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --quiet openpyxl
+          python - <<'PY'
+          import json, hashlib, pathlib, openpyxl
+          root=pathlib.Path("evidence/tevv22-assets")
+          jpath=root/"data_compliance_hallucination.json"
+          obj=json.loads(jpath.read_text(encoding="utf-8"))
+          rows=obj if isinstance(obj,list) else [obj]
+          def typ(v): return type(v).__name__
+          code={
+            "file":jpath.name,
+            "sha256":hashlib.sha256(jpath.read_bytes()).hexdigest(),
+            "top_level_type":type(obj).__name__,
+            "row_count":len(rows),
+            "first_row_keys":sorted(rows[0].keys()) if rows and isinstance(rows[0],dict) else [],
+            "first_row_types":{k:typ(v) for k,v in rows[0].items()} if rows and isinstance(rows[0],dict) else {},
+            "fields_of_interest":{
+              k:sum(1 for r in rows if isinstance(r,dict) and k in r and r[k] not in (None,"",[]))
+              for k in ["deal_response","input_output","response","full_response","code","error_type","id","prompt","input","output"]
+            }
+          }
+          wb=openpyxl.load_workbook(root/"COBOLErrorSet.xlsx",read_only=True,data_only=True)
+          sheets=[]
+          for ws in wb.worksheets:
+            it=ws.iter_rows(values_only=True)
+            header=next(it,())
+            headers=[str(x) if x is not None else "" for x in header]
+            count=0
+            samples=[]
+            for row in it:
+              count+=1
+              if len(samples)<3:
+                samples.append([type(x).__name__ for x in row])
+            sheets.append({"title":ws.title,"headers":headers,"data_rows":count,"sample_cell_types":samples})
+          out={"codehalu":code,"cobolassist":{"file":"COBOLErrorSet.xlsx","sha256":hashlib.sha256((root/"COBOLErrorSet.xlsx").read_bytes()).hexdigest(),"sheets":sheets}}
+          (root/"schema_summary.json").write_text(json.dumps(out,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
+          print(json.dumps(out,indent=2,ensure_ascii=False))
+          PY
+      - name: Upload frozen acquisition evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: tevv22-public-assets
+          retention-days: 7
+          path: |
+            evidence/tevv22-assets/codehalu_hf_commit.txt
+            evidence/tevv22-assets/assets.sha256
+            evidence/tevv22-assets/schema_summary.json
+            evidence/tevv22-assets/data_compliance_hallucination.json
+            evidence/tevv22-assets/COBOLErrorSet.xlsx
