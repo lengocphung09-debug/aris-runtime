@@ -1,0 +1,45 @@
+name: RVEH I5 Independent Evaluation
+on:
+  workflow_dispatch:
+    inputs:
+      evaluator_identity:
+        description: Evaluator name or stable identity
+        required: true
+        type: string
+      evaluator_affiliation:
+        description: Affiliation or independent individual
+        required: true
+        type: string
+      outside_target_trust_domain:
+        description: Evaluator is outside target-development trust domain
+        required: true
+        type: boolean
+      evaluator_controls_adjudication:
+        description: Evaluator controls execution/adjudication
+        required: true
+        type: boolean
+permissions:
+  contents: read
+jobs:
+  i5:
+    runs-on: ubuntu-latest
+    env:
+      EVALUATOR_IDENTITY: ${{ inputs.evaluator_identity }}
+      EVALUATOR_AFFILIATION: ${{ inputs.evaluator_affiliation }}
+      OUTSIDE_TARGET_TRUST_DOMAIN: ${{ inputs.outside_target_trust_domain }}
+      EVALUATOR_CONTROLS_ADJUDICATION: ${{ inputs.evaluator_controls_adjudication }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Generate fail-closed evaluation record
+        run: python i5/github-evaluator/evaluate.py
+      - name: Hash raw result
+        run: sha256sum i5-result.json | tee i5-result.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rveh-i5-evidence
+          path: |
+            i5-result.json
+            i5-result.sha256
