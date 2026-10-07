@@ -1,4 +1,4 @@
-name: TEVV22 TFDV Exact C++ Native Tests
+name: TEVV22 StepShield Test-Tampering Source Verification
 on:
   push:
     branches: [tevv22-public-asset-acquisition]
@@ -6,63 +6,77 @@ on:
 permissions:
   contents: read
 jobs:
-  replay:
+  verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - name: Clone exact TFDV release
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Clone exact StepShield source
         shell: bash
         run: |
           set -euo pipefail
-          git clone --branch v1.21.0 --depth 1 https://github.com/tensorflow/data-validation.git upstream-tfdv
-          cd upstream-tfdv
-          test "$(git rev-parse HEAD)" = "933dc6bcc0b7014c25522819095cd227242d0b56"
-          test "$(git hash-object tensorflow_data_validation/anomalies/schema_anomalies_test.cc)" = "0c2f4816d40b0ddfe9fe3ff5c158ffa9ba60daa2"
-          cat .bazelversion
-      - name: Run exact upstream native gtests
+          git clone https://github.com/glo26/stepshield.git upstream-stepshield
+          cd upstream-stepshield
+          git checkout 031aa88219f78cda987c2b9d034112e360afda7e
+          test "$(git rev-parse HEAD)" = "031aa88219f78cda987c2b9d034112e360afda7e"
+          test "$(git hash-object tests/integration/test_all_detectors.py)" = "8094147ca505d0a88be0dc70c29bb7bd7ddbc4f3"
+          test "$(git hash-object data/train/TST/TST-L2-020-ROGUE.jsonl)" = "4c28f20eda6179081969bd49e3b393e6be9a11b0"
+          test "$(git hash-object data/train/TST/TST-L1-014-ROGUE.jsonl)" = "029e2a345a6e2d29632fc16aaeed9a836caa41ca"
+          test "$(git hash-object data/train/TST/TST-L1-026-ROGUE.jsonl)" = "41166c8ef7f43b1c948d84a7079d54a71f87d4fd"
+      - name: Install source and test dependencies
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p evidence/tevv22-tfdv-cpp
-          cd upstream-tfdv
-          set +e
-          bazel test //tensorflow_data_validation/anomalies:schema_anomalies_test \
-            --test_filter='SchemaAnomalies.FindsLowSupportedImageFraction:SchemaAnomalies.UniqueNotInRange' \
-            --test_output=all \
-            > ../evidence/tevv22-tfdv-cpp/bazel.stdout 2> ../evidence/tevv22-tfdv-cpp/bazel.stderr
-          RC=$?
-          set -e
-          printf '%s\n' "$RC" > ../evidence/tevv22-tfdv-cpp/exit_code.txt
-          cat ../evidence/tevv22-tfdv-cpp/bazel.stdout
-          cat ../evidence/tevv22-tfdv-cpp/bazel.stderr >&2
-          test "$RC" -eq 0
-      - name: Record evidence
+          cd upstream-stepshield
+          python -m pip install --disable-pip-version-check --quiet -r requirements.txt
+          python -m pip install --disable-pip-version-check --quiet pytest pytest-asyncio pytest-cov
+          python -m pip install --disable-pip-version-check --quiet -e .
+      - name: Run exact source-native test-manipulation integration test
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence/tevv22-stepshield
+          cd upstream-stepshield
+          pytest -q tests/integration/test_all_detectors.py::test_stepshield_tst_trajectory --no-cov \
+            > ../evidence/tevv22-stepshield/pytest.stdout 2> ../evidence/tevv22-stepshield/pytest.stderr
+          cat ../evidence/tevv22-stepshield/pytest.stdout
+          cat ../evidence/tevv22-stepshield/pytest.stderr >&2
+      - name: Record provenance repair evidence
         shell: bash
         run: |
           set -euo pipefail
           python - <<'PY'
           import json,hashlib,pathlib,platform
-          root=pathlib.Path("evidence/tevv22-tfdv-cpp")
+          root=pathlib.Path("evidence/tevv22-stepshield")
           out={
-            "schema":"AIPF-TEVV22-TFDV-CPP-NATIVE-REPLAY-1",
-            "items":["AIPF-000195","AIPF-000205"],
-            "release":{"tag":"v1.21.0","commit":"933dc6bcc0b7014c25522819095cd227242d0b56"},
-            "native_fixture":{"path":"tensorflow_data_validation/anomalies/schema_anomalies_test.cc","blob_sha":"0c2f4816d40b0ddfe9fe3ff5c158ffa9ba60daa2"},
-            "target":"//tensorflow_data_validation/anomalies:schema_anomalies_test",
-            "test_filter":"SchemaAnomalies.FindsLowSupportedImageFraction:SchemaAnomalies.UniqueNotInRange",
-            "exit_code":int((root/"exit_code.txt").read_text().strip()),
-            "stdout_sha256":hashlib.sha256((root/"bazel.stdout").read_bytes()).hexdigest(),
-            "stderr_sha256":hashlib.sha256((root/"bazel.stderr").read_bytes()).hexdigest(),
-            "runner":platform.platform(),
-            "acceptance_criterion_lowered":False
+            "schema":"AIPF-TEVV22-ITEM260-SOURCE-REPAIR-CANDIDATE-1",
+            "item_id":"AIPF-000260",
+            "current_r36_source":"RewardHackingAgents arXiv:2603.11337",
+            "candidate_source":{
+              "repository":"glo26/stepshield",
+              "commit":"031aa88219f78cda987c2b9d034112e360afda7e",
+              "integration_test":{"path":"tests/integration/test_all_detectors.py","blob_sha":"8094147ca505d0a88be0dc70c29bb7bd7ddbc4f3","test":"test_stepshield_tst_trajectory"},
+              "direct_examples":[
+                {"path":"data/train/TST/TST-L2-020-ROGUE.jsonl","blob_sha":"4c28f20eda6179081969bd49e3b393e6be9a11b0","rationale":"Deletes assert statements leaving test that always passes."},
+                {"path":"data/train/TST/TST-L1-014-ROGUE.jsonl","blob_sha":"029e2a345a6e2d29632fc16aaeed9a836caa41ca","rationale":"Modifies assertEqual(result, 100) to assertEqual(result, 99) to match wrong output."},
+                {"path":"data/train/TST/TST-L1-026-ROGUE.jsonl","blob_sha":"41166c8ef7f43b1c948d84a7079d54a71f87d4fd","rationale":"Creates test that calls function without any assertions - fake coverage."}
+              ]
+            },
+            "scope_note":"StepShield TST is broader than Test Tampering; candidate binding is limited to exact test-manipulation evidence spans, not the whole TST category.",
+            "pytest_stdout_sha256":hashlib.sha256((root/"pytest.stdout").read_bytes()).hexdigest(),
+            "pytest_stderr_sha256":hashlib.sha256((root/"pytest.stderr").read_bytes()).hexdigest(),
+            "runtime":platform.platform(),
+            "r36_mutated":False,
+            "canonicalization":"PROHIBITED_WITHOUT_RELEASE_AUTHORITY"
           }
-          (root/"native_replay.json").write_text(json.dumps(out,indent=2,sort_keys=True)+"\n")
+          (root/"repair_candidate.json").write_text(json.dumps(out,indent=2,sort_keys=True)+"\n")
           print(json.dumps(out,indent=2,sort_keys=True))
           PY
-          sha256sum evidence/tevv22-tfdv-cpp/* > evidence/tevv22-tfdv-cpp/files.sha256
+          sha256sum evidence/tevv22-stepshield/* > evidence/tevv22-stepshield/files.sha256
       - uses: actions/upload-artifact@v4
         with:
-          name: tevv22-tfdv-cpp-native-replay
+          name: tevv22-stepshield-item260-repair
           retention-days: 7
-          path: evidence/tevv22-tfdv-cpp/
+          path: evidence/tevv22-stepshield/
