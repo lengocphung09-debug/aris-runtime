@@ -1,4 +1,4 @@
-name: TEVV22 Public Asset Acquisition
+name: TEVV22 CodeHalu Full Schema Audit
 on:
   push:
     branches: [tevv22-public-asset-acquisition]
@@ -6,7 +6,7 @@ on:
 permissions:
   contents: read
 jobs:
-  acquire:
+  audit:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -14,71 +14,73 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Acquire frozen public assets
+      - name: Acquire all frozen CodeHaluEval files
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p evidence/tevv22-assets
+          mkdir -p evidence/tevv22-codehalu
           HF_SHA="$(git ls-remote https://huggingface.co/datasets/Yuchen111/CodeHaluEval refs/heads/main | awk '{print $1}')"
           test -n "$HF_SHA"
-          printf '%s\n' "$HF_SHA" | tee evidence/tevv22-assets/codehalu_hf_commit.txt
-          curl -L --fail --retry 3 --retry-delay 2 \
-            "https://huggingface.co/datasets/Yuchen111/CodeHaluEval/resolve/$HF_SHA/data_compliance_hallucination.json" \
-            -o evidence/tevv22-assets/data_compliance_hallucination.json
-          curl -L --fail --retry 3 --retry-delay 2 \
-            "https://raw.githubusercontent.com/anonymizedName/COBOLAssist/68a54eb768378655ec93722a2a023c4efcae04e2/data/COBOLErrorSet.xlsx" \
-            -o evidence/tevv22-assets/COBOLErrorSet.xlsx
-          sha256sum evidence/tevv22-assets/data_compliance_hallucination.json evidence/tevv22-assets/COBOLErrorSet.xlsx \
-            | tee evidence/tevv22-assets/assets.sha256
-      - name: Inspect schemas without changing source bytes
+          printf '%s\n' "$HF_SHA" > evidence/tevv22-codehalu/hf_commit.txt
+          files=(
+            calculate_boundary_hallucination.json
+            data_compliance_hallucination.json
+            external_source_hallucination.json
+            identification_hallucination.json
+            logic_breakdown.json
+            logic_deviation.json
+            physical_constraint_hallucination.json
+            structural_access_hallucination.json
+          )
+          for f in "${files[@]}"; do
+            curl -L --fail --retry 3 --retry-delay 2 \
+              "https://huggingface.co/datasets/Yuchen111/CodeHaluEval/resolve/$HF_SHA/$f" \
+              -o "evidence/tevv22-codehalu/$f"
+          done
+          sha256sum evidence/tevv22-codehalu/*.json > evidence/tevv22-codehalu/files.sha256
+      - name: Inspect all schemas and prediction-field availability
         shell: bash
         run: |
           set -euo pipefail
-          python -m pip install --disable-pip-version-check --quiet openpyxl
           python - <<'PY'
-          import json, hashlib, pathlib, openpyxl
-          root=pathlib.Path("evidence/tevv22-assets")
-          jpath=root/"data_compliance_hallucination.json"
-          obj=json.loads(jpath.read_text(encoding="utf-8"))
-          rows=obj if isinstance(obj,list) else [obj]
-          def typ(v): return type(v).__name__
-          code={
-            "file":jpath.name,
-            "sha256":hashlib.sha256(jpath.read_bytes()).hexdigest(),
-            "top_level_type":type(obj).__name__,
-            "row_count":len(rows),
-            "first_row_keys":sorted(rows[0].keys()) if rows and isinstance(rows[0],dict) else [],
-            "first_row_types":{k:typ(v) for k,v in rows[0].items()} if rows and isinstance(rows[0],dict) else {},
-            "fields_of_interest":{
-              k:sum(1 for r in rows if isinstance(r,dict) and k in r and r[k] not in (None,"",[]))
-              for k in ["deal_response","input_output","response","full_response","code","error_type","id","prompt","input","output"]
-            }
+          import json,hashlib,pathlib,collections
+          root=pathlib.Path("evidence/tevv22-codehalu")
+          fields=["deal_response","input_output","response","full_response","code","model_output","prediction","pred","error_type","id","prompt","input","output","halu_type"]
+          out={"hf_commit":(root/"hf_commit.txt").read_text().strip(),"files":{}}
+          for p in sorted(root.glob("*.json")):
+              obj=json.loads(p.read_text(encoding="utf-8"))
+              rows=obj if isinstance(obj,list) else [obj]
+              first=rows[0] if rows and isinstance(rows[0],dict) else {}
+              counts={k:sum(1 for r in rows if isinstance(r,dict) and k in r and r[k] not in (None,"",[])) for k in fields}
+              halu=collections.Counter(str(r.get("halu_type")) for r in rows if isinstance(r,dict) and r.get("halu_type") not in (None,""))
+              out["files"][p.name]={
+                  "sha256":hashlib.sha256(p.read_bytes()).hexdigest(),
+                  "bytes":p.stat().st_size,
+                  "top_level_type":type(obj).__name__,
+                  "row_count":len(rows),
+                  "first_row_keys":sorted(first.keys()),
+                  "fields_of_interest_nonempty":counts,
+                  "halu_type_counts":dict(sorted(halu.items()))
+              }
+          pred_fields=["deal_response","response","full_response","code","model_output","prediction","pred"]
+          out["aggregate"]={
+              "file_count":len(out["files"]),
+              "total_rows":sum(v["row_count"] for v in out["files"].values()),
+              "files_with_any_prediction_field":[
+                  name for name,v in out["files"].items()
+                  if any(v["fields_of_interest_nonempty"].get(k,0)>0 for k in pred_fields)
+              ],
+              "prediction_fields_checked":pred_fields
           }
-          wb=openpyxl.load_workbook(root/"COBOLErrorSet.xlsx",read_only=True,data_only=True)
-          sheets=[]
-          for ws in wb.worksheets:
-            it=ws.iter_rows(values_only=True)
-            header=next(it,())
-            headers=[str(x) if x is not None else "" for x in header]
-            count=0
-            samples=[]
-            for row in it:
-              count+=1
-              if len(samples)<3:
-                samples.append([type(x).__name__ for x in row])
-            sheets.append({"title":ws.title,"headers":headers,"data_rows":count,"sample_cell_types":samples})
-          out={"codehalu":code,"cobolassist":{"file":"COBOLErrorSet.xlsx","sha256":hashlib.sha256((root/"COBOLErrorSet.xlsx").read_bytes()).hexdigest(),"sheets":sheets}}
-          (root/"schema_summary.json").write_text(json.dumps(out,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
+          (root/"full_schema_summary.json").write_text(json.dumps(out,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
           print(json.dumps(out,indent=2,ensure_ascii=False))
           PY
-      - name: Upload frozen acquisition evidence
+      - name: Upload audit summary and hashes
         uses: actions/upload-artifact@v4
         with:
-          name: tevv22-public-assets
+          name: tevv22-codehalu-full-schema
           retention-days: 7
           path: |
-            evidence/tevv22-assets/codehalu_hf_commit.txt
-            evidence/tevv22-assets/assets.sha256
-            evidence/tevv22-assets/schema_summary.json
-            evidence/tevv22-assets/data_compliance_hallucination.json
-            evidence/tevv22-assets/COBOLErrorSet.xlsx
+            evidence/tevv22-codehalu/hf_commit.txt
+            evidence/tevv22-codehalu/files.sha256
+            evidence/tevv22-codehalu/full_schema_summary.json
