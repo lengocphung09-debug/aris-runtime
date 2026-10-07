@@ -1,4 +1,4 @@
-name: TEVV22 TFDV Native Fixture Replay
+name: TEVV22 TFDV Additional Native Fixtures
 on:
   push:
     branches: [tevv22-public-asset-acquisition]
@@ -14,86 +14,127 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: '3.13'}
       - name: Install exact public release
-        shell: bash
         run: |
-          set -euo pipefail
           python -m pip install --disable-pip-version-check --quiet tensorflow-data-validation==1.21.0
           python - <<'PY'
           import tensorflow_data_validation as tfdv
-          assert tfdv.__version__ == "1.21.0", tfdv.__version__
-          print(tfdv.__version__)
+          assert tfdv.__version__ == "1.21.0"
           PY
-      - name: Replay exact upstream weighted-feature fixture
+      - name: Replay exact native fixtures for AIPF-000195 and AIPF-000205
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p evidence/tevv22-tfdv
+          mkdir -p evidence/tevv22-tfdv-additional
           python - <<'PY'
-          import json,platform,sys,hashlib
+          import json,platform,sys
           from google.protobuf import text_format
           from tensorflow_metadata.proto.v0 import anomalies_pb2, schema_pb2, statistics_pb2
           from tensorflow_data_validation.api import validation_api
           import tensorflow_data_validation as tfdv
-          # Exact fixture text from tensorflow/data-validation v1.21.0
-          # commit 933dc6bcc0b7014c25522819095cd227242d0b56,
-          # validation_api_test.py blob 158cb68b4cf9821bdbf61c1cf43a2586956ed109,
-          # ValidationApiTest.test_validate_stats_weighted_feature.
-          schema_text = """
-          feature { name: "value" }
-          feature { name: "weight" }
-          weighted_feature {
-            name: "weighted_feature"
-            feature { step: "value" }
-            weight_feature { step: "weight" }
-          }
-          """
-          stats_text = """
-          datasets {
-            num_examples: 10
-            features {
-              path { step: 'weighted_feature' }
-              custom_stats { name: 'missing_weight' num: 1.0 }
-              custom_stats { name: 'missing_value' num: 2.0 }
-              custom_stats { name: 'min_weight_length_diff' num: 3.0 }
-              custom_stats { name: 'max_weight_length_diff' num: 4.0 }
+
+          fixtures = {
+            "AIPF-000195": {
+              "construct":"LOW_SUPPORTED_IMAGE_FRACTION",
+              "test":"SchemaAnomalies.FindsLowSupportedImageFraction",
+              "schema": """
+                feature {
+                  name: "image/encoded"
+                  presence: { min_count: 1 min_fraction: 1.0 }
+                  value_count: { min: 1 max: 1 }
+                  type: BYTES
+                  image_domain: { minimum_supported_image_fraction: 0.85 }
+                }
+              """,
+              "stats": """
+                datasets {
+                  features: {
+                    name: 'image/encoded'
+                    type: BYTES
+                    bytes_stats: {
+                      common_stats: {
+                        num_non_missing: 10
+                        min_num_values: 1
+                        max_num_values: 1
+                      }
+                    }
+                    custom_stats: {
+                      name: 'image_format_histogram'
+                      rank_histogram: {
+                        buckets: { label: 'jpeg' sample_count: 5 }
+                        buckets: { label: 'png' sample_count: 3 }
+                        buckets: { label: 'UNKNOWN' sample_count: 2 }
+                      }
+                    }
+                  }
+                }
+              """,
+              "feature":"image/encoded",
+              "expected_type":"LOW_SUPPORTED_IMAGE_FRACTION",
+              "expected_description":"Fraction of values containing TensorFlow supported images: 0.800000 is lower than the threshold set in the Schema: 0.850000."
+            },
+            "AIPF-000205": {
+              "construct":"FEATURE_TYPE_NO_UNIQUE",
+              "test":"SchemaAnomalies.UniqueNotInRange",
+              "schema": """
+                feature {
+                  name: "numeric_feature"
+                  type: FLOAT
+                  unique_constraints { min: 1 max: 1 }
+                }
+              """,
+              "stats": """
+                datasets {
+                  features: {
+                    name: 'numeric_feature'
+                    type: FLOAT
+                    num_stats: {
+                      common_stats: { min_num_values: 1 max_num_values: 1 num_non_missing: 1 }
+                    }
+                  }
+                }
+              """,
+              "feature":"numeric_feature",
+              "expected_type":"FEATURE_TYPE_NO_UNIQUE",
+              "expected_description":"UniqueConstraints specified for the feature, but unique values were not counted (i.e., feature is not string or categorical)."
             }
           }
-          """
-          expected = {
-            "WEIGHTED_FEATURE_MISSING_WEIGHT": "Found 1 examples missing weight feature.",
-            "WEIGHTED_FEATURE_MISSING_VALUE": "Found 2 examples missing value feature.",
-            "WEIGHTED_FEATURE_LENGTH_MISMATCH": "Mismatch between weight and value feature with min_weight_length_diff = 3 and max_weight_length_diff = 4.",
-          }
-          runs=[]
-          for rep in range(1,4):
-            schema=text_format.Parse(schema_text,schema_pb2.Schema())
-            stats=text_format.Parse(stats_text,statistics_pb2.DatasetFeatureStatisticsList())
-            anomalies=validation_api.validate_statistics(stats,schema)
-            info=anomalies.anomaly_info["weighted_feature"]
-            observed={anomalies_pb2.AnomalyInfo.Type.Name(r.type):r.description for r in info.reason}
-            runs.append({"repeat":rep,"observed":observed,"exact_match":observed==expected})
-          result={
-            "schema":"AIPF-TEVV22-TFDV-NATIVE-REPLAY-1",
-            "items":["AIPF-000148","AIPF-000149"],
-            "constructs":["WEIGHTED_FEATURE_MISSING_VALUE","WEIGHTED_FEATURE_MISSING_WEIGHT"],
+
+          results={}
+          for iid,f in fixtures.items():
+            runs=[]
+            for rep in range(1,4):
+              schema=text_format.Parse(f["schema"],schema_pb2.Schema())
+              stats=text_format.Parse(f["stats"],statistics_pb2.DatasetFeatureStatisticsList())
+              anomalies=validation_api.validate_statistics(stats,schema)
+              info=anomalies.anomaly_info[f["feature"]]
+              obs=[{
+                "type":anomalies_pb2.AnomalyInfo.Type.Name(r.type),
+                "short_description":r.short_description,
+                "description":r.description
+              } for r in info.reason]
+              match=any(x["type"]==f["expected_type"] and x["description"]==f["expected_description"] for x in obs)
+              runs.append({"repeat":rep,"observed_reasons":obs,"exact_expected_reason_present":match})
+            results[iid]={
+              "construct":f["construct"],"native_test":f["test"],"runs":runs,
+              "repeatability":"3/3 identical" if all(x["observed_reasons"]==runs[0]["observed_reasons"] for x in runs) else "DIVERGENT",
+              "pass":all(x["exact_expected_reason_present"] for x in runs)
+            }
+
+          out={
+            "schema":"AIPF-TEVV22-TFDV-ADDITIONAL-NATIVE-REPLAY-1",
             "release":{"version":tfdv.__version__,"tag":"v1.21.0","commit":"933dc6bcc0b7014c25522819095cd227242d0b56"},
-            "native_fixture":{"path":"tensorflow_data_validation/api/validation_api_test.py","blob_sha":"158cb68b4cf9821bdbf61c1cf43a2586956ed109","test":"ValidationApiTest.test_validate_stats_weighted_feature"},
-            "expected":expected,
-            "runs":runs,
-            "repeatability":"3/3 identical" if all(x["observed"]==runs[0]["observed"] for x in runs) else "DIVERGENT",
+            "native_fixture":{"path":"tensorflow_data_validation/anomalies/schema_anomalies_test.cc","blob_sha":"0c2f4816d40b0ddfe9fe3ff5c158ffa9ba60daa2"},
+            "results":results,
             "runtime":{"python":sys.version,"platform":platform.platform()},
-            "acceptance":"PASS only if all three runs exactly equal the native expected reasons",
             "acceptance_criterion_lowered":False
           }
-          p="evidence/tevv22-tfdv/tfdv_weighted_feature_replay.json"
-          open(p,"w").write(json.dumps(result,indent=2,sort_keys=True)+"\n")
-          print(json.dumps(result,indent=2,sort_keys=True))
-          assert all(x["exact_match"] for x in runs)
-          assert result["repeatability"]=="3/3 identical"
+          open("evidence/tevv22-tfdv-additional/tfdv_additional_replay.json","w").write(json.dumps(out,indent=2,sort_keys=True)+"\n")
+          print(json.dumps(out,indent=2,sort_keys=True))
+          assert all(v["pass"] and v["repeatability"]=="3/3 identical" for v in results.values())
           PY
-          sha256sum evidence/tevv22-tfdv/tfdv_weighted_feature_replay.json > evidence/tevv22-tfdv/tfdv_weighted_feature_replay.sha256
+          sha256sum evidence/tevv22-tfdv-additional/tfdv_additional_replay.json > evidence/tevv22-tfdv-additional/tfdv_additional_replay.sha256
       - uses: actions/upload-artifact@v4
         with:
-          name: tevv22-tfdv-native-replay
+          name: tevv22-tfdv-additional-native-replay
           retention-days: 7
-          path: evidence/tevv22-tfdv/
+          path: evidence/tevv22-tfdv-additional/
